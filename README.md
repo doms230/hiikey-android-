@@ -10,12 +10,12 @@ Private Repository Hiikey, the event discovery and promotion app. #savetreesuseh
 
 
 * Major Dependencies:
--Parse(Database)
--Google Play Services
--Picasso
--Melnykov
+**Parse(Database)
+**Google Play Services
+**Picasso
+**Melnykov
 * Database configuration
 
 ### Contribution guidelines ###
 
-//If you create a new class, state your name, the date it was created, and what the class does at the top of the class file... Some classes may not do that.. oops! 
+If you create a new class, state your name, the date it was created, and what the class does at the top of the class file.
