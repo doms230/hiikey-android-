@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="instagram">Instagram</string>
+    <string name="instagramuser">Instagram Username</string>
+
+    <string name="tumblr">Tumblr</string>
+    <string name="tumblruser">Tumblr Username</string>
+
+    <string name="twitter">Twitter</string>
+    <string name="twitteruser">Twitter Username</string>
+
+    <string name="snapchat">Snapchat</string>
+    <string name="snapchatuser">Snapchat Username</string>
+
+    <string name="NoOnetoInvite">There\'s no one on your guest list.</string>
+
+</resources>

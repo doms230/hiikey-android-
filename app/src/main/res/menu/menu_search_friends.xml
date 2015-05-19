@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.socialgroupe.hiikey.SearchFriends">
+    <item android:id="@+id/action_shareFriends" android:title="@string/friends"
+        android:orderInCategory="100" app:showAsAction="always"
+        android:icon="@drawable/ic_action_search_red"/>
+</menu>

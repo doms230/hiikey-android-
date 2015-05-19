@@ -1,0 +1,175 @@
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".NewEvent"
+    android:id="@+id/llNewPost"
+    android:visibility="visible"
+    android:padding="5dp">
+
+    ////////////////Linear layout used to make room for custom flier preview///////////////////
+
+    <RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uploadFlier"
+        android:id="@+id/cbIsitCustom"
+        android:padding="5dp"
+        android:textColor="@color/appColor"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+        android:padding="5dp"
+        android:id="@+id/llcoolj">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/category"
+        android:id="@+id/textView9"
+        android:textStyle="bold"
+        android:layout_gravity="center_vertical" />
+
+    <Spinner
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/sCategory"
+            android:textStyle="bold"
+            android:layout_weight="0.09"
+        android:paddingBottom="5dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbEventInfo"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp">
+
+        <Button
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:id="@+id/bDate" />
+
+        <Button
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:id="@+id/bTime" />
+
+    </LinearLayout>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etTitle"
+            android:hint="@string/title"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/appColor" />
+
+
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/etAddress"
+        android:hint="@string/address"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:textColorHint="@color/appColor" />
+
+</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/optional"
+        android:id="@+id/textView"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:id="@+id/llFilterColor">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/hashtag"
+            android:id="@+id/tvHashtag"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_weight="5" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etOfficialHashtag"
+            android:hint="@string/offHashtag"
+            android:layout_weight="95"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:textColorHint="@color/appColor" />
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/etWebsite"
+        android:hint="@string/website"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:textColorHint="@color/appColor"
+        android:inputType="textUri" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etDescription"
+        android:hint="@string/description"
+        android:textStyle="bold"
+        android:textColorHint="@color/appColor"
+        android:inputType="textMultiLine"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

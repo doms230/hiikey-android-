@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_category_title">Category</string>
+    <string name="pref_dialogCategory_title">Choose a Category</string>
+
+    <string name="pref_mileRadius_title">Distance</string>
+    <string name="pref_mileRadiusDialog_title">Choose the Search Radius</string>
+
+    <string name="pref_searchFriendssum">Real friends search for each other!</string>
+    <string name="pref_titlesearchfriends">Friend Search</string>
+
+    <string name="pref_shareImboardsum"> Imboard is more fun with your friends!</string>
+    <string name="pref_titleshareimboard">Share Imboard</string>
+
+    <string name="pref_view_title">View Type</string>
+    <string name="pref_view_description">How do you want to view content?</string>
+</resources>

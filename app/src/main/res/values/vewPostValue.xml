@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Title</string>
+    <string name="category">Category:</string>
+    <string name="address">Location</string>
+    <string name="description">Describe your flyer in detail</string>
+    <string name="createVibe">Vibe: e.g. Business casual, Chill, Turnup</string>
+    <string name="pub"> Public </string>
+    <string name="priv">Private</string>
+    <string name="share">Spread the Word</string>
+    <string name="pubPrivMess">Private, but can be discovered</string>
+    <string name="pubMess">Public</string>
+    <string name="privMess">Private</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="exampleTitle">Party at Dom\'s</string>
+    <string name="exampleAddress">1700 East Coldspring Lane, Baltimore MD, 21251</string>
+    <string name="exampleTime">9:00pm</string>
+    <string name="exampleDate">April 5th 2014</string>
+    <string name="uploadFlier"> I have a flyer</string>
+    <string name="makeFlier">Designs</string>
+    <string name="or">OR</string>
+    <string name="cdDes1">background design 1</string>
+    <string name="cdDes2">background design 2</string>
+    <string name="cdDes4">background design 4</string>
+    <string name="exConDes">Come turn up at Dom\'s Party! Food and drinks taken care of!</string>
+    <string name="exColorWhite">White Letters</string>
+    <string name="exColorBlack">Black letters</string>
+    <string name="getWordOut">Share your Clad:</string>
+    <string name="toSocNet">To Your Social Network Audience</string>
+    <string name="createOne">Create One</string>
+    <string name="toContacts">To Your Contact List</string>
+    <string name="hashtag">#</string>
+    <string name="offHashtag">Official Hashtag</string>
+    <string name="exOffHashtag">domparty</string>
+    <string name="hashy">#</string>
+    <string name="foursquare">foursquare</string>
+    <string name="post">post</string>
+    <string name="nevermind">Nevermind</string>
+    <string name="uploadBack">Background</string>
+    <string name="backDesign">Background Designs</string>
+    <string name="buildGuestList">Add Friends to Your GuestList:</string>
+    <string name="next">Next</string>
+    <string name="website">Website</string>
+    <string name="flyerInfo">Info</string>
+    <string name="flyerDesign">Design</string>
+    <string name="promotion">Promotion</string>
+    <string name="privacy">Privacy:</string>
+    <string name="exclusiveList">Who\'s on the List?</string>
+    <string name="pricing">Promotion Fees: Free</string>
+    <string name="newEvent">New Event</string>
+    <string name="optional">Optional:</string>
+
+    <string name="publicState">Viewable by the public</string>
+    <string name="privateState">Viewable by your guest list.</string>
+    <string name="exclusive">Viewable by your invited guest list.</string>
+
+    <string-array name="ampm_array">
+        <item>PM</item>
+        <item>AM</item>
+    </string-array>
+
+    <string-array name="privacy_array">
+        <item>Public </item>
+        <item>Private </item>
+        <item>Exclusive </item>
+    </string-array>
+</resources>

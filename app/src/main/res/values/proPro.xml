@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="exampleProName"> Dominic Smith </string>
+    <string name="exampleProAge">20 </string>
+    <string name="exampleProAboutMe"> All about the fun!</string>
+    <string name="exampleConnect">Connect:</string>
+    <string name="tumblrDes">Link to User/\'s tumblr account</string>
+    <string name="link">Link</string>
+    <string name="unlink">Un-Link</string>
+    <string name="editUsername">Update your username</string>
+    <string name="update">Save and Update</string>
+    <string name="uploadproPic">Upload Profile Picture</string>
+    <string name="saveandupdate">Save and Update</string>
+    <string-array name="array_society">
+        <item>Instagram</item>
+        <item>Snapchat</item>
+        <item>Tumblr</item>
+        <item>Twitter</item>
+    </string-array>
+
+    <string name="event">Events</string>
+    <string name="guest">Guests</string>
+    <string name="hosts">Hosts</string>
+    <string name="editProPro">Edit Profile</string>
+
+    <string name="profileexp">Profile Explanation</string>
+
+    <string name="profileeventmessage">If you tap on EVENTS, you\'ll see a list of all the events
+        the person created. If he/she has any private or exclusive events, then those events
+        will be invisible to you if your not on their guest list. If this is your profile,
+        than you\'ll have the option of deleting events, by tapping on the trash can.</string>
+
+    <string name="profileguestmessage">Tapping on GUESTS will show you everyone on that person\'s guest list</string>
+
+    <string name="profilehostmessage">Tapping on HOSTS will show you all of the people hosting that person.</string>
+
+    <string name="profilehostermessage">Tapping the HOST BUTTON will ADD the person to your guest list.
+    That means he/she will see all of your current and future private events. They will NOT be able
+    to see your exclusive events unless invited first.</string>
+
+    <string name="profilehostingmessage">Tapping the HOSTING BUTTON will REMOVE the person from your
+    guest list and they will no longer be able to see any of your private or exclusive events.</string>
+
+    <string name="profilequestionmessage">If you have anymore questions regarding the app, tweet us
+    @hiikeyapp or on our facebook page at facbook.com/hiikey.</string>
+
+</resources>

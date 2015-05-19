@@ -1,0 +1,45 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.socialgroupe.hiikey.Bulletin">
+
+    <item android:id = "@+id/actionSaved"
+        android:icon="@drawable/ic_action_heart_white"
+        android:title="@string/title_newEvent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="always"/>
+
+    <item android:id = "@+id/action_newFlyerv2"
+    android:icon="@drawable/ic_action_new_pwhite"
+    android:title="@string/title_newEvent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:showAsAction="always"/>
+
+    <item android:id = "@+id/action_searchBulletin"
+        android:icon="@drawable/ic_action_search_white"
+        android:title="@string/title_activity_search_stuff"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="always"/>
+
+    <item android:id = "@+id/action_myProfilev2"
+        android:icon="@drawable/ic_action_person_white"
+        android:title="@string/title_profile"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_shareFriendsv2" android:title="Share Hiikey!"
+        android:orderInCategory="4" app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_share_pwhite"/>
+
+    <item android:id = "@+id/action_verifyMembers"
+        android:title="@string/verifiedMembers"
+        android:orderInCategory="2"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never"/>
+
+    <item android:id = "@+id/action_signoutv2"
+        android:title="@string/title_signout"
+        android:orderInCategory="5"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never"/>
+
+</menu>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.socialgroupe.hiikey.EditProfile">
+
+    <item android:id="@+id/action_editProfile_upate" android:title="@string/title_activity_new_bulletin"
+        android:orderInCategory="1" app:showAsAction="always"
+        android:icon="@drawable/ic_action_accept_white"/>
+
+    <item android:id="@+id/action_editProfile_cancel" android:title="@string/title_activity_new_bulletin"
+        android:orderInCategory="0" app:showAsAction="always"
+        android:icon="@drawable/ic_action_exit_t"/>
+
+</menu>

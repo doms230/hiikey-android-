@@ -1,0 +1,125 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:layout_height="fill_parent"
+    tools:context="com.dominic.nopinion.socialgroupe.InterestedFrag"
+    android:background="#ffffffff"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout9">
+
+        <com.parse.ParseImageView
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:id="@+id/ivShowFLyerHost"
+            android:background="#fffff0f8"
+            android:layout_marginLeft="20dp" />
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/linearLayout6"
+                android:layout_alignBottom="@+id/ivMemberLevel"
+                android:layout_alignRight="@+id/linearLayout10"
+                android:layout_alignEnd="@+id/linearLayout10"
+                android:layout_below="@+id/linearLayout10"
+                android:visibility="visible">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ibThumbsUp"
+                    android:background="@drawable/ic_action_thumbup"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ibThumbdown"
+                    android:padding="10dp"
+                    android:background="@drawable/ic_action_thumbdown"
+                    android:layout_marginTop="25dp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout10"
+                android:layout_below="@+id/tvHost">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView7"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_action_person" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="0"
+                    android:id="@+id/tvFavNumber"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/tvHost"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textSize="24sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="@string/host" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="100dp"
+                android:id="@+id/ivMemberLevel"
+                android:visibility="visible"
+                android:layout_gravity="bottom"
+                android:layout_below="@+id/linearLayout10"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <GridView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/gvInterested"
+        android:layout_centerHorizontal="true"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:layout_below="@+id/linearLayout9"
+        android:verticalSpacing="5dp"
+        android:layout_marginTop="5dp"
+        android:columnWidth="5dp" />
+
+</LinearLayout>

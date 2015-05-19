@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Board Choices"
+        android:summary="Narrow your results to find exactly what your looking for.">
+        <ListPreference
+            android:title="@string/pref_category_title"
+            android:key="category"
+            android:dialogTitle="@string/pref_dialogCategory_title"
+            android:entries="@array/categories_array"
+            android:entryValues="@array/categories_array"
+            android:defaultValue="Party"
+            android:summary="@string/pref_dialogCategory_title"/>
+
+        <ListPreference
+            android:title="@string/pref_mileRadius_title"
+            android:key="distance"
+            android:dialogTitle="@string/pref_mileRadiusDialog_title"
+            android:entries="@array/mile_radius_array_string"
+            android:entryValues="@array/mile_radius_array_string"
+            android:summary="@string/pref_mileRadiusDialog_title"
+            android:defaultValue="5"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,36 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="redText">#f44336</color>
+    <color name="pinkText">#ec407a</color>
+    <color name="purpleText">#9c27b0</color>
+    <color name="deepPurText">#311b92</color>
+    <color name="indigoText">#3f51b5</color>
+    <color name="blueText">#1565c0</color>
+    <color name="lightBlueText">#0288d1</color>
+    <color name="cyanText">#00bcd4</color>
+    <color name="tealText">#009688</color>
+    <color name="greenText">#4caf50</color>
+    <color name="lightGreenText">#8bc34a</color>
+    <color name="limeText">#cddc39</color>
+    <color name="yelloText">#ffeb3b</color>
+    <color name="amberText">#ffc107</color>
+    <color name="orangeText">#ff9800</color>
+    <color name="deepOrangeText">#ff5722</color>
+    <color name="brownText">#795548</color>
+    <color name="blueGreyText">#607d8b</color>
+
+    <color name="appColor">#b71c1c</color>
+    <color name="appComplement">#e8f5e9</color>
+    <color name="asadf">#e3f2fd</color>
+
+    <color name="redFilter">#a0550815</color>
+    <color name="purpleFilter">#9f411455</color>
+    <color name="greeFilter">#a00c550b</color>
+    <color name="blueGFilter">#a00c5546</color>
+    <color name="blueFilter">#a0092955</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#FF020002</color>
+
+</resources>

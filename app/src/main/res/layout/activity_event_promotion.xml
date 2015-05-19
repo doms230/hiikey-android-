@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.dominic.nopinion.socialgroupe.Promotion"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="5dp">
+
+        <Spinner
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:id="@+id/sPrivate"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/exclusive"
+            android:id="@+id/tvExclusiveState"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/privateState"
+            android:id="@+id/tvPrivateState"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/publicState"
+            android:id="@+id/tvPublicState"
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:textSize="16sp"
+            android:padding="10dp" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pbPromo"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true"
+            android:visibility="gone" />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/llExclusive"
+    android:visibility="visible">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/exclusiveList"
+        android:id="@+id/tvWhoOnGuest"
+        android:layout_gravity="start|center_horizontal"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:padding="10dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvWhoList"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/NoOnetoInvite"
+        android:id="@+id/tvNoOnetoinvite"
+        android:padding="10dp"
+        android:visibility="gone" />
+</LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/pricing"
+        android:id="@+id/tvPromoFees"
+        android:layout_gravity="start|center_horizontal"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:textSize="24sp" />
+
+</LinearLayout>

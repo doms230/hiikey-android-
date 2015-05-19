@@ -10,11 +10,18 @@ Private Repository Hiikey, the event discovery and promotion app. #savetreesuseh
 
 
 *[Parse(Database)](https://parse.com/)
+
 *[Google Play Services](https://developer.android.com/google/play-services/index.html)
+
 *[Picasso](http://square.github.io/picasso/)
+
 *[Melnykov](https://github.com/makovkastar/FloatingActionButton)
 
 
 ### Contribution guidelines ###
 
 If you create a new class, state your name, the date it was created, and what the class does at the top of the class file.
+
+### Caveat ###
+
+Hiikey used to be called Imboard! That's the name of the project, but the package name is hiikey

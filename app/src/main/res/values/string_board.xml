@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<string-array name="categories_array">
+    <item>Party</item>
+    <item>Meetup</item>
+    <item>Other</item>
+</string-array>
+
+    <string-array name="categoriesPost_array">
+        <item>Other</item>
+        <item>Meetup</item>
+        <item>Party</item>
+    </string-array>
+
+    <integer-array name="mile_Radius_array_integer">
+        <item>5</item>
+        <item>15</item>
+        <item>25</item>
+        <item>50</item>
+    </integer-array>
+
+    <string-array name="mile_radius_array_string">
+        <item>5</item>
+        <item>15</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
+
+    <integer name="defaultdistance"> 5</integer>
+
+    <string name="noFavs">Nothing saved, start liking events!</string>
+
+     <string name="flyer">Flyer</string>
+
+    <string-array name="myLo_array">
+        <item>Places</item>
+        <item>Friends</item>
+    </string-array>
+
+    <string name="narrowChoices">
+        Board Stuff
+    </string>
+
+    <string name="noResults">No Results</string>
+
+    <string name="friends">Search for Friends!</string>
+
+    <string name="searchPlaces">Search Locations</string>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bulletinname">Bulletin Name</string>
+    <string name="city">City or Address</string>
+    <string name="bulletinsetting">Bulletin Setting</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="newBulletin">New Bulletin</string>
+    <string name="showTitle">Show Name</string>
+    <string name="hideTitle">Hide Name</string>
+
+</resources>

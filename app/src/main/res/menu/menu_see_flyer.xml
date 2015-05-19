@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dominic.nopinion.socialgroupe.SeeFlyer">
+    <item android:id="@+id/action_info" android:title="@string/action_info"
+        android:orderInCategory="5" app:showAsAction="ifRoom" android:icon="@drawable/ic_action_info_pwhite"/>
+
+    <item android:id="@+id/action_mapit" android:title="@string/action_map"
+        android:orderInCategory="4" app:showAsAction="ifRoom" android:icon="@drawable/ic_action_map_pwhite"/>
+
+    <item android:id="@+id/action_shareit" android:title="@string/action_share"
+        android:orderInCategory="3" app:showAsAction="ifRoom" android:icon="@drawable/ic_action_share_pwhite"/>
+
+    <item android:id="@+id/action_loveit" android:title="@string/action_love"
+        android:orderInCategory="1" app:showAsAction="ifRoom" android:icon="@drawable/ic_action_name2"/>
+
+</menu>

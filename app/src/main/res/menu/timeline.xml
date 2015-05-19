@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.dominic.nopinion.socialgroupe.PublicBoardFrag">
+
+    <item android:id = "@+id/action_myProfile"
+        android:icon="@drawable/ic_action_person_white"
+        android:title="@string/title_profile"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="always"/>
+
+    <item android:id = "@+id/action_newFlyer"
+        android:icon="@drawable/ic_action_new_pwhite"
+        android:title="@string/title_newEvent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/action_shareFriends" android:title="Share Hiikey!"
+        android:orderInCategory="100" app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_share_pwhite"/>
+
+    <item android:id = "@+id/action_signout"
+        android:title="@string/title_signout"
+        android:orderInCategory="4"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never"/>
+
+    <item android:id = "@+id/action_counter"
+        android:title="@string/title_activity_counter"
+        android:orderInCategory="2"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="never"/>
+</menu>
