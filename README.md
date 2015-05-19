@@ -10,11 +10,11 @@ Private Repository Hiikey, the event discovery and promotion app. #savetreesuseh
 
 
 * Major Dependencies:
-**Parse(Database)
-**Google Play Services
-**Picasso
-**Melnykov
-* Database configuration
+ *Parse(Database)
+ *Google Play Services
+ *Picasso
+ *Melnykov
+
 
 ### Contribution guidelines ###
 
