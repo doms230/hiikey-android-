@@ -6,10 +6,9 @@ Private Repository Hiikey, the event discovery and promotion app. #savetreesuseh
 * Version 1.4.3
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+### Major Dependencies ###
 
 
-* Major Dependencies:
 *[Parse(Database)](https://parse.com/)
 *[Google Play Services](https://developer.android.com/google/play-services/index.html)
 *[Picasso](http://square.github.io/picasso/)
