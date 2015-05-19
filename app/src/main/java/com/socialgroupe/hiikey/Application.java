@@ -10,6 +10,7 @@ import com.parse.ParseCrashReporting;
 
 /**
  * Created by Dominic on 11/18/2014.
+ * //
  */
 public class Application extends android.app.Application {
     public Application() {
