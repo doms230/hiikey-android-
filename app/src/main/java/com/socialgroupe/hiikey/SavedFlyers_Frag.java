@@ -2,13 +2,21 @@ package com.socialgroupe.hiikey;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.parse.FindCallback;
@@ -35,11 +43,43 @@ public class SavedFlyers_Frag extends ActionBarActivity implements View.OnClickL
     private LinearLayout noFavs;
     private ProgressBar pb;
 
+    //Navigation Drawer Stuff
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private String[] navItems;
+    private ActionBarDrawerToggle mDrawerToggle;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_favorite);
+
+        // Navigation drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
 
         listView = (GridView)findViewById(R.id.gridFavView);
         noFavs = (LinearLayout)findViewById(R.id.llnoFavsStuff);
@@ -77,13 +117,13 @@ public class SavedFlyers_Frag extends ActionBarActivity implements View.OnClickL
         v.post(new Runnable() {
             @Override
             public void run() {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.ivFavv2:
-                        if(ParseUser.getCurrentUser() != null) {
+                        if (ParseUser.getCurrentUser() != null) {
                             Intent intent = new Intent(SavedFlyers_Frag.this, SeeFlyer.class);
                             intent.putExtra("objectId", v.getTag().toString());
                             startActivity(intent);
-                        } else{
+                        } else {
                             showLogin();
                         }
                         break;
@@ -126,9 +166,9 @@ public class SavedFlyers_Frag extends ActionBarActivity implements View.OnClickL
                         @Override
                         public void onLoaded(List<PublicPost_Helper> publicPostHelpers, Exception e) {
                             pb.setVisibility(View.GONE);
-                            if(publicPostHelpers.isEmpty()){
+                            if (publicPostHelpers.isEmpty()) {
                                 noFavs.setVisibility(View.VISIBLE);
-                            } else{
+                            } else {
                                 noFavs.setVisibility(View.GONE);
                             }
                         }
@@ -171,5 +211,40 @@ public class SavedFlyers_Frag extends ActionBarActivity implements View.OnClickL
                     .into(parseImageView);
             return v;
         }
+    }
+
+    //Navigation Drawer
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_bulletin, menu);
+
+        navItems = getResources().getStringArray(R.array.navItems_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, navItems));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

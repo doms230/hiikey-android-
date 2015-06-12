@@ -113,4 +113,7 @@
     <string name="search_bulletins">Search for Bulletins!</string>
     <string name="verifiedMembers">Get Verified</string>
     <string name="savedFlyers">Saved Flyers</string>
+
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer closed</string>
 </resources>

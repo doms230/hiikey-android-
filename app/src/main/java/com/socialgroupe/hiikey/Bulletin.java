@@ -1,18 +1,23 @@
 package com.socialgroupe.hiikey;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.net.Uri;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +46,12 @@ GoogleApiClient.OnConnectionFailedListener{
 
     private ListView listView;
 
+    //Navigation Drawer Stuff
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private String[] navItems;
+    private ActionBarDrawerToggle mDrawerToggle;
+
     /**********************Location stuff*****************/
     private static final long ONE_MIN = 1000 * 60;
     private static final long FIVE_MIN = ONE_MIN * 5;
@@ -58,6 +69,32 @@ GoogleApiClient.OnConnectionFailedListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulletin);
+
+        // Navigation drawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
 
         ParseObject.registerSubclass(Bulletin_Helper.class);
         ParseObject.registerSubclass(Props_Helper.class);
@@ -112,8 +149,7 @@ GoogleApiClient.OnConnectionFailedListener{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("com.socialgroupe.SUBBULLETIN");
-                startActivity(intent);
+                isVerified();
             }
         });
 
@@ -158,10 +194,26 @@ GoogleApiClient.OnConnectionFailedListener{
         }
     }
 
+    //Navigation Drawer
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_bulletin, menu);
+
+        navItems = getResources().getStringArray(R.array.navItems_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, navItems));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         return true;
     }
 
@@ -170,40 +222,20 @@ GoogleApiClient.OnConnectionFailedListener{
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         switch (item.getItemId()){
 
             case R.id.action_searchBulletin:
-                Intent intent = new Intent(this, SearchBulletins.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.actionSaved:
-                Intent intent4 = new Intent(this, SavedFlyers_Frag.class);
-                startActivity(intent4);
-                return true;
-
-            case R.id.action_newFlyerv2:
-                isVerified();
-                return true;
-
-            case R.id.action_signoutv2:
-                ParseUser.logOut();
-
-                 Toast.makeText(getApplicationContext(),
-                        "Sign out Successful", Toast.LENGTH_SHORT).show();
-
-                Intent intent1 = new Intent(this, Signup_Login.class);
-                startActivity(intent1);
+                //Intent intent = new Intent(this, SearchBulletins.class);
+                //startActivity(intent);
                 return true;
 
             case R.id.action_verifyMembers:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.hiikey.com/verified-members"));
                 startActivity(browserIntent);
-                return true;
-
-            case R.id.action_myProfilev2:
-                Intent intent3 = new Intent(this, MyProfile.class);
-                startActivity(intent3);
                 return true;
 
             case R.id.action_shareFriendsv2:

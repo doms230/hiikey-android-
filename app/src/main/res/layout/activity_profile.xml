@@ -1,230 +1,253 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/drawer_layout"
     tools:context="com.socialgroupe.hiikey.Profile">
 
-    <com.parse.ParseImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/ivProPic"
-        android:orientation="horizontal"
-        android:background="#ff040404"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/ivProfileFilter"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/black_overlay" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout8"
-        android:padding="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp">
+            <com.parse.ParseImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/ivProPic"
+                android:orientation="horizontal"
+                android:background="#ff040404"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ibProTwitter"
-            android:background="@mipmap/twitter_icon"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/ivProfileFilter"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/black_overlay" />
 
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ibProInstagram"
-            android:background="@mipmap/instagram_icon"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone" />
-
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ibProTumblr"
-            android:background="@mipmap/tumblr_icon"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/noshare"
-            android:id="@+id/tvNoshareSocials"
-            android:textStyle="bold"
-            android:textColor="#ffffffff"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ivProfileSnapchat"
-            android:background="@mipmap/snapchat_icon"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/tvSnapUsername"
-            android:layout_gravity="center_vertical"
-            android:textColor="#ffffffff"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        android:layout_above="@+id/linearLayout8"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/llEventNumber"
-            android:padding="5dp">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvEventNumber"
-                android:text="@string/number"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout8"
                 android:padding="5dp"
-                android:textColor="#ffffffff" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/ibProTwitter"
+                    android:background="@mipmap/twitter_icon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/ibProInstagram"
+                    android:background="@mipmap/instagram_icon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/ibProTumblr"
+                    android:background="@mipmap/tumblr_icon"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/noshare"
+                    android:id="@+id/tvNoshareSocials"
+                    android:textStyle="bold"
+                    android:textColor="#ffffffff"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/ivProfileSnapchat"
+                    android:background="@mipmap/snapchat_icon"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/tvSnapUsername"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="#ffffffff"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/event"
-                android:id="@+id/textView5"
-                android:textColor="#ffffffff" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/llHostNumber"
-            android:padding="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvHostNumber"
-                android:text="@string/number"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
+                android:orientation="horizontal"
                 android:padding="5dp"
-                android:textColor="#ffffffff" />
+                android:layout_above="@+id/linearLayout8"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/llEventNumber"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvEventNumber"
+                        android:text="@string/number"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:padding="5dp"
+                        android:textColor="#ffffffff" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/hosts"
-                android:textColor="#ffffffff" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/event"
+                        android:id="@+id/textView5"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/llGuestNumber"
-            android:padding="5dp" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/llHostNumber"
+                    android:padding="5dp" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvGuestNumber"
-                android:text="@string/number"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible"
-                android:padding="5dp"
-                android:textColor="#ffffffff" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvHostNumber"
+                        android:text="@string/number"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:padding="5dp"
+                        android:textColor="#ffffffff" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/guest"
-                android:id="@+id/textView7"
-                android:textColor="#ffffffff" />
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/hosts"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/list"
-            android:id="@+id/blist"
-            android:padding="5dp"
-            android:visibility="gone"
-            android:textColor="#ff050505"
-            android:layout_gravity="center_vertical"
-            android:textStyle="italic"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/llGuestNumber"
+                    android:padding="5dp" >
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/unlist"
-            android:id="@+id/bUnlist"
-            android:padding="5dp"
-            android:visibility="gone"
-            android:textColor="#ff050505"
-            android:textStyle="italic"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvGuestNumber"
+                        android:text="@string/number"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        android:padding="5dp"
+                        android:textColor="#ffffffff" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/editProPro"
-            android:id="@+id/bEditProfile"
-            android:padding="5dp"
-            android:visibility="gone"
-            android:textColor="#ff050505"
-            android:textStyle="italic"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/guest"
+                        android:id="@+id/textView7"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
 
-    </LinearLayout>
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/list"
+                    android:id="@+id/blist"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:textColor="#ff050505"
+                    android:layout_gravity="center_vertical"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
-</RelativeLayout>
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unlist"
+                    android:id="@+id/bUnlist"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:textColor="#ff050505"
+                    android:textStyle="italic"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/editProPro"
+                    android:id="@+id/bEditProfile"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:textColor="#ff050505"
+                    android:textStyle="italic"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/appColor"
+        android:dividerHeight="2dp"
+        android:background="@color/white" />
+
+</android.support.v4.widget.DrawerLayout>
