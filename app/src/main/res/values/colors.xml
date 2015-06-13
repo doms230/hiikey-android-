@@ -1,6 +1,7 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
+    <color name="snow">#eee9e9</color>
     <color name="redText">#f44336</color>
     <color name="pinkText">#ec407a</color>
     <color name="purpleText">#9c27b0</color>
