@@ -2,6 +2,7 @@ package com.socialgroupe.hiikey;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,7 +96,7 @@ GoogleApiClient.OnConnectionFailedListener{
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu_white);
 
         ParseObject.registerSubclass(Bulletin_Helper.class);
         ParseObject.registerSubclass(Props_Helper.class);
@@ -205,6 +207,12 @@ GoogleApiClient.OnConnectionFailedListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_bulletin, menu);
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_searchBulletin).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         navItems = getResources().getStringArray(R.array.navItems_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
