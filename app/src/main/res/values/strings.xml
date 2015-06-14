@@ -84,7 +84,6 @@
     <string name="action_repost">Repost</string>
     <string name="title_activity_privacy">Privacy</string>
     <string name="title_activity_signup">SignupAct</string>
-    <string name="title_activity_signin">SigninAct</string>
     <string name="accept">Accept</string>
     <string name="inviteFriends">Invite Friends to Imboard</string>
     <string name="title_activity_search_friends">Search</string>

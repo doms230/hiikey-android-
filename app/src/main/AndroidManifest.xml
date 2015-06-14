@@ -108,7 +108,7 @@
         <activity
             android:name=".EditProfile"
             android:label="@string/title_activity_edit_profile"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.socialgroupe.EDITPROFILE" />
 
@@ -161,26 +161,15 @@
             </intent-filter>
         </activity>
 
-        <!-- Login -->
+        <!-- -Signup/Login -->
         <activity
-            android:name=".Signin"
-            android:label="@string/title_activity_signin"
+            android:name=".Signup_Login"
+            android:label="@string/title_activity_signup"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.socialgroupe.SIGNIN" />
+                <action android:name="com.socialgroupe.LOGIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <!-- Signup -->
-        <activity
-            android:name=".Signup"
-            android:label="@string/title_activity_signup"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.socialgroup.SIGNUP" />
-                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
@@ -273,9 +262,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
+            <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
 

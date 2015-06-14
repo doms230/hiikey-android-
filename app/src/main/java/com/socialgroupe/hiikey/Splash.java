@@ -36,15 +36,11 @@ public class Splash extends Activity {
 
     public void signUp(View view){
         // click sign_up, enter sign_up page
-        Intent intent = new Intent(this,Signup.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this,)
     }
 
     public void explore(View view){
         // click explore, enter the main page with limited authority
-        Intent intent = new Intent("com.socialgroupe.BULLETIN");
-        startActivity(intent);
-
 
     }
 }
