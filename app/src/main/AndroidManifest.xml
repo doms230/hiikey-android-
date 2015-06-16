@@ -108,7 +108,7 @@
         <activity
             android:name=".EditProfile"
             android:label="@string/title_activity_edit_profile"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroupe.EDITPROFILE" />
 
@@ -177,10 +177,11 @@
         <activity
             android:name=".Signup"
             android:label="@string/title_activity_signup"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroup.SIGNUP" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -273,7 +274,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
+
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
 
@@ -361,6 +364,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.socialgroupe.hiikey.Bulletin" />
         </activity>
+
+        <!-- main page listing flyers -->
+        <activity
+            android:name=".Test"
+            android:label="@string/title_activity_test" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
     </application>
+
 
 </manifest>

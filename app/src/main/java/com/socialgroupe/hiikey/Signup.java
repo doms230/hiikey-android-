@@ -32,7 +32,7 @@ public class Signup extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
+
         setContentView(R.layout.activity_signup);
         ParseObject.registerSubclass(Props_Helper.class);
 
@@ -138,7 +138,6 @@ public class Signup extends Activity implements View.OnClickListener {
             user.setEmail(email);
             Intent timeIntent = new Intent("com.socialgroupe.BULLETIN");
             startActivity(timeIntent);
-
         } else {
             progressbar.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "Profile creation failed," +

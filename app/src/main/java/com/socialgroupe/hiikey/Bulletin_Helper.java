@@ -23,13 +23,22 @@ public class Bulletin_Helper extends ParseObject {
 
     /**userId***/
 
-    public void serUserId(String userId){
+    public void setUserId(String userId){
         put("userId", userId);
     }
 
     public String getUserId(){
         return getString("userId");
     }
+
+    /**Category of public post**/
+    public void setCategory(String category){put("Category",category);}
+    public String getCategory(){return getString("Category");}
+
+    /** Flyer Picture **/
+    public void setFlyerPic(ParseFile flyerPic){put("Flyer", flyerPic);}
+    public ParseFile getFlyerPic(){return getParseFile("Flyer");}
+
 
     /***Bulletin Picture ****/
 

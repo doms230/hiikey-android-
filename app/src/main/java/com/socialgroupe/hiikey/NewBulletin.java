@@ -12,11 +12,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -209,7 +208,7 @@ public class NewBulletin extends ActionBarActivity implements View.OnClickListen
             getit.setBulletinSetting(sSetting);
             getit.setShowHideSetting(sShowHide);
             getit.setUser(ParseUser.getCurrentUser());
-            getit.serUserId(ParseUser.getCurrentUser().getObjectId());
+            getit.setUserId(ParseUser.getCurrentUser().getObjectId());
 
             final ParseFile parseFile = new ParseFile("bulletin.png", bytes);
             parseFile.saveInBackground(new SaveCallback() {
