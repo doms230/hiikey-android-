@@ -1,12 +1,15 @@
 package com.socialgroupe.hiikey;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
 import com.parse.ParseImageView;
 
 import java.util.ArrayList;
@@ -74,8 +77,16 @@ public class Customlv_Adapter extends BaseAdapter {
         holder.Category.setText(flyers.get(position).getCategory());
         holder.userId.setText(flyers.get(position).getUserId());
 
-        // !!!!! No image listed !!!!!
+        // The placeholder will be used before and during the fetch, to be replaced by
+        // the fetched image data
+        //holder.Flyer.setPlaceholder(getResources().getDrawable(R.drawable.placeholder()));
         holder.Flyer.setParseFile(flyers.get(position).getFlyer());
+        holder.Flyer.loadInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+                Log.v("LOG!!!!","Log!!");
+            }
+        });
 
         //Listen for ListView Item Click
         /*

@@ -1,6 +1,7 @@
 package com.socialgroupe.hiikey;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +10,12 @@ import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,11 +44,21 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Bulletin extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener{
 
     private ListView listView;
+
+    // Custom Listview Stuff
+    ListView listview;
+    List<ParseObject> ob;
+    ProgressDialog mProgressDialog;
+    Customlv_Adapter adapter;
+    private List<AllFlyers> flyers = null;
 
     //Navigation Drawer Stuff
     private DrawerLayout mDrawerLayout;
@@ -70,6 +83,9 @@ GoogleApiClient.OnConnectionFailedListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulletin);
+
+        //Execute RemoteDataTask AsyncTask
+        new RemoteDataTask().execute();
 
         // Navigation drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,6 +188,59 @@ GoogleApiClient.OnConnectionFailedListener{
         mainA.setTextKey("title");
 
         updateBulletin(this);
+    }
+
+    // RemoteDataTask AsyncTask
+    private class RemoteDataTask extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            // Create a progressdialog
+            mProgressDialog = new ProgressDialog(Bulletin.this);
+            // Set progressdialog tilte
+            mProgressDialog.setTitle("Parse.com Custom ListView");
+            // Set progressdialog message
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            // Show progressdialog
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params){
+            // Create the array
+            flyers = new ArrayList<AllFlyers>();
+            try{
+                // Locate the class table named  "PublicPost" in Parse.com
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("PublicPost");
+                // Locate the column named "createdAt" in Parse.com and order list by ascending
+                query.orderByAscending("createdAt");
+                ob = query.find();
+                for(ParseObject PublicPost : ob){
+                    AllFlyers map = new AllFlyers();
+                    map.setCategory((String) PublicPost.get("Category"));
+                    map.setUserId((String) PublicPost.get("userId"));
+                    map.setFlyer((ParseFile) PublicPost.get("Flyer"));
+                    flyers.add(map);
+                }
+            }catch (ParseException e){
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            // Locate the listView in activity_test.xml
+            listview = (ListView) findViewById(R.id.lvBulletin);
+            // Pass the results into Customlv_Adapter.java
+            adapter = new Customlv_Adapter(Bulletin.this,flyers);
+            // Binds the Adapter to the ListView
+            listview.setAdapter(adapter);
+            // Close the progressdialog
+            mProgressDialog.dismiss();
+        }
     }
 
     @Override

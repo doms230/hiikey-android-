@@ -10,9 +10,7 @@ public class AllFlyers {
     private String userId;
     private ParseFile Flyer;
 
-    public String getCategory(){
-        return Category;
-    }
+    public String getCategory(){return Category;}
 
     public void setCategory(String Category){
         this.Category=Category;
@@ -33,4 +31,5 @@ public class AllFlyers {
     public ParseFile getFlyer(){
         return Flyer;
     }
+
 }
