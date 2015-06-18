@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -15,30 +17,82 @@ import com.parse.ParseImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 /**
  * Created by lemonie on 6/14/15.
  */
-public class Customlv_Adapter extends BaseAdapter {
+public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAdapter{
 
     // Declare Variables
     LayoutInflater inflater;
     Context mContext;
-    private List<AllFlyers> flyers = null;
-    private ArrayList<AllFlyers> arraylist;
+    private List<FlyerObject> flyers = null;
+    private ArrayList<FlyerObject> arraylist;
 
 
-    public Customlv_Adapter(Context context, List<AllFlyers> flyers){
+    public Customlv_Adapter(Context context, List<FlyerObject> flyers){
         mContext = context;
         this.flyers = flyers;
         inflater = LayoutInflater.from(mContext);
-        this.arraylist = new ArrayList<AllFlyers>();
+        this.arraylist = new ArrayList<FlyerObject>();
         this.arraylist.addAll(flyers);
     }
 
-    public class ViewHolder{
-        TextView Category;
-        TextView userId;
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup viewGroup) {
+        HeaderViewHolder holder;
+
+        if(convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = inflater.inflate(R.layout.activity_row_bulletin, viewGroup, false);
+            holder.bullName = (TextView) convertView.findViewById(R.id.tvBulletinName);
+            holder.userId = (TextView) convertView.findViewById(R.id.tvCreatorName);
+            holder.bulletin = (ParseImageView) convertView.findViewById(R.id.ivBulletin);
+            holder.subscribe = (Button) convertView.findViewById(R.id.subButton);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+
+        BulletinObject bo = flyers.get(position).getBulletin();
+
+        String headerText = bo.getName();
+        String nameText = bo.getCreator();
+        holder.bulletin.setParseFile(bo.getPic());
+        holder.bulletin.loadInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] bytes, ParseException e) {
+                Log.v("LOG!!!!", "Log!!");
+            }
+        });
+        holder.bullName.setText(headerText);
+        holder.userId.setText(nameText);
+
+        holder.subscribe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext,"Subscribed",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int i) {
+        return flyers.get(i).getBullId();
+    }
+
+    private class ViewHolder{
         ParseImageView Flyer;
+    }
+
+    private class HeaderViewHolder {
+        ParseImageView bulletin;
+        TextView bullName;
+        TextView userId;
+        Button subscribe;
     }
 
     @Override
@@ -47,7 +101,7 @@ public class Customlv_Adapter extends BaseAdapter {
     }
 
     @Override
-    public AllFlyers getItem(int position){
+    public FlyerObject getItem(int position){
         return flyers.get(position);
     }
 
@@ -58,24 +112,18 @@ public class Customlv_Adapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        final ViewHolder holder;
+        ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
             view = inflater.inflate(R.layout.row_hiikey, null);
 
             // Locate the TextViews and ParseImageView in row_hiikey.xml
-            holder.Category = (TextView) view.findViewById(R.id.textView1);
-            holder.userId = (TextView) view.findViewById(R.id.textView2);
-            holder.Flyer=(ParseImageView) view.findViewById(R.id.imageView2);
+            holder.Flyer=(ParseImageView) view.findViewById(R.id.ivflyermain);
             view.setTag(holder);
 
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
-        // Set the results into TextViews
-        holder.Category.setText(flyers.get(position).getCategory());
-        holder.userId.setText(flyers.get(position).getUserId());
 
         // The placeholder will be used before and during the fetch, to be replaced by
         // the fetched image data

@@ -4,25 +4,49 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
+        <com.parse.ParseImageView
+            android:layout_width="112dp"
+            android:layout_height="63dp"
             android:id="@+id/ivBulletin"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="Bulletin Name"
             android:id="@+id/tvBulletinName"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textColor="#ffffffff"
             android:textStyle="bold"
-            android:background="#ff050505" />
+            android:layout_toRightOf="@+id/ivBulletin"
+            android:layout_alignBaseline="@+id/ivBulletin"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Creator of Bulletin"
+            android:id="@+id/tvCreatorName"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@+id/ivBulletin"
+            android:layout_toRightOf="@+id/ivBulletin" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subscribe"
+            android:id="@+id/subButton"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#ffff2309" />
     </RelativeLayout>
 </LinearLayout>

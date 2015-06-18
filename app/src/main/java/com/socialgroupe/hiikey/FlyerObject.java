@@ -5,10 +5,11 @@ import com.parse.ParseFile;
 /**
  * Created by lemonie on 6/15/15.
  */
-public class AllFlyers {
+public class FlyerObject {
     private String Category;
-    private String userId;
+    private long bullId;
     private ParseFile Flyer;
+    private BulletinObject bulletin;
 
     public String getCategory(){return Category;}
 
@@ -16,12 +17,12 @@ public class AllFlyers {
         this.Category=Category;
     }
 
-    public void setUserId(String userId){
-        this.userId = userId;
+    public void setBullId(long bId){
+        this.bullId = bId;
     }
 
-    public String getUserId(){
-        return userId;
+    public long getBullId(){
+        return bullId;
     }
 
     public void setFlyer(ParseFile Flyer){
@@ -30,6 +31,14 @@ public class AllFlyers {
 
     public ParseFile getFlyer(){
         return Flyer;
+    }
+
+    public void setBulletin(BulletinObject bo) {
+        bulletin = bo;
+    }
+
+    public BulletinObject getBulletin() {
+        return bulletin;
     }
 
 }

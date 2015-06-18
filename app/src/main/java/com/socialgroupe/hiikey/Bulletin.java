@@ -32,7 +32,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.melnykov.fab.FloatingActionButton;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -47,6 +47,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
 
 public class Bulletin extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener{
@@ -54,11 +56,11 @@ GoogleApiClient.OnConnectionFailedListener{
     private ListView listView;
 
     // Custom Listview Stuff
-    ListView listview;
+    StickyListHeadersListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
     Customlv_Adapter adapter;
-    private List<AllFlyers> flyers = null;
+    private List<FlyerObject> flyers = null;
 
     //Navigation Drawer Stuff
     private DrawerLayout mDrawerLayout;
@@ -161,8 +163,9 @@ GoogleApiClient.OnConnectionFailedListener{
                 });
 
 
-        listView = (ListView) findViewById(R.id.lvBulletin);
+        listview = (StickyListHeadersListView) findViewById(R.id.lvBulletin);
 
+        /*
       FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fabBulletin);
         fab.attachToListView(listView);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +174,8 @@ GoogleApiClient.OnConnectionFailedListener{
                 isVerified();
             }
         });
+
+        */
 
         /*************************location setup****************************/
         LocationRequest mLocationRequest = LocationRequest.create();
@@ -208,21 +213,42 @@ GoogleApiClient.OnConnectionFailedListener{
 
         @Override
         protected Void doInBackground(Void... params){
-            // Create the array
-            flyers = new ArrayList<AllFlyers>();
+            flyers = new ArrayList<FlyerObject>();
             try{
-                // Locate the class table named  "PublicPost" in Parse.com
                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("PublicPost");
-                // Locate the column named "createdAt" in Parse.com and order list by ascending
-                query.orderByAscending("createdAt");
+                query.orderByAscending("bulletinId");
                 ob = query.find();
-                for(ParseObject PublicPost : ob){
-                    AllFlyers map = new AllFlyers();
-                    map.setCategory((String) PublicPost.get("Category"));
-                    map.setUserId((String) PublicPost.get("userId"));
-                    map.setFlyer((ParseFile) PublicPost.get("Flyer"));
-                    flyers.add(map);
+                for(ParseObject obj: ob) {
+                    FlyerObject temp = new FlyerObject();
+                    temp.setCategory((String) obj.get("Category"));
+                    temp.setFlyer((ParseFile) obj.get("Flyer"));
+
+
+                    ParseQuery bquery = new ParseQuery<ParseObject>("Bulletin");
+                    bquery.whereEqualTo("bulletinName", temp.getCategory());
+                    List<ParseObject> bull;
+                    bull = bquery.find();
+                    for(ParseObject b: bull) {
+                        BulletinObject bo = new BulletinObject();
+                        bo.setName((String) b.get("bulletinName"));
+                        bo.setCreator((String) b.get("userId"));
+                        bo.setPic((ParseFile) b.get("bulletinPic"));
+                        bo.setId(b.getLong("numId"));
+
+                        temp.setBullId(bo.getId());
+                        temp.setBulletin(bo);
+                    }
+
+                    bquery = new ParseQuery<ParseObject>("User");
+                    bquery.whereEqualTo("objectId", temp.getBulletin().getCreator());
+                    bull = bquery.find();
+                    for(ParseObject b: bull) {
+                        temp.getBulletin().setCreator((String) b.get("username"));
+                    }
+
+                    flyers.add(temp);
                 }
+
             }catch (ParseException e){
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -233,7 +259,7 @@ GoogleApiClient.OnConnectionFailedListener{
         @Override
         protected void onPostExecute(Void result){
             // Locate the listView in activity_test.xml
-            listview = (ListView) findViewById(R.id.lvBulletin);
+            listview = (StickyListHeadersListView) findViewById(R.id.lvBulletin);
             // Pass the results into Customlv_Adapter.java
             adapter = new Customlv_Adapter(Bulletin.this,flyers);
             // Binds the Adapter to the ListView
@@ -485,9 +511,11 @@ GoogleApiClient.OnConnectionFailedListener{
     }
 
     private void updateBulletin(final Context context){
+        /*
         BulletinAdapter bulletinAdapter = new BulletinAdapter(context);
         listView.setAdapter(bulletinAdapter);
         bulletinAdapter.loadObjects();
+        */
     }
 
     class BulletinAdapter extends ParseQueryAdapter<Bulletin_Helper> {
