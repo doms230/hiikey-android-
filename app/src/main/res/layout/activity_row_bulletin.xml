@@ -6,47 +6,69 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/white">
 
         <com.parse.ParseImageView
-            android:layout_width="112dp"
+            android:layout_width="63dp"
             android:layout_height="63dp"
             android:id="@+id/ivBulletin"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_launcher" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Bulletin Name"
-            android:id="@+id/tvBulletinName"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:textStyle="bold"
             android:layout_toRightOf="@+id/ivBulletin"
-            android:layout_alignBaseline="@+id/ivBulletin"
-            android:textColor="@color/white" />
+            android:layout_alignBaseline="@+id/ivBulletin">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Creator of Bulletin"
-            android:id="@+id/tvCreatorName"
-            android:textColor="@color/white"
-            android:layout_alignBottom="@+id/ivBulletin"
-            android:layout_toRightOf="@+id/ivBulletin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Bulletin Name"
+                android:id="@+id/tvBulletinName"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="by"
+                    android:layout_marginRight="4dp"
+                    android:textColor="@color/black_overlay"
+                    android:layout_alignBottom="@+id/ivBulletin"
+                    android:layout_toRightOf="@+id/ivBulletin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Creator of Bulletin"
+                    android:id="@+id/tvCreatorName"
+                    android:textColor="@color/black_overlay"/>
+
+            </LinearLayout>
+        </LinearLayout>
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="Subscribe"
+            android:textColor="@color/white"
             android:id="@+id/subButton"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="#ffff2309" />
+            android:background="@color/appColor"/>
     </RelativeLayout>
 </LinearLayout>

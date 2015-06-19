@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.parse.ParseInstallation;
+import com.parse.ParseUser;
+
 
 /**
  * Created by Dominic on 9/13/2014.
@@ -26,6 +29,14 @@ public class Splash extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_splash);
+
+        // if user has logged in , turn into main page
+        if(ParseUser.getCurrentUser()!=null){
+            Intent iBoard = new Intent("com.socialgroupe.BULLETIN");
+            startActivity(iBoard);
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.saveInBackground();
+        }
     }
 
     public void signIn(View view){

@@ -1,10 +1,8 @@
 package com.socialgroupe.hiikey;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Configuration;
@@ -19,12 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,17 +27,12 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +58,9 @@ GoogleApiClient.OnConnectionFailedListener{
     private String[] navItems;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    /**********************Location stuff*****************/
+    /**
+     * *******************Location stuff****************
+     */
     private static final long ONE_MIN = 1000 * 60;
     private static final long FIVE_MIN = ONE_MIN * 5;
     private static final long POLLING_FREQ = 1000 * 30;
@@ -116,53 +108,6 @@ GoogleApiClient.OnConnectionFailedListener{
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu_white);
 
-        ParseObject.registerSubclass(Bulletin_Helper.class);
-        ParseObject.registerSubclass(Props_Helper.class);
-        ParseObject.registerSubclass(Subscribe_Helper.class);
-
-
-
-        ParseQuery<Subscribe_Helper> getStuff = Subscribe_Helper.getData();
-        getStuff.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
-                .whereEqualTo("bulletinTitle", "PARTY")
-                .getFirstInBackground(new GetCallback<Subscribe_Helper>() {
-                    @Override
-                    public void done( Subscribe_Helper parseUser, ParseException e) {
-                        if (e != null) {
-
-                            Subscribe_Helper helper = new Subscribe_Helper();
-                            subStuff(helper, "PARTY", "j39Pp4rtzu");
-                            helper.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e == null) {
-                                        Subscribe_Helper helper = new Subscribe_Helper();
-                                        subStuff(helper, "OTHER", "UL6qP7JGJb");
-                                        helper.saveInBackground(new SaveCallback() {
-                                            @Override
-                                            public void done(ParseException e) {
-                                                if (e == null) {
-                                                    Subscribe_Helper helper = new Subscribe_Helper();
-                                                    subStuff(helper, "MEETUP", "ih5bqtmBmI");
-                                                    helper.saveInBackground(new SaveCallback() {
-                                                        @Override
-                                                        public void done(ParseException e) {
-                                                            if (e == null) {
-
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-
-
         listview = (StickyListHeadersListView) findViewById(R.id.lvBulletin);
 
         /*
@@ -196,9 +141,9 @@ GoogleApiClient.OnConnectionFailedListener{
     }
 
     // RemoteDataTask AsyncTask
-    private class RemoteDataTask extends AsyncTask<Void,Void,Void> {
+    private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
             // Create a progressdialog
             mProgressDialog = new ProgressDialog(Bulletin.this);
@@ -212,13 +157,13 @@ GoogleApiClient.OnConnectionFailedListener{
         }
 
         @Override
-        protected Void doInBackground(Void... params){
+        protected Void doInBackground(Void... params) {
             flyers = new ArrayList<FlyerObject>();
-            try{
+            try {
                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("PublicPost");
                 query.orderByAscending("bulletinId");
                 ob = query.find();
-                for(ParseObject obj: ob) {
+                for (ParseObject obj : ob) {
                     FlyerObject temp = new FlyerObject();
                     temp.setCategory((String) obj.get("Category"));
                     temp.setFlyer((ParseFile) obj.get("Flyer"));
@@ -228,7 +173,7 @@ GoogleApiClient.OnConnectionFailedListener{
                     bquery.whereEqualTo("bulletinName", temp.getCategory());
                     List<ParseObject> bull;
                     bull = bquery.find();
-                    for(ParseObject b: bull) {
+                    for (ParseObject b : bull) {
                         BulletinObject bo = new BulletinObject();
                         bo.setName((String) b.get("bulletinName"));
                         bo.setCreator((String) b.get("userId"));
@@ -242,14 +187,14 @@ GoogleApiClient.OnConnectionFailedListener{
                     bquery = new ParseQuery<ParseObject>("User");
                     bquery.whereEqualTo("objectId", temp.getBulletin().getCreator());
                     bull = bquery.find();
-                    for(ParseObject b: bull) {
+                    for (ParseObject b : bull) {
                         temp.getBulletin().setCreator((String) b.get("username"));
                     }
 
                     flyers.add(temp);
                 }
 
-            }catch (ParseException e){
+            } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
@@ -257,11 +202,11 @@ GoogleApiClient.OnConnectionFailedListener{
         }
 
         @Override
-        protected void onPostExecute(Void result){
+        protected void onPostExecute(Void result) {
             // Locate the listView in activity_test.xml
             listview = (StickyListHeadersListView) findViewById(R.id.lvBulletin);
             // Pass the results into Customlv_Adapter.java
-            adapter = new Customlv_Adapter(Bulletin.this,flyers);
+            adapter = new Customlv_Adapter(Bulletin.this, flyers);
             // Binds the Adapter to the ListView
             listview.setAdapter(adapter);
             // Close the progressdialog
@@ -330,7 +275,7 @@ GoogleApiClient.OnConnectionFailedListener{
             return true;
         }
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             case R.id.action_searchBulletin:
                 //Intent intent = new Intent(this, SearchBulletins.class);
@@ -343,24 +288,24 @@ GoogleApiClient.OnConnectionFailedListener{
                 return true;
 
             case R.id.action_shareFriendsv2:
-                try
-                { Intent i = new Intent(Intent.ACTION_SEND);
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "Hiikey");
                     String sAux = "\n Yo, check this out! \n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=com.socialgroupe.hiikey \n\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "Share Hiikey"));
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                 }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /*********************************Location methods****************************/
+    /**
+     * ******************************Location methods***************************
+     */
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -368,14 +313,14 @@ GoogleApiClient.OnConnectionFailedListener{
         if (servicesAvailable()) {
             /*******************************************************/
             // Get best last location measurement meeting criteria
-           Location currentLocation = bestLastKnownLocation(MIN_LAST_READ_ACCURACY, FIVE_MIN);
-            if(currentLocation != null) {
+            Location currentLocation = bestLastKnownLocation(MIN_LAST_READ_ACCURACY, FIVE_MIN);
+            if (currentLocation != null) {
                 mLat = currentLocation.getLatitude();
                 mLong = currentLocation.getLongitude();
 
                 //myPoint = new ParseGeoPoint(mLat,mLong);
 
-            } else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Couldn't receive your location",
                         Toast.LENGTH_SHORT).show();
             }
@@ -389,7 +334,7 @@ GoogleApiClient.OnConnectionFailedListener{
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        if ( !mIntentInProgress && result.hasResolution()){
+        if (!mIntentInProgress && result.hasResolution()) {
             mIntentInProgress = true;
             try {
                 startIntentSenderForResult(result.getResolution().getIntentSender(),
@@ -403,10 +348,10 @@ GoogleApiClient.OnConnectionFailedListener{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             mIntentInProgress = false;
 
-            if(!mGoogleApiClient.isConnecting()){
+            if (!mGoogleApiClient.isConnecting()) {
                 mGoogleApiClient.connect();
             }
         }
@@ -434,8 +379,7 @@ GoogleApiClient.OnConnectionFailedListener{
         // Return best reading or null
         if (bestAccuracy > minAccuracy || bestTime < minTime) {
             return null;
-        }
-        else {
+        } else {
             return bestResult;
         }
     }
@@ -445,140 +389,21 @@ GoogleApiClient.OnConnectionFailedListener{
 
         if (ConnectionResult.SUCCESS == resultCode) {
             return true;
-        }
-        else {
+        } else {
             GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0).show();
             return false;
         }
     }
 
-    /****************Private methods***********************/
+    /**
+     * *************Private methods**********************
+     */
 
-    private void subStuff(Subscribe_Helper helper,String bName, String bObject){
-        helper.setBulletinSubscriber(ParseUser.getCurrentUser());
-        helper.setUserId(ParseUser.getCurrentUser().getObjectId());
-        helper.setBulletinId(bObject);
-        helper.setBulletinTitle(bName);
-    }
-
-    private void isVerified(){
-        ParseQuery<Props_Helper> parsa = Props_Helper.getPropList();
-        parsa.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
-                .getFirstInBackground(new GetCallback<Props_Helper>() {
-                    @Override
-                    public void done(Props_Helper props_helper, ParseException e) {
-                        if (e == null) {
-                            if (props_helper.getVerification()) {
-                                createNew();
-
-                            } else {
-                                Intent intent = new Intent("com.socialgroupe.PROMOTION");
-                                startActivity(intent);
-                                finish();
-                            }
-                        }
-                    }
-                });
-    }
-
-    private void createNew(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Create")
-                .setPositiveButton(getString(R.string.newEvent), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent("com.socialgroupe.PROMOTION");
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .setNegativeButton(getString(R.string.newBulletin), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent("com.socialgroupe.NEWBULLETIN");
-                        startActivity(intent);
-                        finish();
-                    }
-                })
-                .setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private void updateBulletin(final Context context){
+    private void updateBulletin(final Context context) {
         /*
         BulletinAdapter bulletinAdapter = new BulletinAdapter(context);
         listView.setAdapter(bulletinAdapter);
         bulletinAdapter.loadObjects();
         */
-    }
-
-    class BulletinAdapter extends ParseQueryAdapter<Bulletin_Helper> {
-        public BulletinAdapter(Context context){
-            super(context, new ParseQueryAdapter.QueryFactory<Bulletin_Helper>(){
-
-                public ParseQuery<Bulletin_Helper> create(){
-                    ParseQuery query = new ParseQuery("Bulletin");
-                   // query.whereWithinMiles("bulletinLocation", myPoint, 50);
-                    return query;
-                }
-            });
-        }
-
-        @Override
-        public View getItemView(final Bulletin_Helper object, View v, ViewGroup parent){
-
-            if(v==null) {
-                v = View.inflate(getContext(), R.layout.activity_row_bulletin, null);
-                v.setTag(object.getObjectId());
-            }
-            super.getItemView(object, v, parent);
-
-            String objectid = object.getObjectId();
-
-            /**
-             * Changed "timeTitle" to date, because the titles people make won't always fit in one line.
-             * -Dominic
-             * 2/8/15
-             */
-
-            TextView textView = (TextView) v.findViewById(R.id.tvBulletinName);
-            if(object.getShowHideSetting().equals("hide") ){
-                textView.setVisibility(View.INVISIBLE);
-            } else {
-                textView.setVisibility(View.VISIBLE);
-                textView.setText(object.getBulletinName());
-            }
-            textView.setTag(object.getObjectId());
-
-            final ImageView parseImageView =
-                    (ImageView) v.findViewById(R.id.ivBulletin);
-            parseImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    Intent intent = new Intent("com.socialgroupe.PUBLICPOSTV2");
-                    bundle.putString("bulletin", v.getTag().toString());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            });
-            parseImageView.setTag(objectid);
-
-            ParseFile parseFile = object.getParseFile("bulletinPic");
-            Picasso.with(Bulletin.this)
-                    .load(parseFile.getUrl())
-                    .resize(800, 450)
-                    .centerCrop()
-                    .into(parseImageView);
-            return v;
-
-            /////.resize(325, 405)
-        }
     }
 }

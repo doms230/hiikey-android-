@@ -117,5 +117,7 @@
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer closed</string>
     <string name="title_activity_test">Test</string>
+    <string name="title_activity_testtest">testtest</string>
+    <string name="title_activity_signout">Signout</string>
 
 </resources>

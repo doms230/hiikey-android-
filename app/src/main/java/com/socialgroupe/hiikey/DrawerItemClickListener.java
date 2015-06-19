@@ -44,7 +44,7 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
                 Toast.makeText(context,
                         "Sign out Successful", Toast.LENGTH_SHORT).show();
 
-                Intent intent4 = new Intent(context, Signup_Login.class);
+                Intent intent4 = new Intent(context, Splash.class);
                 context.startActivity(intent4);
                 break;
             default:

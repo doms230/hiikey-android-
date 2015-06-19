@@ -365,8 +365,6 @@
                 android:value="com.socialgroupe.hiikey.Bulletin" />
         </activity>
 
-
     </application>
-
 
 </manifest>

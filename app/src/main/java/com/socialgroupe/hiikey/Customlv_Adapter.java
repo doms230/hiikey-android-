@@ -1,7 +1,6 @@
 package com.socialgroupe.hiikey;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,8 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 /**
- * Created by lemonie on 6/14/15.
+ * Created by Yaning on 6/14/15.
+ * Edited by Marcos
  */
 public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAdapter{
 
@@ -59,13 +59,19 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
 
         String headerText = bo.getName();
         String nameText = bo.getCreator();
+
         holder.bulletin.setParseFile(bo.getPic());
         holder.bulletin.loadInBackground(new GetDataCallback() {
             @Override
             public void done(byte[] bytes, ParseException e) {
-                Log.v("LOG!!!!", "Log!!");
             }
         });
+        // ************ new *********************
+
+
+
+        // ************ new end *****************
+
         holder.bullName.setText(headerText);
         holder.userId.setText(nameText);
 
@@ -132,7 +138,6 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
         holder.Flyer.loadInBackground(new GetDataCallback() {
             @Override
             public void done(byte[] bytes, ParseException e) {
-                Log.v("LOG!!!!","Log!!");
             }
         });
 

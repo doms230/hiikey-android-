@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 /**
- * Created by lemonie on 6/13/15.
+ * Created by Yaning on 6/13/15.
  */
 public class Signin extends Activity implements View.OnClickListener{
 
