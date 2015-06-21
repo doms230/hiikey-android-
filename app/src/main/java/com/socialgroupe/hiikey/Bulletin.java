@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.net.Uri;
@@ -32,7 +31,6 @@ import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +40,6 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class Bulletin extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
 GoogleApiClient.OnConnectionFailedListener{
-
-    private ListView listView;
 
     // Custom Listview Stuff
     StickyListHeadersListView listview;
@@ -58,9 +54,19 @@ GoogleApiClient.OnConnectionFailedListener{
     private String[] navItems;
     private ActionBarDrawerToggle mDrawerToggle;
 
+
     /**
      * *******************Location stuff****************
      */
+
+    private static final String TAG = Bulletin.class.getSimpleName();
+    private final static int PLAY_SERVICE_RESOLUSION_REQUEST = 1000;
+    private Location mLastLocation;
+    private boolean mRequestingLocationUpdates =false;
+    private LocationRequest mLocationRequest;
+
+    private static int UPDATE_INTERVAL = 10000; //10 sec
+    private static int DISPLACEMENT =10; //10 meters
     private static final long ONE_MIN = 1000 * 60;
     private static final long FIVE_MIN = ONE_MIN * 5;
     private static final long POLLING_FREQ = 1000 * 30;
@@ -121,23 +127,10 @@ GoogleApiClient.OnConnectionFailedListener{
         });
 
         */
-
-        /*************************location setup****************************/
-        LocationRequest mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(POLLING_FREQ);
-        mLocationRequest.setFastestInterval(FASTEST_UPDATE_FREQ);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-
-        ParseQueryAdapter<Bulletin_Helper> mainA = new ParseQueryAdapter<Bulletin_Helper>(this, Bulletin_Helper.class);
-        mainA.setTextKey("title");
-
-        updateBulletin(this);
+        // check google play services (Location stuff)
+        if(checkPlayServices()){
+            buildGoogleApiClient();
+        }
     }
 
     // RemoteDataTask AsyncTask
@@ -168,7 +161,6 @@ GoogleApiClient.OnConnectionFailedListener{
                     temp.setCategory((String) obj.get("Category"));
                     temp.setFlyer((ParseFile) obj.get("Flyer"));
 
-
                     ParseQuery bquery = new ParseQuery<ParseObject>("Bulletin");
                     bquery.whereEqualTo("bulletinName", temp.getCategory());
                     List<ParseObject> bull;
@@ -176,20 +168,21 @@ GoogleApiClient.OnConnectionFailedListener{
                     for (ParseObject b : bull) {
                         BulletinObject bo = new BulletinObject();
                         bo.setName((String) b.get("bulletinName"));
-                        bo.setCreator((String) b.get("userId"));
+                        //bo.setCreator((String) b.get("userId"));
                         bo.setPic((ParseFile) b.get("bulletinPic"));
                         bo.setId(b.getLong("numId"));
 
                         temp.setBullId(bo.getId());
                         temp.setBulletin(bo);
                     }
-
+                    /*
                     bquery = new ParseQuery<ParseObject>("User");
                     bquery.whereEqualTo("objectId", temp.getBulletin().getCreator());
                     bull = bquery.find();
                     for (ParseObject b : bull) {
                         temp.getBulletin().setCreator((String) b.get("username"));
                     }
+                    */
 
                     flyers.add(temp);
                 }
@@ -211,29 +204,6 @@ GoogleApiClient.OnConnectionFailedListener{
             listview.setAdapter(adapter);
             // Close the progressdialog
             mProgressDialog.dismiss();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        updateBulletin(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.connect();
-        }
-        updateBulletin(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
         }
     }
 
@@ -307,24 +277,46 @@ GoogleApiClient.OnConnectionFailedListener{
      * ******************************Location methods***************************
      */
 
+    // get location (latitude,longitude)
+    private void displayLocation(){
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+
+        }else{
+            Toast.makeText(getApplicationContext(), "Couldn't receive your location",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected synchronized void buildGoogleApiClient(){
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+    private boolean checkPlayServices(){
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if(resultCode!=ConnectionResult.SUCCESS){
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
+                GooglePlayServicesUtil.getErrorDialog(resultCode,this,PLAY_SERVICE_RESOLUSION_REQUEST)
+                        .show();
+            } else{
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
     @Override
     public void onConnected(Bundle bundle) {
-        // Get first reading. Get additional location updates if necessary
-        if (servicesAvailable()) {
-            /*******************************************************/
-            // Get best last location measurement meeting criteria
-            Location currentLocation = bestLastKnownLocation(MIN_LAST_READ_ACCURACY, FIVE_MIN);
-            if (currentLocation != null) {
-                mLat = currentLocation.getLatitude();
-                mLong = currentLocation.getLongitude();
-
-                //myPoint = new ParseGeoPoint(mLat,mLong);
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Couldn't receive your location",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
+       displayLocation();
     }
 
     @Override
@@ -334,76 +326,27 @@ GoogleApiClient.OnConnectionFailedListener{
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        if (!mIntentInProgress && result.hasResolution()) {
-            mIntentInProgress = true;
-            try {
-                startIntentSenderForResult(result.getResolution().getIntentSender(),
-                        RC_SIGN_IN, null, 0, 0, 0);
-            } catch (IntentSender.SendIntentException e) {
-                mIntentInProgress = false;
-                mGoogleApiClient.connect();
-            }
+        Log.i(TAG,"Connection failed: ConnectionResult.getErrorCode()="
+        +result.getErrorCode());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.connect();
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RC_SIGN_IN) {
-            mIntentInProgress = false;
-
-            if (!mGoogleApiClient.isConnecting()) {
-                mGoogleApiClient.connect();
-            }
-        }
+    protected void onResume() {
+        super.onResume();
+        checkPlayServices();
     }
 
-    private Location bestLastKnownLocation(float minAccuracy, long minTime) {
-        Location bestResult = null;
-        float bestAccuracy = Float.MAX_VALUE;
-        long bestTime = Long.MIN_VALUE;
-
-        // Get the best most recent location currently available
-        Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        if (mCurrentLocation != null) {
-            float accuracy = mCurrentLocation.getAccuracy();
-            long time = mCurrentLocation.getTime();
-
-            if (accuracy < bestAccuracy) {
-                bestResult = mCurrentLocation;
-                bestAccuracy = accuracy;
-                bestTime = time;
-            }
-        }
-
-        // Return best reading or null
-        if (bestAccuracy > minAccuracy || bestTime < minTime) {
-            return null;
-        } else {
-            return bestResult;
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
-    private boolean servicesAvailable() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-
-        if (ConnectionResult.SUCCESS == resultCode) {
-            return true;
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(resultCode, this, 0).show();
-            return false;
-        }
-    }
-
-    /**
-     * *************Private methods**********************
-     */
-
-    private void updateBulletin(final Context context) {
-        /*
-        BulletinAdapter bulletinAdapter = new BulletinAdapter(context);
-        listView.setAdapter(bulletinAdapter);
-        bulletinAdapter.loadObjects();
-        */
-    }
 }

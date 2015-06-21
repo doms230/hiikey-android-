@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -47,9 +45,9 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
             holder = new HeaderViewHolder();
             convertView = inflater.inflate(R.layout.activity_row_bulletin, viewGroup, false);
             holder.bullName = (TextView) convertView.findViewById(R.id.tvBulletinName);
-            holder.userId = (TextView) convertView.findViewById(R.id.tvCreatorName);
+            //holder.userId = (TextView) convertView.findViewById(R.id.tvCreatorName);
             holder.bulletin = (ParseImageView) convertView.findViewById(R.id.ivBulletin);
-            holder.subscribe = (Button) convertView.findViewById(R.id.subButton);
+            //holder.subscribe = (Button) convertView.findViewById(R.id.subButton);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -73,14 +71,15 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
         // ************ new end *****************
 
         holder.bullName.setText(headerText);
-        holder.userId.setText(nameText);
-
+        //holder.userId.setText(nameText);
+        /*
         holder.subscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext,"Subscribed",Toast.LENGTH_LONG).show();
             }
         });
+        */
 
         return convertView;
     }
@@ -97,8 +96,8 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
     private class HeaderViewHolder {
         ParseImageView bulletin;
         TextView bullName;
-        TextView userId;
-        Button subscribe;
+        //TextView userId;
+        //Button subscribe;
     }
 
     @Override
