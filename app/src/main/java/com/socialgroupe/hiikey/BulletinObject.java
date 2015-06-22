@@ -2,8 +2,6 @@ package com.socialgroupe.hiikey;
 
 import com.parse.ParseFile;
 
-import java.util.ArrayList;
-
 /**
  * Created by Marcos on 6/17/2015.
  */

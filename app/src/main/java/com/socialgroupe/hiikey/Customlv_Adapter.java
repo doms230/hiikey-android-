@@ -56,7 +56,7 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
         BulletinObject bo = flyers.get(position).getBulletin();
 
         String headerText = bo.getName();
-        String nameText = bo.getCreator();
+        //String nameText = bo.getCreator();
 
         holder.bulletin.setParseFile(bo.getPic());
         holder.bulletin.loadInBackground(new GetDataCallback() {
@@ -138,7 +138,8 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
             @Override
             public void done(byte[] bytes, ParseException e) {
             }
-        });
+        }
+        );
 
         //Listen for ListView Item Click
         /*
