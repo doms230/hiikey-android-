@@ -10,6 +10,7 @@
         android:actionViewClass="android.widget.SearchView"
         app:actionViewClass="android.widget.SearchView"/>
 
+
     <!--
     <item android:id="@+id/action_shareFriendsv2" android:title="Share Hiikey!"
         android:orderInCategory="2" app:showAsAction="ifRoom"

@@ -1,8 +1,6 @@
 package com.socialgroupe.hiikey;
 
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -18,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -225,13 +222,13 @@ GoogleApiClient.OnConnectionFailedListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_bulletin, menu);
-
+        /*
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_searchBulletin).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
+        */
         navItems = getResources().getStringArray(R.array.navItems_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -255,8 +252,8 @@ GoogleApiClient.OnConnectionFailedListener{
         switch (item.getItemId()) {
 
             case R.id.action_searchBulletin:
-                //Intent intent = new Intent(this, SearchBulletins.class);
-                //startActivity(intent);
+                Intent intent = new Intent(this, Search.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_verifyMembers:

@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">Hiikey</string>
+    <string name="location">Location</string>
+    <string name="bulletin">Bulletin</string>
+    <string name="search">Search</string>
+    <string name="people">People</string>
     <string name="explore">Explore</string>
     <string name="google_map_api_key">AIzaSyBIuj5qgI16ThyZpPLo5l_1ntu56l0DPio</string>
     <string name="profile">Profile</string>
@@ -119,5 +123,6 @@
     <string name="title_activity_test">Test</string>
     <string name="title_activity_testtest">testtest</string>
     <string name="title_activity_signout">Signout</string>
+    <string name="title_activity_search">Search</string>
 
 </resources>
