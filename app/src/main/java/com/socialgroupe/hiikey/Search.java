@@ -68,12 +68,12 @@ public class Search extends ActionBarActivity {
         @Override
         public Fragment getItem(int position) {
             switch(position){
-                case 0: return SearchBulletinsF.newInstance("SearchBulletins");
+                case 0: return SearchBulletinsF.newInstance();
                 // test -- pass string from activity to fragment
-                case 1: return SearchPeople.newInstance(a);
+                case 1: return SearchPeople.newInstance();
                 //return SearchBulletinsF.newInstance("SearchBulletins, Default");
             }
-            return SearchBulletinsF.newInstance("SearchBulletins");
+            return SearchBulletinsF.newInstance();
         }
     }
 

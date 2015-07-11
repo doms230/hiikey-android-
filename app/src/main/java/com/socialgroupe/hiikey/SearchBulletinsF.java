@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseObject;
@@ -31,23 +30,21 @@ public class SearchBulletinsF extends Fragment {
     ArrayAdapter<String> adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_searchbulletins, container, false);
-        //final ProgressBar progressBar = (ProgressBar) v.findViewById(R.id.pbSearchBulletins);
-        TextView textView = (TextView) v.findViewById(R.id.tvNoBulletins);
-        textView.setText(getArguments().getString("msg"));
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         // Execute RemoteDataTask AsyncTask
         new RemoteDataTask().execute();
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_search_bulletins, container, false);
         return v;
     }
 
-    public static SearchBulletinsF newInstance(String text) {
+    public static SearchBulletinsF newInstance() {
 
         SearchBulletinsF sb = new SearchBulletinsF();
-        Bundle bundle = new Bundle();
-        bundle.putString("msg", text);
-        sb.setArguments(bundle);
         return sb;
     }
 
@@ -69,7 +66,7 @@ public class SearchBulletinsF extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                    "Bulletins");
+                    "Bulletin");
             query.orderByDescending("numId");
 
             try {
@@ -95,3 +92,4 @@ public class SearchBulletinsF extends Fragment {
         }
     }
 }
+
