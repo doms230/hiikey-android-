@@ -156,13 +156,6 @@ GoogleApiClient.OnConnectionFailedListener{
                     FlyerObject temp = new FlyerObject();
                     temp.setCategory((String) obj.get("Category"));
                     temp.setFlyer((ParseFile) obj.get("Flyer"));
-                    /*
-                    ParseFile parseFile = (ParseFile)obj.get("Flyer");
-                    Picasso.with(Bulletin.this)
-                            .load(parseFile.getUrl())
-                            .resize(820,820)
-                            .centerCrop();
-                            */
 
                     ParseQuery bquery = new ParseQuery<ParseObject>("Bulletin");
                     bquery.whereEqualTo("bulletinName", temp.getCategory());

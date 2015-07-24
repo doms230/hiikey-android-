@@ -10,6 +10,7 @@ public class FlyerObject {
     private long bullId;
     private ParseFile Flyer;
     private BulletinObject bulletin;
+    private boolean liked = false;
 
     public String getCategory(){return Category;}
 
@@ -39,6 +40,14 @@ public class FlyerObject {
 
     public BulletinObject getBulletin() {
         return bulletin;
+    }
+
+    public void toggleLiked(){
+        liked = !liked;
+    }
+
+    public boolean getLiked() {
+        return liked;
     }
 
 }

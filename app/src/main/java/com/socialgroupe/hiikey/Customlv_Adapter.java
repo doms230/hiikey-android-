@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +94,9 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
 
     private class ViewHolder{
         ParseImageView Flyer;
+        ImageButton info;
+        ImageButton share;
+        ImageButton like;
     }
 
     private class HeaderViewHolder {
@@ -117,13 +123,16 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
 
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
             view = inflater.inflate(R.layout.row_hiikey, null);
 
             // Locate the TextViews and ParseImageView in row_hiikey.xml
             holder.Flyer=(ParseImageView) view.findViewById(R.id.ivflyermain);
+            holder.info = (ImageButton) view.findViewById(R.id.info);
+            holder.share = (ImageButton) view.findViewById(R.id.share);
+            holder.like = (ImageButton) view.findViewById(R.id.like);
             view.setTag(holder);
 
         } else {
@@ -133,13 +142,52 @@ public class Customlv_Adapter extends BaseAdapter implements StickyListHeadersAd
         // The placeholder will be used before and during the fetch, to be replaced by
         // the fetched image data
         //holder.Flyer.setPlaceholder(getResources().getDrawable(R.drawable.placeholder()));
-        holder.Flyer.setParseFile(flyers.get(position).getFlyer());
+        Picasso.with(mContext).load(flyers.get(position).getFlyer().getUrl())
+                .placeholder(R.drawable.ic_launcher_hiikey)
+                .error(R.drawable.ic_action_info_red)
+                .fit()
+                .centerCrop()
+                .into(holder.Flyer);
+        //holder.Flyer.setParseFile(flyers.get(position).getFlyer());
         holder.Flyer.loadInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
-            }
-        }
+                                          @Override
+                                          public void done(byte[] bytes, ParseException e) {
+                                          }
+                                      }
         );
+
+        if(flyers.get(position).getLiked()) {
+            holder.like.setImageResource(R.drawable.ic_action_heart_red);
+        } else {
+            holder.like.setImageResource(R.drawable.ic_heart_grey);
+        }
+
+        holder.info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        holder.share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(flyers.get(position).getLiked()) {
+                    holder.like.setImageResource(R.drawable.ic_heart_grey);
+                } else {
+                    holder.like.setImageResource(R.drawable.ic_action_heart_red);
+                }
+                flyers.get(position).toggleLiked();
+            }
+        });
 
         //Listen for ListView Item Click
         /*

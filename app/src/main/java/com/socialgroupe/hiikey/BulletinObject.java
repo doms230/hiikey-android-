@@ -9,7 +9,7 @@ public class BulletinObject {
     private ParseFile pic;
     private String name;
     private String creator;
-    long id;
+    private long id;
 
     public BulletinObject(ParseFile p, String bname, String cname, long id) {
         pic = p;

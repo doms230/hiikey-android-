@@ -21,8 +21,7 @@
                 android:id="@+id/people"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_people_grey"
-                />
+                android:src="@drawable/ic_people_grey" />
             <TextView
                 android:id="@+id/numPeople"
                 android:layout_width="30dp"
