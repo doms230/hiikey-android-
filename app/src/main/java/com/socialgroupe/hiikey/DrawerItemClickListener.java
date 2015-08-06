@@ -38,14 +38,19 @@ public class DrawerItemClickListener implements AdapterView.OnItemClickListener 
                 Intent intent3 = new Intent(context, SavedFlyers_Frag.class);
                 context.startActivity(intent3);
                 break;
+
             case 4:
+                Intent intent4 = new Intent(context, Promotion.class);
+                context.startActivity(intent4);
+
+            case 5:
                 ParseUser.logOut();
 
                 Toast.makeText(context,
                         "Sign out Successful", Toast.LENGTH_SHORT).show();
 
-                Intent intent4 = new Intent(context, Splash.class);
-                context.startActivity(intent4);
+                Intent intent6 = new Intent(context, Splash.class);
+                context.startActivity(intent6);
                 break;
             default:
                 Log.d("Nav drawer", "null position");

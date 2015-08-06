@@ -3,8 +3,9 @@
     <string-array name = "navItems_array">
         <item>Profile</item>
         <item>Subscriptions</item>
-        <item>Local Bulletins</item>
-        <item>Saved Flyers</item>
+        <item>Local</item>
+        <item>Saved</item>
+        <item>New</item>
         <item>Sign out</item>
     </string-array>
 </resources>

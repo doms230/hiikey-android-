@@ -124,5 +124,7 @@
     <string name="title_activity_testtest">testtest</string>
     <string name="title_activity_signout">Signout</string>
     <string name="title_activity_search">Search</string>
+    <string name="title_activity_bulletin_v2">Bulletin</string>
+    <string name="title_activity_home">Home</string>
 
 </resources>

@@ -240,9 +240,9 @@ GoogleApiClient.OnConnectionFailedListener{
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        /*if (mDrawerToggle.onOpionsItemSelected(item)) {
             return true;
-        }
+        }*/
 
         switch (item.getItemId()) {
 
