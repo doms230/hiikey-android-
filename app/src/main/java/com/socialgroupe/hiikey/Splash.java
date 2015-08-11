@@ -32,7 +32,7 @@ public class Splash extends Activity {
 
         // if user has logged in , turn into main page
         if(ParseUser.getCurrentUser()!=null){
-            Intent iBoard = new Intent("com.socialgroupe.BULLETIN");
+            Intent iBoard = new Intent("com.socialgroupe.HOME");
             startActivity(iBoard);
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.saveInBackground();
@@ -54,7 +54,7 @@ public class Splash extends Activity {
 
     public void explore(View view){
         // click explore, enter the main page with limited authority
-        Intent intent = new Intent("com.socialgroupe.BULLETIN");
+        Intent intent = new Intent("com.socialgroupe.HOME");
         startActivity(intent);
 
     }

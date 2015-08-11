@@ -25,6 +25,105 @@
             android:id="@+id/homeFlyer"
             android:layout_gravity="center" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:background="#96020206"
+            android:id="@+id/llHomeBulletin"
+            android:visibility="visible">
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/ibHomeBulletin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/tvBulletinName"
+                android:layout_gravity="center_vertical"
+                android:visibility="invisible"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:id="@+id/llHomeActions"
+            android:background="#96020206"
+            android:visibility="visible">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibHomeShare"
+                android:background="@drawable/ic_action_share_white"
+                android:padding="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ibHomeLike"
+                android:layout_toStartOf="@+id/ibHomeLike"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibHomeLike"
+                android:background="@drawable/ic_action_heart_white"
+                android:padding="5dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/llHomeInterested">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ibHomePerson"
+                    android:background="@drawable/ic_action_person_white"
+                    android:padding="5dp"
+                    android:layout_alignTop="@+id/ibHomeShare"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="0"
+                    android:id="@+id/tvHomeInterested"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/ibHomePerson"
+                    android:layout_toEndOf="@+id/ibHomePerson"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pbHomeShareProgress"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
     </FrameLayout>
 
 </LinearLayout>

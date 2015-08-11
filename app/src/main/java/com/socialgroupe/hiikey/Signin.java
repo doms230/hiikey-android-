@@ -57,7 +57,7 @@ public class Signin extends Activity implements View.OnClickListener{
                     public void done(ParseUser parseUser, ParseException e) {
                         if (parseUser != null) {
                             progressbar.setVisibility(View.GONE);
-                            Intent timeIntent = new Intent("com.socialgroupe.BULLETIN");
+                            Intent timeIntent = new Intent("com.socialgroupe.HOME");
                             startActivity(timeIntent);
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                             installation.put("user", ParseUser.getCurrentUser());

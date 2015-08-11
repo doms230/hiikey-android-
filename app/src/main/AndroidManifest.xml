@@ -253,7 +253,7 @@
         <activity
             android:name=".MyProfile"
             android:label="MyProfile"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.MYPROFILE" />
 
@@ -283,7 +283,7 @@
         <!-- -Bulletin Posts -->
         <activity
             android:name=".Bulletin_Posts"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.PUBLICPOSTV2" />
 
@@ -299,7 +299,7 @@
         <activity
             android:name=".SavedFlyers_Frag"
             android:label="@string/savedFlyers"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.FAVSFRAG" />
 
@@ -315,7 +315,7 @@
         <activity
             android:name=".SubscribedBulletins"
             android:label="@string/title_activity_subscribed_bulletins"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.SUBBULLETIN" />
 
@@ -353,7 +353,7 @@
         <activity
             android:name=".Search"
             android:label="@string/search"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.SEARCHBULLETINS" />
 
@@ -369,13 +369,28 @@
         <activity
             android:name=".Home"
             android:label="Home"
-            >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroupe.HOME" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
 
+        <!-- -Interested- -->
+        <activity
+            android:name=".InterestedFrag"
+            android:label="Interested"
+            android:parentActivityName=".Home" >
+            <intent-filter>
+                <action android:name="com.socialgroupe.INTERESTED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".blank"
+            android:label="@string/title_activity_blank" >
         </activity>
     </application>
 

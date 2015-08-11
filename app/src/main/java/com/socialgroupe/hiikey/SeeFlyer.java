@@ -161,7 +161,7 @@ public class SeeFlyer extends ActionBarActivity implements ActionBar.OnNavigatio
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_STREAM, ui);
                 shareIntent.setType("image/png");
-                shareIntent.putExtra("sms_body","Check this event out!" + hashtag + "#hiikey");
+                shareIntent.putExtra("sms_body","Check this event out!" + hashtag + " #hiikey");
 
                 if(shareIntent.resolveActivity(getPackageManager()) != null){
                     startActivity(Intent.createChooser(shareIntent, "Share Flyer"));
@@ -195,10 +195,10 @@ public class SeeFlyer extends ActionBarActivity implements ActionBar.OnNavigatio
                         .commit();
                 break;
 
-            case 1:
+            /*case 1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                         InterestedFrag.interInsta()).commit();
-                break;
+                break;*/
         }
         return true;
     }

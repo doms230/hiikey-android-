@@ -2,11 +2,18 @@ package com.socialgroupe.hiikey;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +21,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,63 +31,263 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
  * Created by Dominic on 8/5/15.
  */
 
-
-public class Home extends ActionBarActivity{
+public class Home extends AppCompatActivity implements android.support.v7.app.ActionBar.OnNavigationListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener{
 
     static int NUM_ITEMS = 0;
 
+    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     MyAdapter mAdapter;
     ViewPager mPager;
    // ActionBar actionBar;
 
+    private ArrayList<String> flyerFile = new ArrayList<>();
+    private ArrayList<String> bulletinName = new ArrayList<>();
+    private ArrayList<String> flyerId = new ArrayList<>();
+    private ArrayList<String> flyerHashtag = new ArrayList<>();
+
+    /******Location Stuff*******/
+    private static final String TAG = Bulletin.class.getSimpleName();
+    private final static int PLAY_SERVICE_RESOLUSION_REQUEST = 1000;
+    private Location mLastLocation;
+
+    private static final long ONE_MIN = 1000 * 60;
+
+    private GoogleApiClient mGoogleApiClient;
+    private ParseGeoPoint myPoint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ParseObject.registerSubclass(PublicPost_Helper.class);
+        ParseObject.registerSubclass(Bulletin_Helper.class);
+        ParseObject.registerSubclass(Favorites.class);
+        ParseObject.registerSubclass(Subscribe_Helper.class);
+
         setContentView(R.layout.home_fragment_pager);
 
-        ParseQuery<PublicPost_Helper> loadFlyerData = PublicPost_Helper.getQuery();
-        loadFlyerData.findInBackground(new FindCallback<PublicPost_Helper>() {
-            @Override
-            public void done(List<PublicPost_Helper> list, ParseException e) {
-                if (e == null) {
-                    List<String> flyerNumber = new ArrayList<>();
-                    /*for (PublicPost_Helper liasdf : list) {
-                        flyerNumber.add(liasdf.getObjectId());
+        if(checkPlayServices()){
+            buildGoogleApiClient();
+        }
+        /***Get Subscriptions***/
 
-                    }*/
-                    NUM_ITEMS = list.size();
-                    mAdapter = new MyAdapter(getFragmentManager());
+        // Set up the action bar to show a dropdown list.
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_LIST);
 
-                    mPager = (ViewPager) findViewById(R.id.pager);
-                    mPager.setAdapter(mAdapter);
-                }
-            }
-        });
-
+        // Set up the dropdown list navigation in the action bar.
+        actionBar.setListNavigationCallbacks(
+                // Specify a SpinnerAdapter to populate the dropdown list.
+                new ArrayAdapter<String>(
+                        actionBar.getThemedContext(),
+                        android.R.layout.simple_list_item_1,
+                        android.R.id.text1,
+                        new String[]{
+                                "Subscriptions",
+                                "Local",
+                                "Private",
+                        }),
+                this);
     }
 
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Restore the previously serialized current dropdown position.
+        if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+            getSupportActionBar().setSelectedNavigationItem(
+                    savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Serialize the current dropdown position.
+        outState.putInt(STATE_SELECTED_NAVIGATION_ITEM,
+                getSupportActionBar().getSelectedNavigationIndex());
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int position, long id) {
+        // When the given dropdown item is selected, show its contents in the
+        // container view.
+        switch (position){
+            /**Location was selected**/
+
+            case 1:
+                flyerFile.clear();
+                bulletinName.clear();
+                flyerId.clear();
+                flyerHashtag.clear();
+                //Toast.makeText(getApplicationContext(), "Local",
+                        //Toast.LENGTH_SHORT).show();
+
+                ParseQuery<PublicPost_Helper> loadFlyerData = PublicPost_Helper.getQuery();
+                loadFlyerData.whereWithinMiles("location", myPoint, 50);
+                loadFlyerData.findInBackground(new FindCallback<PublicPost_Helper>() {
+                    @Override
+                    public void done(List<PublicPost_Helper> list, ParseException e) {
+                        if (e == null) {
+
+                            for(PublicPost_Helper getFlyerData : list){
+                                ParseFile parseFile = getFlyerData.getParseFile("Flyer");
+                                flyerFile.add(parseFile.getUrl());
+                                bulletinName.add(getFlyerData.getCategory());
+                                flyerId.add(getFlyerData.getObjectId());
+                                flyerHashtag.add(getFlyerData.getHashtag());
+                            }
+
+                            NUM_ITEMS = list.size();
+                            mAdapter = new MyAdapter(getFragmentManager());
+
+                            mAdapter.setFlyerFile(flyerFile);
+                            mAdapter.setBulletinName(bulletinName);
+                            mAdapter.setFlyerId(flyerId);
+                            mAdapter.setFlyerHashtag(flyerHashtag);
+
+                            mPager = (ViewPager) findViewById(R.id.pager);
+                            mPager.setAdapter(mAdapter);
+                        }
+                    }
+                });
+                break;
+            /**Subscriptions was selected*/
+            case 0:
+                flyerFile.clear();
+                bulletinName.clear();
+                flyerId.clear();
+                flyerHashtag.clear();
+                //Toast.makeText(getApplicationContext(), "Sub",
+                        //Toast.LENGTH_SHORT).show();
+                ParseQuery<Subscribe_Helper> loadSubs = Subscribe_Helper.getData();
+                loadSubs.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
+                        .findInBackground(new FindCallback<Subscribe_Helper>() {
+                            @Override
+                            public void done(List<Subscribe_Helper> list, ParseException e) {
+                                if (e == null) {
+
+                                    List<String> subList = new ArrayList<>();
+                                    for (Subscribe_Helper asd : list){
+                                        subList.add(asd.getBulletinTitle());
+                                    }
+
+                                    ParseQuery<PublicPost_Helper> loadFlyerData1 = PublicPost_Helper.getQuery();
+                                     loadFlyerData1.whereContainedIn("Category", subList);
+                                    loadFlyerData1.findInBackground(new FindCallback<PublicPost_Helper>() {
+                                        @Override
+                                        public void done(List<PublicPost_Helper> list, ParseException e) {
+                                            if (e == null) {
+
+                                                for(PublicPost_Helper getFlyerData : list){
+                                                    ParseFile parseFile = getFlyerData.getParseFile("Flyer");
+                                                    flyerFile.add(parseFile.getUrl());
+                                                    bulletinName.add(getFlyerData.getCategory());
+                                                    flyerId.add(getFlyerData.getObjectId());
+                                                    flyerHashtag.add(getFlyerData.getHashtag());
+                                                }
+
+                                                NUM_ITEMS = list.size();
+                                                mAdapter = new MyAdapter(getFragmentManager());
+
+                                                mAdapter.setFlyerFile(flyerFile);
+                                                mAdapter.setBulletinName(bulletinName);
+                                                mAdapter.setFlyerId(flyerId);
+                                                mAdapter.setFlyerHashtag(flyerHashtag);
+
+                                                mPager = (ViewPager) findViewById(R.id.pager);
+                                                mPager.setAdapter(mAdapter);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                break;
+
+            /***Private was selected****/
+            case 2:
+                flyerFile.clear();
+                bulletinName.clear();
+                flyerId.clear();
+                flyerHashtag.clear();
+                //Toast.makeText(getApplicationContext(), "Local",
+                //Toast.LENGTH_SHORT).show();
+
+                ParseQuery<PublicPost_Helper> loadPrivateFlyerData = PublicPost_Helper.getQuery();
+                loadPrivateFlyerData.whereEqualTo("Privacy", "Private");
+                loadPrivateFlyerData.whereEqualTo("Privacy", "Exclusive");
+                loadPrivateFlyerData.findInBackground(new FindCallback<PublicPost_Helper>() {
+                    @Override
+                    public void done(List<PublicPost_Helper> list, ParseException e) {
+                        if (e == null) {
+
+                            for (PublicPost_Helper getFlyerData : list) {
+                                ParseFile parseFile = getFlyerData.getParseFile("Flyer");
+                                flyerFile.add(parseFile.getUrl());
+                                bulletinName.add(getFlyerData.getCategory());
+                                flyerId.add(getFlyerData.getObjectId());
+                                flyerHashtag.add(getFlyerData.getHashtag());
+                            }
+
+                            NUM_ITEMS = list.size();
+                            mAdapter = new MyAdapter(getFragmentManager());
+
+                            mAdapter.setFlyerFile(flyerFile);
+                            mAdapter.setBulletinName(bulletinName);
+                            mAdapter.setFlyerId(flyerId);
+                            mAdapter.setFlyerHashtag(flyerHashtag);
+
+                            mPager = (ViewPager) findViewById(R.id.pager);
+                            mPager.setAdapter(mAdapter);
+                        }
+                    }
+                });
+                break;
+        }
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,94 +329,117 @@ public class Home extends ActionBarActivity{
     }
 
     public static class MyAdapter extends FragmentStatePagerAdapter{
+
+        private ArrayList<String> flyerFile = new ArrayList<>();
+        private ArrayList<String> bulletinNameList = new ArrayList<>();
+        private ArrayList<String> flyerIdList = new ArrayList<>();
+        private ArrayList<String> flyerHashtagList = new ArrayList<>();
         public MyAdapter(android.app.FragmentManager fm){
             super(fm);
         }
 
+        public void setFlyerFile(ArrayList<String> file){
+            flyerFile = file;
+
+        }
+
+        public void setBulletinName(ArrayList<String> bulletinName){
+            bulletinNameList = bulletinName;
+        }
+
+        public void setFlyerId(ArrayList<String> flyerId){
+            flyerIdList = flyerId;
+        }
+
+        public void setFlyerHashtag(ArrayList<String> flyerHashtag){
+            flyerHashtagList = flyerHashtag;
+        }
+
         @Override
         public Fragment getItem(int position) {
-            return ArrayListFragment.newInstance(position) ;
+            return Home_fragment.newInstance(position,
+                    flyerFile, bulletinNameList, flyerIdList, flyerHashtagList) ;
         }
 
         @Override
         public int getCount() {
-
             return NUM_ITEMS;
-
         }
     }
 
-    public static class ArrayListFragment extends ListFragment{
-        int mNum;
+    /**Location updates***/
+    protected ParseGeoPoint displayLocation(){
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(mLastLocation!=null){
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+            myPoint = new ParseGeoPoint(latitude,longitude);
 
-        private List<String> flyerFile = new ArrayList<>();
-
-        static ArrayListFragment newInstance(int num){
-            ArrayListFragment f = new ArrayListFragment();
-
-            // supply num input as an argument.
-            Bundle args = new Bundle();
-            args.putInt("num", num);
-            f.setArguments(args);
-
-            return f;
+        }else{
+            Toast.makeText(getApplicationContext(), "Couldn't receive your location",
+                    Toast.LENGTH_SHORT).show();
         }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            mNum = getArguments() != null ? getArguments().getInt("num") : 1;
-
-            //ParseQuery Data
-
-
-        }
-
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.fragment_home_pager_list, container, false);
-            //View tv = v.findViewById(R.id.text);
-            //((TextView)tv).setText("Fragment #" + mNum);
-            //final ImageView flyerImage = (ImageView) v.findViewById(R.id.homeFlyer);
-
-            final View fa = v.findViewById(R.id.homeFlyer);
-
-
-            ParseQuery<PublicPost_Helper> loadFlyerData = PublicPost_Helper.getQuery();
-            loadFlyerData.findInBackground(new FindCallback<PublicPost_Helper>() {
-                @Override
-                public void done(List<PublicPost_Helper> list, ParseException e) {
-                    if (e == null) {
-                        for (PublicPost_Helper setFlyerData : list) {
-                            ParseFile parseFile = setFlyerData.getParseFile("Flyer");
-                            flyerFile.add(parseFile.getUrl());
-
-                        }
-
-                        Picasso.with(getActivity())
-                                .load(flyerFile.get(mNum))
-                                .placeholder(R.drawable.ic_launcher_hiikey)
-                                .resize(fa.getWidth(), fa.getHeight())
-
-                                .into((ImageView) fa);
-                    }
-                }
-            });
-
-            return v;
-        }
-
-       /* @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            /*setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, R.array.myLo_array));
-        }
-
-        @Override
-        public void onListItemClick(ListView l, View v, int position, long id) {
-            super.onListItemClick(l, v, position, id);
-            Log.i("FragmentList", "Item clicked: " + id);
-        }*/
+        return myPoint;
     }
+
+
+    protected synchronized void buildGoogleApiClient(){
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+    }
+
+    private boolean checkPlayServices(){
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if(resultCode!= ConnectionResult.SUCCESS){
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
+                GooglePlayServicesUtil.getErrorDialog(resultCode,this,PLAY_SERVICE_RESOLUSION_REQUEST)
+                        .show();
+            } else{
+                Toast.makeText(getApplicationContext(),
+                        "This device is not supported.", Toast.LENGTH_LONG)
+                        .show();
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public void onConnected(Bundle bundle) {
+        displayLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        Log.i(TAG,"Connection failed: ConnectionResult.getErrorCode()="
+                +result.getErrorCode());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mGoogleApiClient!=null){
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPlayServices();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 }

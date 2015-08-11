@@ -136,7 +136,7 @@ public class Signup extends Activity implements View.OnClickListener {
             user.setUsername(username.toLowerCase());
             user.setPassword(password);
             user.setEmail(email);
-            Intent timeIntent = new Intent("com.socialgroupe.BULLETIN");
+            Intent timeIntent = new Intent("com.socialgroupe.HOME");
             startActivity(timeIntent);
         } else {
             progressbar.setVisibility(View.GONE);

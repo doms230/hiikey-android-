@@ -126,5 +126,6 @@
     <string name="title_activity_search">Search</string>
     <string name="title_activity_bulletin_v2">Bulletin</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_blank">blank</string>
 
 </resources>
