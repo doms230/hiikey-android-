@@ -1,10 +1,16 @@
 package com.socialgroupe.hiikey;
 
-/*
+/**
 Class where all of the users put in the flyer information.
+
+ New 7/20/2015:
+ *Ln 501: Added method where the bulletin spinner only loads the bulletins that the user created along with the basic bulletin "LOCAL"
+ *Ln 273 Added method where Hiikey checks the privacy setting beforehand. Bulletin will show "PRIVATE " if the user chose private.
+ * Ln 217: Added validation method where Hiikey doest a check to make user that the user entered in a valid website url
+ * Ln 80: Added method where Hiikey checks to see if the address or location entered is valid after he or she is finished editing.
+
  */
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,11 +18,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,9 +30,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -45,11 +51,12 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
 
     private EditText flyTitle, flyHashtag, flyAddress, flyWebsite, flyDesc;
     private Button bDate, bTime;
-    private String stringFlyCategory,stringampm, stringFlyTime, stringFlyDate;
+    private String stringFlyCategory,stringampm, stringFlyTime, stringFlyDate, privacy, stringFlyAddress;
     private boolean titleValidated = false, dateValidated = false, timeValidated =false,
-            locationValidated = false, custom  = false, addressFound = false;
+            locationValidated = false, custom  = false, addressFound = false, websiteValidated =false;
     private double latitude, longitude;
     private ProgressBar pb;
+    private TextView tvPrivateBulletin;
 
     /**
      * for some reason when I localize "addressFound = false;" it reads it us unitiliazed, so I
@@ -66,6 +73,38 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         pb = (ProgressBar)findViewById(R.id.pbEventInfo);
         pb.setIndeterminate(true);
         initialize_post();
+
+       flyAddress.addTextChangedListener(new TextWatcher() {
+           @Override
+           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+           }
+
+           @Override
+           public void onTextChanged(CharSequence s, int start, int before, int count) {
+           }
+
+           @Override
+           public void afterTextChanged(Editable s) {
+            //dodgy code
+
+               List<Address> geocodeMatches = null;
+               try {
+                   geocodeMatches = new Geocoder(getApplicationContext()).getFromLocationName(stringFlyAddress, 1);
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+
+               if (geocodeMatches != null && geocodeMatches.size() > 0) {
+                   latitude = geocodeMatches.get(0).getLatitude();
+                   longitude = geocodeMatches.get(0).getLongitude();
+                   addressFound = true;
+               } else{
+                   pb.setVisibility(View.GONE);
+                   addressFound = false;
+                   Toast.makeText(getApplicationContext(), "Address not found", Toast.LENGTH_SHORT).show();
+               }
+           }
+       });
     }
 
     @Override
@@ -105,7 +144,7 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
 
             default:
                 stringampm ="5";
-                stringFlyCategory = "Other";
+                stringFlyCategory = "LOCAL";
                 break;
         }
     }
@@ -140,7 +179,7 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
     }
 
     private void validateInfo(String location, EditText lo, String date,
-                              String time, String title, EditText tit){
+                              String time, String title, EditText tit, String website, EditText web){
 
         if(location.isEmpty()){
             lo.setError(getString(R.string.error_field_required));
@@ -169,6 +208,19 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         } else{
             titleValidated = true;
         }
+
+        if(!website.isEmpty())
+        {
+            if(website.startsWith("https://")){
+                websiteValidated = true;
+            } else if (website.startsWith("http://")) {
+                websiteValidated = true;
+
+            } else{
+                websiteValidated = false;
+                web.setError("Website in incorrect format");
+            }
+        }
     }
 
     private void exit(){
@@ -178,14 +230,14 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
     }
 
     private void customNext() {
-        String privacy = getIntent().getExtras().getString("privacy");
+
         String stringFlyHashtag = flyHashtag.getText().toString();
-        String stringFlyAddress = flyAddress.getText().toString();
+        stringFlyAddress = flyAddress.getText().toString();
         String stringtitle = flyTitle.getText().toString();
         String stringWebsite = flyWebsite.getText().toString();
         String stringDesc = flyDesc.getText().toString();
 
-        List<Address> geocodeMatches = null;
+       /* List<Address> geocodeMatches = null;
         try {
             geocodeMatches = new Geocoder(this).getFromLocationName(stringFlyAddress, 1);
         } catch (IOException e) {
@@ -200,10 +252,10 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
             pb.setVisibility(View.GONE);
             addressFound = false;
             Toast.makeText(this.getApplicationContext(), "Address not found", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         validateInfo(stringFlyAddress, flyAddress, stringFlyDate, stringFlyTime,
-                stringtitle, flyTitle);
+                stringtitle, flyTitle, stringWebsite, flyWebsite);
 
        if(locationValidated && dateValidated && timeValidated && titleValidated && addressFound) {
             Bundle bundleCustomPost = new Bundle();
@@ -211,7 +263,12 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
             bundleCustomPost.putDouble("longitude", longitude);
             bundleCustomPost.putString("title", stringtitle);
 
-            bundleCustomPost.putString("category", stringFlyCategory);
+           if(!privacy.equals("Public"))
+           {
+               bundleCustomPost.putString("category", "PRIVATE");
+           } else {
+               bundleCustomPost.putString("category", stringFlyCategory);
+           }
            if(stringFlyHashtag.isEmpty()){
                bundleCustomPost.putString("hashtag", "null");
            } else {
@@ -416,26 +473,55 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         tpd.show();
     }
 
-    private void initialize_post(){
-        bDate = (Button)findViewById(R.id.bDate);
+    private void initialize_post() {
+
+        privacy = getIntent().getExtras().getString("privacy");
+
+        bDate = (Button) findViewById(R.id.bDate);
         bDate.setOnClickListener(this);
 
-        bTime = (Button)findViewById(R.id.bTime);
+        bTime = (Button) findViewById(R.id.bTime);
         bTime.setOnClickListener(this);
 
-        flyTitle = (EditText)findViewById(R.id.etTitle);
-        flyAddress = (EditText)findViewById(R.id.etAddress);
-        flyHashtag = (EditText)findViewById(R.id.etOfficialHashtag);
+        flyTitle = (EditText) findViewById(R.id.etTitle);
+        flyAddress = (EditText) findViewById(R.id.etAddress);
+        flyHashtag = (EditText) findViewById(R.id.etOfficialHashtag);
 
-        flyWebsite = (EditText)findViewById(R.id.etWebsite);
-        flyDesc = (EditText)findViewById(R.id.etDescription);
+        flyWebsite = (EditText) findViewById(R.id.etWebsite);
+        flyDesc = (EditText) findViewById(R.id.etDescription);
+
+        tvPrivateBulletin = (TextView) findViewById(R.id.tvPrivateBulletin);
+
+        if (!privacy.equals("Public")) {
+            tvPrivateBulletin.setVisibility(View.VISIBLE);
+        }
+
+        else {
 
         final Spinner category = (Spinner) findViewById(R.id.sCategory);
         category.setOnItemSelectedListener(Event_Info.this);
 
-        final List<String> subList = new ArrayList<>();
+            final List<String> bulletinList = new ArrayList<>();
+            ParseQuery<Bulletin_Helper> getBull = Bulletin_Helper.getQuery();
+            getBull.whereEqualTo("user ", ParseUser.getCurrentUser())
+                    .findInBackground(new FindCallback<Bulletin_Helper>() {
+                        @Override
+                        public void done(List<Bulletin_Helper> list, ParseException e) {
+                            if (e == null) {
+                                for (Bulletin_Helper ble : list) {
+                                    bulletinList.add(ble.getBulletinName());
+                                    bulletinList.add("LOCAL");
+                                }
+                                ArrayAdapter<String> catAdapter = new ArrayAdapter<>(Event_Info.this,
+                                        android.R.layout.simple_spinner_dropdown_item, bulletinList);
+                                catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                category.setAdapter(catAdapter);
+                                category.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
 
-        ParseQuery<Subscribe_Helper> getSubs = Subscribe_Helper.getData();
+       /* ParseQuery<Subscribe_Helper> getSubs = Subscribe_Helper.getData();
         getSubs.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
                 .findInBackground(new FindCallback<Subscribe_Helper>() {
                     @Override
@@ -445,7 +531,7 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
                                 subList.add(string.getBulletinId());
                             }
 
-                           final List<String> bulletinList = new ArrayList<>();
+                            final List<String> bulletinList = new ArrayList<>();
                             ParseQuery<Bulletin_Helper> getBull = Bulletin_Helper.getQuery();
                             getBull.whereContainedIn("objectId", subList)
                                     .findInBackground(new FindCallback<Bulletin_Helper>() {
@@ -469,8 +555,8 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
                                     });
                         }
                     }
-                });
-
+                });*/
+    }
         CheckBox checkBox= (CheckBox)findViewById(R.id.cbIsitCustom);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
