@@ -69,6 +69,7 @@ import java.util.List;
 
 /**
  * Created by Dominic on 8/5/15.
+ *
  */
 
 public class Home extends AppCompatActivity implements android.support.v7.app.ActionBar.OnNavigationListener,
@@ -79,7 +80,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
 
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
-    MyAdapter mAdapter;
+    FlyerPager_Adapter mAdapter;
     ViewPager mPager;
    // ActionBar actionBar;
 
@@ -89,11 +90,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
     private ArrayList<String> flyerHashtag = new ArrayList<>();
 
     /******Location Stuff*******/
-    private static final String TAG = Bulletin.class.getSimpleName();
+    private static final String TAG = Home.class.getSimpleName();
     private final static int PLAY_SERVICE_RESOLUSION_REQUEST = 1000;
     private Location mLastLocation;
-
-    private static final long ONE_MIN = 1000 * 60;
 
     private GoogleApiClient mGoogleApiClient;
     private ParseGeoPoint myPoint;
@@ -101,10 +100,6 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseObject.registerSubclass(PublicPost_Helper.class);
-        ParseObject.registerSubclass(Bulletin_Helper.class);
-        ParseObject.registerSubclass(Favorites.class);
-        ParseObject.registerSubclass(Subscribe_Helper.class);
 
         setContentView(R.layout.home_fragment_pager);
 
@@ -121,7 +116,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         // Set up the dropdown list navigation in the action bar.
         actionBar.setListNavigationCallbacks(
                 // Specify a SpinnerAdapter to populate the dropdown list.
-                new ArrayAdapter<String>(
+                new ArrayAdapter<>(
                         actionBar.getThemedContext(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
@@ -129,6 +124,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                                 "Subscriptions",
                                 "Local",
                                 "Private",
+                                "Likes"
                         }),
                 this);
     }
@@ -161,8 +157,6 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 bulletinName.clear();
                 flyerId.clear();
                 flyerHashtag.clear();
-                //Toast.makeText(getApplicationContext(), "Local",
-                        //Toast.LENGTH_SHORT).show();
 
                 ParseQuery<PublicPost_Helper> loadFlyerData = PublicPost_Helper.getQuery();
                 loadFlyerData.whereWithinMiles("location", myPoint, 50);
@@ -179,13 +173,15 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                                 flyerHashtag.add(getFlyerData.getHashtag());
                             }
 
-                            NUM_ITEMS = list.size();
-                            mAdapter = new MyAdapter(getFragmentManager());
+                            //NUM_ITEMS = list.size();
+                            mAdapter = new FlyerPager_Adapter(getFragmentManager());
 
                             mAdapter.setFlyerFile(flyerFile);
                             mAdapter.setBulletinName(bulletinName);
                             mAdapter.setFlyerId(flyerId);
                             mAdapter.setFlyerHashtag(flyerHashtag);
+                            mAdapter.setNUM_ITEMS(list.size());
+
 
                             mPager = (ViewPager) findViewById(R.id.pager);
                             mPager.setAdapter(mAdapter);
@@ -199,8 +195,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 bulletinName.clear();
                 flyerId.clear();
                 flyerHashtag.clear();
-                //Toast.makeText(getApplicationContext(), "Sub",
-                        //Toast.LENGTH_SHORT).show();
+
                 ParseQuery<Subscribe_Helper> loadSubs = Subscribe_Helper.getData();
                 loadSubs.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
                         .findInBackground(new FindCallback<Subscribe_Helper>() {
@@ -228,13 +223,14 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                                                     flyerHashtag.add(getFlyerData.getHashtag());
                                                 }
 
-                                                NUM_ITEMS = list.size();
-                                                mAdapter = new MyAdapter(getFragmentManager());
+                                                //NUM_ITEMS = list.size();
+                                                mAdapter = new FlyerPager_Adapter(getFragmentManager());
 
                                                 mAdapter.setFlyerFile(flyerFile);
                                                 mAdapter.setBulletinName(bulletinName);
                                                 mAdapter.setFlyerId(flyerId);
                                                 mAdapter.setFlyerHashtag(flyerHashtag);
+                                                mAdapter.setNUM_ITEMS(list.size());
 
                                                 mPager = (ViewPager) findViewById(R.id.pager);
                                                 mPager.setAdapter(mAdapter);
@@ -252,8 +248,6 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 bulletinName.clear();
                 flyerId.clear();
                 flyerHashtag.clear();
-                //Toast.makeText(getApplicationContext(), "Local",
-                //Toast.LENGTH_SHORT).show();
 
                 ParseQuery<PublicPost_Helper> loadPrivateFlyerData = PublicPost_Helper.getQuery();
                 loadPrivateFlyerData.whereEqualTo("Privacy", "Private");
@@ -271,19 +265,72 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                                 flyerHashtag.add(getFlyerData.getHashtag());
                             }
 
-                            NUM_ITEMS = list.size();
-                            mAdapter = new MyAdapter(getFragmentManager());
+                            //NUM_ITEMS = list.size();
+                            mAdapter = new FlyerPager_Adapter(getFragmentManager());
 
                             mAdapter.setFlyerFile(flyerFile);
                             mAdapter.setBulletinName(bulletinName);
                             mAdapter.setFlyerId(flyerId);
                             mAdapter.setFlyerHashtag(flyerHashtag);
+                            mAdapter.setNUM_ITEMS(list.size());
 
                             mPager = (ViewPager) findViewById(R.id.pager);
                             mPager.setAdapter(mAdapter);
                         }
                     }
                 });
+                break;
+
+            case 3:
+                flyerFile.clear();
+                bulletinName.clear();
+                flyerId.clear();
+                flyerHashtag.clear();
+
+                ParseQuery<Favorites_Helper> loadFavs = Favorites_Helper.getData();
+                loadFavs.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
+                        .findInBackground(new FindCallback<Favorites_Helper>() {
+                            @Override
+                            public void done(List<Favorites_Helper> list, ParseException e) {
+                                if (e == null) {
+                                    List<String> favList = new ArrayList<>();
+
+                                    for (Favorites_Helper fava : list) {
+                                        favList.add(fava.getFlyerId());
+                                    }
+
+                                    ParseQuery<PublicPost_Helper> loadInterestedData = PublicPost_Helper.getQuery();
+                                    loadInterestedData.whereContainedIn("objectId", favList);
+                                    loadInterestedData.findInBackground(new FindCallback<PublicPost_Helper>() {
+                                        @Override
+                                        public void done(List<PublicPost_Helper> list, ParseException e) {
+                                            if (e == null) {
+
+                                                for (PublicPost_Helper getFlyerData : list) {
+                                                    ParseFile parseFile = getFlyerData.getParseFile("Flyer");
+                                                    flyerFile.add(parseFile.getUrl());
+                                                    bulletinName.add(getFlyerData.getCategory());
+                                                    flyerId.add(getFlyerData.getObjectId());
+                                                    flyerHashtag.add(getFlyerData.getHashtag());
+                                                }
+
+                                                //NUM_ITEMS = list.size();
+                                                mAdapter = new FlyerPager_Adapter(getFragmentManager());
+
+                                                mAdapter.setFlyerFile(flyerFile);
+                                                mAdapter.setBulletinName(bulletinName);
+                                                mAdapter.setFlyerId(flyerId);
+                                                mAdapter.setFlyerHashtag(flyerHashtag);
+                                                mAdapter.setNUM_ITEMS(list.size());
+
+                                                mPager = (ViewPager) findViewById(R.id.pager);
+                                                mPager.setAdapter(mAdapter);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
                 break;
         }
         return true;
@@ -292,7 +339,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_bulletin, menu);
+        getMenuInflater().inflate(R.menu.timeline, menu);
 
         return true;
     }
@@ -302,17 +349,27 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
 
         switch (item.getItemId()) {
 
-            case R.id.action_searchBulletin:
+            case R.id.action_newFlyer:
+                Intent intent3 = new Intent(this, Promotion.class);
+                startActivity(intent3);
+                return true;
+
+            case R.id.action_myProfile:
+                Intent intent4 = new Intent(this, Profile.class);
+                intent4.putExtra("user", ParseUser.getCurrentUser().getObjectId());
+                startActivity(intent4);
+
+            /*case R.id.action_searchBulletin:
                 Intent intent = new Intent(this, Search.class);
                 startActivity(intent);
-                return true;
+                return true;*/
 
-            case R.id.action_verifyMembers:
+           /* case R.id.action_verifyMembers:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.hiikey.com/verified-members"));
                 startActivity(browserIntent);
-                return true;
+                return true;*/
 
-            case R.id.action_shareFriendsv2:
+            case R.id.action_shareFriends:
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
@@ -324,47 +381,16 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 } catch (Exception e) {
                 }
                 return true;
+
+            case R.id.action_signout:
+                ParseUser.logOut();
+                if(ParseUser.getCurrentUser() == null) {
+                    Intent a = new Intent(this, Signup_Login.class);
+                    startActivity(a);
+                    finish();
+                }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static class MyAdapter extends FragmentStatePagerAdapter{
-
-        private ArrayList<String> flyerFile = new ArrayList<>();
-        private ArrayList<String> bulletinNameList = new ArrayList<>();
-        private ArrayList<String> flyerIdList = new ArrayList<>();
-        private ArrayList<String> flyerHashtagList = new ArrayList<>();
-        public MyAdapter(android.app.FragmentManager fm){
-            super(fm);
-        }
-
-        public void setFlyerFile(ArrayList<String> file){
-            flyerFile = file;
-
-        }
-
-        public void setBulletinName(ArrayList<String> bulletinName){
-            bulletinNameList = bulletinName;
-        }
-
-        public void setFlyerId(ArrayList<String> flyerId){
-            flyerIdList = flyerId;
-        }
-
-        public void setFlyerHashtag(ArrayList<String> flyerHashtag){
-            flyerHashtagList = flyerHashtag;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return Home_fragment.newInstance(position,
-                    flyerFile, bulletinNameList, flyerIdList, flyerHashtagList) ;
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;
-        }
     }
 
     /**Location updates***/
@@ -381,7 +407,6 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         }
         return myPoint;
     }
-
 
     protected synchronized void buildGoogleApiClient(){
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -441,5 +466,4 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
     protected void onPause() {
         super.onPause();
     }
-
 }

@@ -1,6 +1,5 @@
 package com.socialgroupe.hiikey;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -49,12 +47,6 @@ public class Promotion extends ActionBarActivity implements
         setContentView(R.layout.activity_event_promotion);
 
         listview = (ListView)findViewById(R.id.lvWhoList);
-
-       /* ImageButton back = (ImageButton)findViewById(R.id.ibPromoBack);
-        back.setOnClickListener(this);
-
-        ImageButton foward = (ImageButton)findViewById(R.id.ibPromoPost);
-        foward.setOnClickListener(this);*/
 
         Spinner privatey = (Spinner) findViewById(R.id.sPrivate);
         privatey.setOnItemSelectedListener(this);
@@ -118,7 +110,7 @@ public class Promotion extends ActionBarActivity implements
                 return true;
 
             case R.id.action_promotion_exit:
-                Intent inte = new Intent(this, Bulletin.class);
+                Intent inte = new Intent(this, Home.class);
                 startActivity(inte);
                 finish();
                 return true;
@@ -166,15 +158,14 @@ public class Promotion extends ActionBarActivity implements
     private void updateProfileList(final Context context){
         final ProgressBar progressBar = (ProgressBar)findViewById(R.id.pbPromo);
         final TextView textView = (TextView)findViewById(R.id.tvNoOnetoinvite);
-        ParseObject.registerSubclass(GuestList.class);
-        ParseQuery<GuestList> userList = GuestList.getList();
+        ParseQuery<GuestList_Helper> userList = GuestList_Helper.getList();
         userList.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
-                .findInBackground(new FindCallback<GuestList>() {
+                .findInBackground(new FindCallback<GuestList_Helper>() {
                     @Override
-                    public void done(List<GuestList> guestLists, ParseException e) {
+                    public void done(List<GuestList_Helper> guestLists, ParseException e) {
                         if (e == null) {
                             List<String> userGuestList = new ArrayList<>();
-                            for (GuestList guestList : guestLists) {
+                            for (GuestList_Helper guestList : guestLists) {
                                 userGuestList.add(guestList.getGuestId());
                             }
 

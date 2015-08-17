@@ -57,21 +57,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         //////////////////////////Splash//////////////////////////////////////////////////
-        <activity
-            android:name=".Splash"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         /////////////////////////////////Profile/////////////////////////
         <activity
             android:name=".Profile"
             android:label="@string/title_activity_profile"
-            android:parentActivityName=".Bulletin"
+            android:parentActivityName=".Home"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroupe.PROFILE" />
@@ -81,9 +71,19 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
+                android:value="com.socialgroupe.hiikey.Home" />
         </activity>
         //////////////////////////////////////////////////////////////
+        <activity
+            android:name=".Splash"
+            android:label="Splash"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.socialgroupe.SPLASH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Event_Info"
             android:label="@string/title_activity_new_post"
@@ -115,23 +115,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        //////////////////////////////////////See FLyer//////////////////////////////////////////////
-        <activity
-            android:name=".SeeFlyer"
-            android:label="@string/title_activity_see_flyer"
-            android:parentActivityName=".Bulletin"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.SEEFLYER" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
-        </activity>
-
+        //////////////////////////////////////See
+        FLyer//////////////////////////////////////////////
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIciWKtEVeRsOnCP4F_MGzlVuER7sxk5oknW2HUw" />
@@ -162,57 +147,39 @@
         </activity>
 
         <!-- Login -->
-        <activity
-            android:name=".Signin"
-            android:label="@string/title_activity_signin"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.SIGNIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <!-- Signup -->
-        <activity
-            android:name=".Signup"
-            android:label="@string/title_activity_signup"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.socialgroup.SIGNUP" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <!-- -Events the User Created/is Hosting -->
         <activity
             android:name=".YourEvent"
             android:label="@string/title_activity_your_event"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
+                android:value="com.socialgroupe.hiikey.Home" />
         </activity>
 
         <!-- -Users hosting the current user -->
         <activity
             android:name=".Hosts"
             android:label="@string/title_activity_hosts"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
+                android:value="com.socialgroupe.hiikey.Home" />
         </activity>
 
         <!-- -Users on the current user's guest list -->
         <activity
             android:name=".Guests"
             android:label="@string/title_activity_guests"
-            android:parentActivityName=".Bulletin" >
+            android:parentActivityName=".Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
+                android:value="com.socialgroupe.hiikey.Home" />
         </activity>
         <!-- Parse stuff ************************************ -->
 
@@ -262,92 +229,26 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
+                android:value="com.socialgroupe.hiikey.Home" />
         </activity>
 
         <!-- -Bulletin -->
-        <activity
-            android:name=".Bulletin"
-            android:label="@string/title_activity_bulletin" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.BULLETIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
 
         <!-- -Bulletin Posts -->
-        <activity
-            android:name=".Bulletin_Posts"
-            android:parentActivityName=".Home" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.PUBLICPOSTV2" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
-        </activity>
 
         <!-- -Saved Flyers/Events -->
-        <activity
-            android:name=".SavedFlyers_Frag"
-            android:label="@string/savedFlyers"
-            android:parentActivityName=".Home" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.FAVSFRAG" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
-        </activity>
 
         <!-- -Subscribed Bulletins -->
-        <activity
-            android:name=".SubscribedBulletins"
-            android:label="@string/title_activity_subscribed_bulletins"
-            android:parentActivityName=".Home" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.SUBBULLETIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Bulletin" />
-        </activity>
 
         <!-- -Create New Bulletin -->
-        <activity
-            android:name=".NewBulletin"
-            android:label="@string/title_activity_new_bulletin" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.NEWBULLETIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <!-- -Edit Bulletin -->
-        <activity
-            android:name=".EditBulletin"
-            android:label="@string/title_activity_edit_bulletin" >
-            <intent-filter>
-                <action android:name="com.socialgroupe.EDITBULLETIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <!-- -Search -->
         <activity
@@ -389,8 +290,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".blank"
-            android:label="@string/title_activity_blank" >
+            android:name=".Signup_Login"
+            android:label="Login"
+            android:parentActivityName=".Home" >
+            <intent-filter>
+                <action android:name="com.socialgroupe.SIGNIN_SIGNUP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+          >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

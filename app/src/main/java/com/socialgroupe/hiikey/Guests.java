@@ -44,7 +44,6 @@ public class Guests extends ActionBarActivity implements View.OnClickListener {
 
         progressBar.setIndeterminate(true);
 
-        ParseObject.registerSubclass(GuestList.class);
         loadStuff();
 
     }
@@ -74,7 +73,7 @@ public class Guests extends ActionBarActivity implements View.OnClickListener {
 
             default:
                 Toast.makeText(getApplicationContext(), "Profile couldn't be opened.", Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(this, Bulletin.class);
+                Intent intent1 = new Intent(this, Home.class);
                 startActivity(intent1);
                 finish();
         }
@@ -83,13 +82,13 @@ public class Guests extends ActionBarActivity implements View.OnClickListener {
     private void loadStuff(){
         /**************Determine how many people the profileUser is hosting**************/
         Bundle bundle = getIntent().getExtras();
-        ParseQuery<GuestList> guestSize = GuestList.getList();
+        ParseQuery<GuestList_Helper> guestSize = GuestList_Helper.getList();
         guestSize.whereEqualTo("hostId", bundle.getString("guest"))
-                .findInBackground(new FindCallback<GuestList>() {
+                .findInBackground(new FindCallback<GuestList_Helper>() {
                     @Override
-                    public void done(List<GuestList> guestLists, ParseException e) {
+                    public void done(List<GuestList_Helper> guestLists, ParseException e) {
                         if (e == null) {
-                            for (GuestList listNumber : guestLists) {
+                            for (GuestList_Helper listNumber : guestLists) {
                                 guestList.add(listNumber.getGuestId());
                             }
 

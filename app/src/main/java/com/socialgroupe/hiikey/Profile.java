@@ -50,43 +50,6 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initiate();
-
-        ParseQuery<ParseUser> pare = ParseUser.getQuery();
-        pare.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-        pare.getFirstInBackground(new GetCallback<ParseUser>() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-                if(e == null) {
-
-                   if(!parseUser.getBoolean("sawExplanation")){
-                       AlertDialog.Builder builder = new AlertDialog.Builder(Profile.this);
-                       builder.setTitle(getString(R.string.profileexp));
-                       builder.setMessage(getString(R.string.profilehostermessage) + "\n\n" +
-                               getString(R.string.profilehostingmessage) + "\n\n" +
-                               getString(R.string.profileeventmessage) + "\n\n" +
-                               getString(R.string.profileguestmessage) + "\n\n" +
-                               getString(R.string.profilehostmessage) + "\n\n" +
-                               getString(R.string.profilequestionmessage) + "\n\n");
-                       builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialog, int which) {
-                               ParseQuery<ParseUser> parseUserParseQuery = ParseUser.getQuery();
-                               parseUserParseQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-                               parseUserParseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
-                                   @Override
-                                   public void done(ParseUser parseUser, ParseException e) {
-                                       parseUser.put("sawExplanation", true);
-                                       parseUser.saveEventually();
-                                   }
-                               });
-                           }
-                       });
-                       AlertDialog alertDialog = builder.create();
-                       alertDialog.show();
-                   }
-                }
-            }
-        });
     }
 
     @Override
@@ -130,7 +93,7 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
              */
 
             case R.id.blist:
-                GuestList addList = new GuestList();
+                GuestList_Helper addList = new GuestList_Helper();
                 addList.setHost(ParseUser.getCurrentUser());
                 addList.setHostId(ParseUser.getCurrentUser().getObjectId());
                 addList.setGuestId(profileUserstring);
@@ -165,15 +128,15 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
              */
 
             case R.id.bUnlist:
-                ParseQuery<GuestList> remove = GuestList.getList();
+                ParseQuery<GuestList_Helper> remove = GuestList_Helper.getList();
                 remove.whereEqualTo("host", ParseUser.getCurrentUser())
                         .whereEqualTo("guestId", profileUserstring)
-                        .getFirstInBackground(new GetCallback<GuestList>() {
+                        .getFirstInBackground(new GetCallback<GuestList_Helper>() {
                             @Override
-                            public void done(final GuestList guestList, ParseException e) {
+                            public void done(final GuestList_Helper guestList, ParseException e) {
                                 if(e == null){
-                                    ParseObject.registerSubclass(GuestListRemoved.class);
-                                    GuestListRemoved add = new GuestListRemoved();
+                                    ParseObject.registerSubclass(GuestListRemoved_Helper.class);
+                                    GuestListRemoved_Helper add = new GuestListRemoved_Helper();
                                     add.setFromUser(ParseUser.getCurrentUser());
                                     add.put("toString", profileUserstring);
                                     add.setDate(DateFormat.getDateTimeInstance().format(new Date()));
@@ -244,7 +207,7 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
             default:
                 Toast.makeText(getApplicationContext(), "Action couldn't be completed.", Toast.LENGTH_SHORT)
                         .show();
-                Intent intent11 = new Intent(this, Bulletin.class);
+                Intent intent11 = new Intent(this, Home.class);
                 startActivity(intent11);
         }
     }
@@ -256,14 +219,14 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
      */
 
     private void queGuestList(final PublicPost_Helper update){
-        ParseQuery<GuestList> gl = GuestList.getList();
+        ParseQuery<GuestList_Helper> gl = GuestList_Helper.getList();
         gl.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
-                .findInBackground(new FindCallback<GuestList>() {
+                .findInBackground(new FindCallback<GuestList_Helper>() {
                     @Override
-                    public void done( final List<GuestList> guestLists, ParseException e) {
+                    public void done( final List<GuestList_Helper> guestLists, ParseException e) {
                         List<String> updateAclList = new ArrayList<>();
                         if(e == null) {
-                            for (GuestList dapy : guestLists) {
+                            for (GuestList_Helper dapy : guestLists) {
                                 updateAclList.add(dapy.getGuestId());
                             }
                             updateAclList.add(ParseUser.getCurrentUser().getObjectId());
@@ -312,19 +275,19 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                     editProfile = (Button) findViewById(R.id.bEditProfile);
                     editProfile.setOnClickListener(Profile.this);
 
-                    ParseObject.registerSubclass(GuestList.class);
+                    ParseObject.registerSubclass(GuestList_Helper.class);
                     if (profileUserstring.equals(ParseUser.getCurrentUser().getObjectId())) {
                         list.setVisibility(View.GONE);
                         unlist.setVisibility(View.GONE);
                         editProfile.setVisibility(View.VISIBLE);
                     } else {
                         /**Determine if the current user is hosting the profile User.**/
-                        ParseQuery<GuestList> who = GuestList.getList();
+                        ParseQuery<GuestList_Helper> who = GuestList_Helper.getList();
                         who.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
                                 .whereEqualTo("guestId", profileUserstring)
-                                .getFirstInBackground(new GetCallback<GuestList>() {
+                                .getFirstInBackground(new GetCallback<GuestList_Helper>() {
                                     @Override
-                                    public void done(GuestList guestList, ParseException e) {
+                                    public void done(GuestList_Helper guestList, ParseException e) {
                                         if(e == null){
                                             editProfile.setVisibility(View.GONE);
                                             list.setVisibility(View.GONE);
@@ -338,13 +301,13 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                                 });
                     }
                     /**************Determine how many people the profileUser is hosting**************/
-                    ParseQuery<GuestList> guestSize = GuestList.getList();
+                    ParseQuery<GuestList_Helper> guestSize = GuestList_Helper.getList();
                     guestSize.whereEqualTo("hostId", profileUserstring)
-                            .findInBackground(new FindCallback<GuestList>() {
+                            .findInBackground(new FindCallback<GuestList_Helper>() {
                                 @Override
-                                public void done(List<GuestList> guestLists, ParseException e) {
+                                public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                     if (e == null) {
-                                        for (GuestList listNumber : guestLists) {
+                                        for (GuestList_Helper listNumber : guestLists) {
                                             guestList.add(listNumber.getGuestId());
                                         }
 
@@ -359,13 +322,13 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                             });
 
                     /*********Determine how many people are hosting the profileUser****************/
-                    ParseQuery<GuestList> hostSize = GuestList.getList();
+                    ParseQuery<GuestList_Helper> hostSize = GuestList_Helper.getList();
                     hostSize.whereEqualTo("guestId", profileUserstring)
-                            .findInBackground(new FindCallback<GuestList>() {
+                            .findInBackground(new FindCallback<GuestList_Helper>() {
                                 @Override
-                                public void done(List<GuestList> guestLists, ParseException e) {
+                                public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                     if (e == null) {
-                                        for (GuestList listNumber : guestLists) {
+                                        for (GuestList_Helper listNumber : guestLists) {
                                             hostList.add(listNumber.getHostId());
                                         }
                                         TextView hostNumber = (TextView) findViewById(R.id.tvHostNumber);

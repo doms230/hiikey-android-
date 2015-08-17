@@ -1,6 +1,5 @@
 package com.socialgroupe.hiikey;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
@@ -18,7 +17,7 @@ public class NewDesign extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_new_event);
         Bundle bundle = getIntent().getExtras();
-        ParseObject.registerSubclass(GuestList.class);
+        ParseObject.registerSubclass(GuestList_Helper.class);
         ParseObject.registerSubclass(PublicPost_Helper.class);
 
         boolean customOrNa = bundle.getBoolean("custom", false);

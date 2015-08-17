@@ -24,10 +24,4 @@
         android:orderInCategory="4"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:showAsAction="never"/>
-
-    <item android:id = "@+id/action_counter"
-        android:title="@string/title_activity_counter"
-        android:orderInCategory="2"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:showAsAction="never"/>
 </menu>

@@ -162,16 +162,16 @@ public class UploardFlyer extends Fragment implements View.OnClickListener{
                 if(e == null){
                     privatePost.setflyer(parseFile);
 
-                    ParseObject.registerSubclass(GuestList.class);
-                    ParseQuery<GuestList> priv = GuestList.getList();
+                    ParseObject.registerSubclass(GuestList_Helper.class);
+                    ParseQuery<GuestList_Helper> priv = GuestList_Helper.getList();
                     priv.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
-                            .findInBackground(new FindCallback<GuestList>() {
+                            .findInBackground(new FindCallback<GuestList_Helper>() {
                                 @Override
-                                public void done(List<GuestList> guestLists, ParseException e) {
+                                public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                     if (e == null) {
                                         List<String> privateList = new ArrayList<>();
                                         ParseACL asdf = new ParseACL();
-                                        for(GuestList list : guestLists){
+                                        for(GuestList_Helper list : guestLists){
                                             privateList.add(list.getGuestId());
                                         }
 
@@ -200,7 +200,7 @@ public class UploardFlyer extends Fragment implements View.OnClickListener{
                             });
                 }
 
-                Intent intent1 = new Intent("com.socialgroupe.BULLETIN");
+                Intent intent1 = new Intent("com.socialgroupe.HOME");
                 startActivity(intent1);
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Almost done...", Toast.LENGTH_SHORT).show();
@@ -244,7 +244,7 @@ public class UploardFlyer extends Fragment implements View.OnClickListener{
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {
-                                Intent intent1 = new Intent("com.socialgroupe.BULLETIN");
+                                Intent intent1 = new Intent("com.socialgroupe.HOME");
                                 startActivity(intent1);
                                 Toast.makeText(getActivity().getApplicationContext(),
                                         "Event Published!", Toast.LENGTH_SHORT).show();
@@ -295,15 +295,15 @@ public class UploardFlyer extends Fragment implements View.OnClickListener{
                 if(e == null){
                     exclusivePost.setflyer(parseFile);
                     final ParseACL acl = new ParseACL();
-                    ParseQuery<GuestList> exc = GuestList.getList();
+                    ParseQuery<GuestList_Helper> exc = GuestList_Helper.getList();
                     exc.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
                             .whereContainedIn("guestId",bundle.getStringArrayList("guestlist"))
-                            .findInBackground(new FindCallback<GuestList>() {
+                            .findInBackground(new FindCallback<GuestList_Helper>() {
                                 @Override
-                                public void done(List<GuestList> guestLists, ParseException e) {
+                                public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                     if (e == null) {
                                         List<String> exclusiveList = new ArrayList<>();
-                                        for (GuestList list : guestLists) {
+                                        for (GuestList_Helper list : guestLists) {
                                             exclusiveList.add(list.getGuestId());
                                         }
 
@@ -330,7 +330,7 @@ public class UploardFlyer extends Fragment implements View.OnClickListener{
 
                             });
 
-                    Intent intent1 = new Intent("com.socialgroupe.BULLETIN");
+                    Intent intent1 = new Intent("com.socialgroupe.HOME");
                     startActivity(intent1);
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Almost done...", Toast.LENGTH_SHORT).show();

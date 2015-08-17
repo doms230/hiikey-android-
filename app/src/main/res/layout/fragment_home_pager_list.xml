@@ -3,14 +3,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:drawable/gallery_thumb">
+    android:background="@android:drawable/gallery_thumb"
+    android:id="@+id/llHome_pager">
 
     <!-- The frame layout is here since we will be showing either
     the empty view or the list view.  -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:id="@+id/flHome_pager">
         <!-- Here is the list. Since we are using a ListActivity, we
              have to call it "@android:id/list" so ListActivity will
              find it -->
@@ -20,8 +22,8 @@
             android:drawSelectorOnTop="false"/>
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/homeFlyer"
             android:layout_gravity="center" />
 
@@ -58,7 +60,7 @@
             android:layout_gravity="center_horizontal|bottom"
             android:id="@+id/llHomeActions"
             android:background="#96020206"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -83,36 +85,56 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="10dp" />
 
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibHomeInfo"
+                android:background="@drawable/ic_action_info_pwhite"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ibHomeShare"
+                android:layout_toStartOf="@+id/ibHomeShare" />
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/llHomeInterested">
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ibHomePerson"
-                    android:background="@drawable/ic_action_person_white"
-                    android:padding="5dp"
-                    android:layout_alignTop="@+id/ibHomeShare"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center_vertical" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="0"
-                    android:id="@+id/tvHomeInterested"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/ibHomePerson"
-                    android:layout_toEndOf="@+id/ibHomePerson"
-                    android:textColor="#ffffff"
-                    android:layout_gravity="center_vertical" />
             </LinearLayout>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibHomePerson"
+                android:background="@drawable/ic_action_person_white"
+                android:padding="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="0"
+                android:id="@+id/tvHomeInterested"
+                android:layout_alignParentTop="false"
+                android:layout_toRightOf="@+id/ibHomePerson"
+                android:layout_toEndOf="@+id/ibHomePerson"
+                android:textColor="#ffff"
+                android:layout_centerVertical="true" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibHomeTrashIt"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ibHomeInfo"
+                android:layout_toStartOf="@+id/ibHomeInfo"
+                android:background="@mipmap/ic_trash"
+                android:visibility="gone"
+                android:padding="5dp" />
 
         </RelativeLayout>
 
@@ -123,6 +145,28 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:id="@+id/llCreateFun">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/noResults"
+                android:id="@+id/textView2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/createfun"
+                android:id="@+id/bHomeCreateFun" />
+        </LinearLayout>
 
     </FrameLayout>
 

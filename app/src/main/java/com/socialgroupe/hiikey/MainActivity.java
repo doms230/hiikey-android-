@@ -1,30 +1,26 @@
 package com.socialgroupe.hiikey;
 
-
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
-
-/**
- * Created by Dominic on 9/13/2014.
- * Opening scene for the app.
- */
-
-public class Splash extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle splash) {
-        super.onCreate(splash);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                setContentView(R.layout.activity_splash);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+
+        setContentView(R.layout.activity_main);
 
 //////////////////////Main thread stuff////////////////////////////////////
         Thread timer = new Thread(){

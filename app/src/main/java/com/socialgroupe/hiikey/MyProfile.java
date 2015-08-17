@@ -10,10 +10,10 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,13 +39,10 @@ import java.util.List;
 Class where people view and edit their profile.
  */
 
-public class MyProfile extends ActionBarActivity implements View.OnClickListener{
+public class MyProfile extends AppCompatActivity implements View.OnClickListener{
 
     //Navigation Drawer Stuff
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private String[] navItems;
-    private ActionBarDrawerToggle mDrawerToggle;
 
     private String instaLink, tumLink, twitLink, snapLink;
     //private ParseUser profileUser;
@@ -61,69 +58,8 @@ public class MyProfile extends ActionBarActivity implements View.OnClickListener
         setContentView(R.layout.activity_profile);
         initiate();
 
-        // Navigation drawer
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
 
-        ParseObject.registerSubclass(GuestList.class);
-
-        ParseQuery<ParseUser> pare = ParseUser.getQuery();
-        pare.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-        pare.getFirstInBackground(new GetCallback<ParseUser>() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-                if(e == null) {
-                    if(!parseUser.getBoolean("sawExplanation")){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MyProfile.this);
-                        builder.setTitle(getString(R.string.profileexp));
-                        builder.setMessage(getString(R.string.profilehostermessage) + "\n\n" +
-                                getString(R.string.profilehostingmessage) + "\n\n" +
-                                getString(R.string.profileeventmessage) + "\n\n" +
-                                getString(R.string.profileguestmessage) + "\n\n" +
-                                getString(R.string.profilehostmessage) + "\n\n" +
-                                getString(R.string.profilequestionmessage) + "\n\n");
-                        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ParseQuery<ParseUser> parseUserParseQuery = ParseUser.getQuery();
-                                parseUserParseQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-                                parseUserParseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
-                                    @Override
-                                    public void done(ParseUser parseUser, ParseException e) {
-                                        parseUser.put("sawExplanation", true);
-                                        parseUser.saveEventually();
-                                    }
-                                });
-                            }
-                        });
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -133,35 +69,14 @@ public class MyProfile extends ActionBarActivity implements View.OnClickListener
         guestList.clear();
     }
 
-    //Navigation Drawer
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        navItems = getResources().getStringArray(R.array.navItems_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, navItems));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -238,7 +153,7 @@ public class MyProfile extends ActionBarActivity implements View.OnClickListener
             default:
                 Toast.makeText(this.getApplicationContext(), "Action couldn't be completed.", Toast.LENGTH_SHORT)
                         .show();
-                Intent intent11 = new Intent(this, Bulletin.class);
+                Intent intent11 = new Intent(this, Home.class);
                 startActivity(intent11);
         }
     }
@@ -268,13 +183,13 @@ public class MyProfile extends ActionBarActivity implements View.OnClickListener
                 editProfile.setOnClickListener(MyProfile.this);
 
                 /**************Determine how many people the profileUser is hosting**************/
-                ParseQuery<GuestList> guestSize = GuestList.getList();
+                ParseQuery<GuestList_Helper> guestSize = GuestList_Helper.getList();
                 guestSize.whereEqualTo("hostId", profileUserstring)
-                        .findInBackground(new FindCallback<GuestList>() {
+                        .findInBackground(new FindCallback<GuestList_Helper>() {
                             @Override
-                            public void done(List<GuestList> guestLists, ParseException e) {
+                            public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                 if (e == null) {
-                                    for (GuestList listNumber : guestLists) {
+                                    for (GuestList_Helper listNumber : guestLists) {
                                         guestList.add(listNumber.getGuestId());
                                     }
 
@@ -289,13 +204,13 @@ public class MyProfile extends ActionBarActivity implements View.OnClickListener
                         });
 
                 /*********Determine how many people are hosting the profileUser****************/
-                ParseQuery<GuestList> hostSize = GuestList.getList();
+                ParseQuery<GuestList_Helper> hostSize = GuestList_Helper.getList();
                 hostSize.whereEqualTo("guestId", profileUserstring)
-                        .findInBackground(new FindCallback<GuestList>() {
+                        .findInBackground(new FindCallback<GuestList_Helper>() {
                             @Override
-                            public void done(List<GuestList> guestLists, ParseException e) {
+                            public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                 if (e == null) {
-                                    for (GuestList listNumber : guestLists) {
+                                    for (GuestList_Helper listNumber : guestLists) {
                                         hostList.add(listNumber.getHostId());
                                     }
                                     TextView hostNumber = (TextView)findViewById(R.id.tvHostNumber);

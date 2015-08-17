@@ -1,22 +1,15 @@
 package com.socialgroupe.hiikey;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -24,7 +17,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -91,15 +83,15 @@ public class InterestedFrag extends ActionBarActivity implements View.OnClickLis
     }
 
     private void updateFavorites(){
-        ParseObject.registerSubclass(Favorites.class);
-        ParseQuery<Favorites> favoritesParseQuery = Favorites.getData();
+        ParseObject.registerSubclass(Favorites_Helper.class);
+        ParseQuery<Favorites_Helper> favoritesParseQuery = Favorites_Helper.getData();
         favoritesParseQuery.whereEqualTo("flyerId", objectid);
-        favoritesParseQuery.findInBackground(new FindCallback<Favorites>() {
+        favoritesParseQuery.findInBackground(new FindCallback<Favorites_Helper>() {
             @Override
-            public void done(List<Favorites> favoriteses, ParseException e) {
+            public void done(List<Favorites_Helper> favoriteses, ParseException e) {
                 if (e == null) {
                     List<String> favList = new ArrayList<>();
-                    for (Favorites favorites : favoriteses) {
+                    for (Favorites_Helper favorites : favoriteses) {
                         favList.add(favorites.getUserId());
                     }
                     interestedAdapter = new InterestedAdapter(InterestedFrag.this, favList);

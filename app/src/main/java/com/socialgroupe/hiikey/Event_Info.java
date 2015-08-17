@@ -4,12 +4,12 @@ package com.socialgroupe.hiikey;
 Class where all of the users put in the flyer information.
 
  New 7/20/2015:
- *Ln 501: Added method where the bulletin spinner only loads the bulletins that the user created along with the basic bulletin "LOCAL"
- *Ln 273 Added method where Hiikey checks the privacy setting beforehand. Bulletin will show "PRIVATE " if the user chose private.
- * Ln 217: Added validation method where Hiikey doest a check to make user that the user entered in a valid website url
- * Ln 80: Added method where Hiikey checks to see if the address or location entered is valid after he or she is finished editing.
+        *Ln 501: Added method where the bulletin spinner only loads the bulletins that the user created along with the basic bulletin "LOCAL"
+        *Ln 273 Added method where Hiikey checks the privacy setting beforehand. Bulletin will show "PRIVATE " if the user chose private.
+        * Ln 217: Added validation method where Hiikey doest a check to make user that the user entered in a valid website url
+        * Ln 80: Added method where Hiikey checks to see if the address or location entered is valid after he or she is finished editing.
 
- */
+        */
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -68,43 +68,38 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
 
-        ParseObject.registerSubclass(Subscribe_Helper.class);
-        ParseObject.registerSubclass(Bulletin_Helper.class);
         pb = (ProgressBar)findViewById(R.id.pbEventInfo);
         pb.setIndeterminate(true);
         initialize_post();
 
-       flyAddress.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-           }
+        flyAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
 
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
-           }
+                    List<Address> geocodeMatches = null;
+                    try {
+                        geocodeMatches = new Geocoder(Event_Info.this).getFromLocationName(flyAddress.getText().toString(), 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-           @Override
-           public void afterTextChanged(Editable s) {
-            //dodgy code
+                    if (geocodeMatches != null && geocodeMatches.size() > 0) {
+                        latitude = geocodeMatches.get(0).getLatitude();
+                        longitude = geocodeMatches.get(0).getLongitude();
+                        addressFound = true;
+                        flyAddress.setTextColor(getResources().getColor(R.color.greenText));
+                    } else{
+                        pb.setVisibility(View.GONE);
+                        addressFound = false;
+                        flyAddress.setTextColor(getResources().getColor(R.color.redText));
+                        flyAddress.setError("Address not found");
+                        //Toast.makeText(getApplicationContext(), "Address not found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
-               List<Address> geocodeMatches = null;
-               try {
-                   geocodeMatches = new Geocoder(getApplicationContext()).getFromLocationName(stringFlyAddress, 1);
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-
-               if (geocodeMatches != null && geocodeMatches.size() > 0) {
-                   latitude = geocodeMatches.get(0).getLatitude();
-                   longitude = geocodeMatches.get(0).getLongitude();
-                   addressFound = true;
-               } else{
-                   pb.setVisibility(View.GONE);
-                   addressFound = false;
-                   Toast.makeText(getApplicationContext(), "Address not found", Toast.LENGTH_SHORT).show();
-               }
-           }
-       });
     }
 
     @Override
@@ -152,13 +147,6 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            /*case R.id.ibExit:
-
-                break;
-
-            case R.id.ibEInfoNext:
-
-                break;*/
 
             case R.id.bDate:
                 date_picker(bDate);
@@ -236,23 +224,6 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         String stringtitle = flyTitle.getText().toString();
         String stringWebsite = flyWebsite.getText().toString();
         String stringDesc = flyDesc.getText().toString();
-
-       /* List<Address> geocodeMatches = null;
-        try {
-            geocodeMatches = new Geocoder(this).getFromLocationName(stringFlyAddress, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (geocodeMatches != null && geocodeMatches.size() > 0) {
-            latitude = geocodeMatches.get(0).getLatitude();
-            longitude = geocodeMatches.get(0).getLongitude();
-            addressFound = true;
-        } else{
-            pb.setVisibility(View.GONE);
-            addressFound = false;
-            Toast.makeText(this.getApplicationContext(), "Address not found", Toast.LENGTH_SHORT).show();
-        }*/
 
         validateInfo(stringFlyAddress, flyAddress, stringFlyDate, stringFlyTime,
                 stringtitle, flyTitle, stringWebsite, flyWebsite);
@@ -502,60 +473,27 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         category.setOnItemSelectedListener(Event_Info.this);
 
             final List<String> bulletinList = new ArrayList<>();
-            ParseQuery<Bulletin_Helper> getBull = Bulletin_Helper.getQuery();
-            getBull.whereEqualTo("user ", ParseUser.getCurrentUser())
-                    .findInBackground(new FindCallback<Bulletin_Helper>() {
+            bulletinList.add("LOCAL");
+            ParseQuery<Bulletin_Helper> getBull = Bulletin_Helper.getQuery()
+            .whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId());
+                    getBull.findInBackground(new FindCallback<Bulletin_Helper>() {
                         @Override
                         public void done(List<Bulletin_Helper> list, ParseException e) {
                             if (e == null) {
                                 for (Bulletin_Helper ble : list) {
                                     bulletinList.add(ble.getBulletinName());
-                                    bulletinList.add("LOCAL");
+
                                 }
-                                ArrayAdapter<String> catAdapter = new ArrayAdapter<>(Event_Info.this,
-                                        android.R.layout.simple_spinner_dropdown_item, bulletinList);
-                                catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                category.setAdapter(catAdapter);
-                                category.setVisibility(View.VISIBLE);
+
                             }
+
+                            ArrayAdapter<String> catAdapter = new ArrayAdapter<>(Event_Info.this,
+                                    android.R.layout.simple_spinner_dropdown_item, bulletinList);
+                            catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            category.setAdapter(catAdapter);
+                            category.setVisibility(View.VISIBLE);
                         }
                     });
-
-       /* ParseQuery<Subscribe_Helper> getSubs = Subscribe_Helper.getData();
-        getSubs.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId())
-                .findInBackground(new FindCallback<Subscribe_Helper>() {
-                    @Override
-                    public void done(List<Subscribe_Helper> list, ParseException e) {
-                        if (e == null) {
-                            for (Subscribe_Helper string : list) {
-                                subList.add(string.getBulletinId());
-                            }
-
-                            final List<String> bulletinList = new ArrayList<>();
-                            ParseQuery<Bulletin_Helper> getBull = Bulletin_Helper.getQuery();
-                            getBull.whereContainedIn("objectId", subList)
-                                    .findInBackground(new FindCallback<Bulletin_Helper>() {
-                                        @Override
-                                        public void done(List<Bulletin_Helper> list, ParseException e) {
-                                            if (e == null) {
-                                                for (Bulletin_Helper ble : list) {
-                                                    if (ble.getBulletinSetting().equals("open")) {
-                                                        bulletinList.add(ble.getBulletinName());
-                                                    } else if (ble.getUserId().equals(ParseUser.getCurrentUser().getObjectId())) {
-                                                        bulletinList.add(ble.getBulletinName());
-                                                    }
-                                                }
-                                                ArrayAdapter<String> catAdapter = new ArrayAdapter<>(Event_Info.this,
-                                                        android.R.layout.simple_spinner_dropdown_item, bulletinList);
-                                                catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                category.setAdapter(catAdapter);
-
-                                            }
-                                        }
-                                    });
-                        }
-                    }
-                });*/
     }
         CheckBox checkBox= (CheckBox)findViewById(R.id.cbIsitCustom);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

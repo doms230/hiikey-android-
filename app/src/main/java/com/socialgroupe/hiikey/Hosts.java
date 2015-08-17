@@ -35,7 +35,7 @@ public class Hosts extends ActionBarActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hosts);
         gridView = (ListView)findViewById(R.id.gvHost);
-        ParseObject.registerSubclass(GuestList.class);
+        ParseObject.registerSubclass(GuestList_Helper.class);
         loadStuff ();
     }
 
@@ -64,7 +64,7 @@ public class Hosts extends ActionBarActivity implements View.OnClickListener {
 
             default:
                 Toast.makeText(getApplicationContext(), "Profile couldn't be opened.", Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(this, Bulletin.class);
+                Intent intent1 = new Intent(this, Home.class);
                 startActivity(intent1);
                 finish();
         }
@@ -77,13 +77,13 @@ public class Hosts extends ActionBarActivity implements View.OnClickListener {
         Bundle bundle = getIntent().getExtras();
         String string = bundle.getString("host");
 
-        ParseQuery<GuestList> hostSize = GuestList.getList();
+        ParseQuery<GuestList_Helper> hostSize = GuestList_Helper.getList();
         hostSize.whereEqualTo("guestId", string)
-                .findInBackground(new FindCallback<GuestList>() {
+                .findInBackground(new FindCallback<GuestList_Helper>() {
                     @Override
-                    public void done(List<GuestList> guestLists, ParseException e) {
+                    public void done(List<GuestList_Helper> guestLists, ParseException e) {
                         if (e == null) {
-                            for (GuestList listNumber : guestLists) {
+                            for (GuestList_Helper listNumber : guestLists) {
                                 hostList.add(listNumber.getHostId());
                             }
                             HostAdapter hostAdapter = new HostAdapter(Hosts.this, hostList );

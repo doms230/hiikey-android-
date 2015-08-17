@@ -74,7 +74,7 @@ public class SearchPeople extends Fragment{
         @Override
         protected Void doInBackground(Void... params) {
             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                    "Favorites");
+                    "Favorites_Helper");
 
             try {
                 ob = query.find();

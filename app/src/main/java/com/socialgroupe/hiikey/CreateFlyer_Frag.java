@@ -34,7 +34,6 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -201,7 +200,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
             default:
                 Toast.makeText(getActivity().getApplicationContext(), "Action couldn't be completed.",
                         Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(getActivity(), Bulletin.class);
+                Intent intent1 = new Intent(getActivity(), Home.class);
                 startActivity(intent1);
                 getActivity().finish();
         }
@@ -372,7 +371,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                         }
                     });
 
-                    Intent intent = new Intent(getActivity(), Bulletin.class);
+                    Intent intent = new Intent(getActivity(), Home.class);
                     startActivity(intent);
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Almost done...", Toast.LENGTH_SHORT).show();
@@ -413,14 +412,14 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                 if(e == null){
                     privPost.setflyer(parseFile);
 
-                    ParseObject.registerSubclass(GuestList.class);
-                    final ParseQuery<GuestList> priv = GuestList.getList();
+                    ParseObject.registerSubclass(GuestList_Helper.class);
+                    final ParseQuery<GuestList_Helper> priv = GuestList_Helper.getList();
                     priv.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
-                            .findInBackground(new FindCallback<GuestList>() {
+                            .findInBackground(new FindCallback<GuestList_Helper>() {
                                 @Override
-                                public void done(List<GuestList> guestLists, ParseException e) {
+                                public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                     List<String> privateList = new ArrayList<>();
-                                    for(GuestList list : guestLists){
+                                    for(GuestList_Helper list : guestLists){
                                         privateList.add(list.getGuestId());
                                     }
                                     ParseACL asdf = new ParseACL();
@@ -448,7 +447,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                                 }
                             });
 
-                    Intent intent1 = new Intent("com.socialgroupe.BULLETIN");
+                    Intent intent1 = new Intent("com.socialgroupe.HOME");
                     startActivity(intent1);
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Almost done...", Toast.LENGTH_SHORT).show();
@@ -489,15 +488,15 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                if(e == null){
                    exPost.setflyer(parseFile);
 
-                   ParseQuery<GuestList> exc = GuestList.getList();
+                   ParseQuery<GuestList_Helper> exc = GuestList_Helper.getList();
                    exc.whereEqualTo("hostId", ParseUser.getCurrentUser().getObjectId())
                            .whereContainedIn("guestId",createFlyInfo.getStringArrayList("guestlist"))
-                           .findInBackground(new FindCallback<GuestList>() {
+                           .findInBackground(new FindCallback<GuestList_Helper>() {
                                @Override
-                               public void done(List<GuestList> guestLists, ParseException e) {
+                               public void done(List<GuestList_Helper> guestLists, ParseException e) {
                                    if (e == null) {
                                        List<String> exclusiveList = new ArrayList<>();
-                                       for (GuestList list : guestLists) {
+                                       for (GuestList_Helper list : guestLists) {
                                            exclusiveList.add(list.getGuestId());
                                        }
                                        ParseACL acl = new ParseACL();
@@ -524,7 +523,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                                    }
                                }
                            });
-                   Intent intent1 = new Intent("com.socialgroupe.BULLETIN");
+                   Intent intent1 = new Intent("com.socialgroupe.HOME");
                    startActivity(intent1);
                    Toast.makeText(getActivity().getApplicationContext(),
                            "Almost done...", Toast.LENGTH_SHORT).show();

@@ -9,12 +9,16 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
@@ -24,12 +28,20 @@ import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Created By: Dominic
@@ -50,6 +62,8 @@ public class Signup_Login extends Activity implements View.OnClickListener{
     private Bitmap bitmap;
     private byte[] bytes;
     private ProgressBar progressbar;
+    private ImageView blur;
+    private RelativeLayout yolo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +73,6 @@ public class Signup_Login extends Activity implements View.OnClickListener{
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.fragment_login_signup);
-
-        ParseObject.registerSubclass(Props_Helper.class);
 
         progressbar = (ProgressBar)findViewById(R.id.pbSignProgress);
 
@@ -73,9 +85,19 @@ public class Signup_Login extends Activity implements View.OnClickListener{
         Button forgotPassword = (Button)findViewById(R.id.bForgotPass);
         forgotPassword.setOnClickListener(this);
 
+        ImageButton logTwitter= (ImageButton) findViewById(R.id.ibLogTwitter);
+        logTwitter.setOnClickListener(this);
+
         Username = (EditText)findViewById(R.id.etUsername);
         Password = (EditText)findViewById(R.id.etPassword);
         Email = (EditText)findViewById(R.id.etEmail);
+        blur =(ImageView) findViewById(R.id.ivBlur);
+//        yolo = (RelativeLayout) findViewById(R.id.rlLogLog);
+        //Blurry.with(this).capture(yolo).into(blur);
+
+        String picDrawable = "android.resource://com.socialgroupe.hiikey/drawable/hiikey_splash";
+        Uri defaultPicture = Uri.parse(picDrawable);
+        saveFlyer(defaultPicture);
     }
 
     @Override
@@ -92,7 +114,7 @@ public class Signup_Login extends Activity implements View.OnClickListener{
                     public void done(ParseUser parseUser, ParseException e) {
                         if (parseUser != null) {
                             progressbar.setVisibility(View.GONE);
-                            Intent timeIntent = new Intent("com.socialgroupe.BULLETIN");
+                            Intent timeIntent = new Intent("com.socialgroupe.HOME");
                             startActivity(timeIntent);
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                             installation.put("user", ParseUser.getCurrentUser());
@@ -155,7 +177,8 @@ public class Signup_Login extends Activity implements View.OnClickListener{
                                     public void done(ParseException e) {
                                         if (e == null) {
                                             //ParseInstallation.getCurrentInstallation().saveInBackground();
-                                            Intent signedIntent = new Intent("com.socialgroupe.MYPROFILE");
+                                            Intent signedIntent = new Intent("com.socialgroupe.HOME");
+                                            //signedIntent.putExtra("userId", ParseUser.getCurrentUser().getObjectId());
                                             startActivity(signedIntent);
                                             Toast.makeText(getApplicationContext(), "Profile Created.", Toast.LENGTH_SHORT).show();
                                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
@@ -164,19 +187,7 @@ public class Signup_Login extends Activity implements View.OnClickListener{
                                                 @Override
                                                 public void done(ParseException e) {
                                                     if(e == null){
-                                                        Props_Helper helper = new Props_Helper();
-                                                        helper.setProps(0);
-                                                        helper.setUser(ParseUser.getCurrentUser());
-                                                        helper.setUserId(ParseUser.getCurrentUser().getObjectId());
-                                                        helper.setVerification(false);
-                                                        helper.saveInBackground(new SaveCallback() {
-                                                            @Override
-                                                            public void done(ParseException e) {
-                                                                if(e == null){
-                                                                    finish();
-                                                                }
-                                                            }
-                                                        });
+                                                        finish();
                                                     }
                                                 }
                                             });
@@ -198,6 +209,83 @@ public class Signup_Login extends Activity implements View.OnClickListener{
             case R.id.bForgotPass:
                 Intent forGotIntent = new Intent(this, ForgotPassFrag.class);
                 startActivity(forGotIntent);
+                break;
+
+            case R.id.ibLogTwitter:
+                progressbar.setVisibility(View.VISIBLE);
+                ParseTwitterUtils.logIn(this, new LogInCallback() {
+                    @Override
+                    public void done(final ParseUser user, ParseException err) {
+                        if (user == null) {
+                            Log.d("MyApp", "Uh oh. The user cancelled the Twitter login.");
+                        } else if (user.isNew()) {
+                            user.put("DisplayName", "");
+                            user.put("InstagramHandle", "");
+                            user.put("SnapchatHandle", "");
+                            user.put("TwitterHandle", "");
+                            user.put("TumblrHandle", "");
+                            user.put("sawExplanation", false);
+
+
+                            final ParseFile parseFile = new ParseFile("proPic.jpeg", bytes);
+                            parseFile.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        user.put("Profile", parseFile);
+                                        user.signUpInBackground(new SignUpCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null) {
+                                                    //ParseInstallation.getCurrentInstallation().saveInBackground();
+                                                    Intent signedIntent = new Intent("com.socialgroupe.HOME");
+                                                    //signedIntent.putExtra("userId", ParseUser.getCurrentUser().getObjectId());
+                                                    startActivity(signedIntent);
+                                                    Toast.makeText(getApplicationContext(), "Profile Created.", Toast.LENGTH_SHORT).show();
+                                                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                                    installation.put("user", ParseUser.getCurrentUser());
+                                                    installation.saveInBackground(new SaveCallback() {
+                                                        @Override
+                                                        public void done(ParseException e) {
+                                                            if (e == null) {
+                                                                finish();
+                                                            }
+                                                        }
+                                                    });
+
+                                                } else {
+                                                    progressbar.setVisibility(View.GONE);
+                                                    Toast.makeText(getApplicationContext(), "Profile creation failed," +
+                                                            " check internet connection", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                            /*Intent signedIntent = new Intent("com.socialgroupe.HOME");
+                            //signedIntent.putExtra("userId", ParseUser.getCurrentUser().getObjectId());
+                            startActivity(signedIntent);
+                            finish();*/
+
+                        } else {
+                            Intent timeIntent = new Intent("com.socialgroupe.HOME");
+                            startActivity(timeIntent);
+                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                            installation.put("user", ParseUser.getCurrentUser());
+                            installation.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        finish();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+                break;
         }
     }
 

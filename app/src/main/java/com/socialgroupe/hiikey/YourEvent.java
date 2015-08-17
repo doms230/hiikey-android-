@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.DeleteCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -27,56 +30,45 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class YourEvent extends ActionBarActivity implements View.OnClickListener {
+public class YourEvent extends AppCompatActivity implements View.OnClickListener {
 
-    private String string;
-    private ListView listView;
-    private ProgressBar progressBar;
-    private LinearLayout linearLayout;
+    FlyerPager_Adapter mAdapter;
+
+    ViewPager mPager;
+
+    private ArrayList<String> flyerFile = new ArrayList<>();
+    private ArrayList<String> bulletinName = new ArrayList<>();
+    private ArrayList<String> flyerId = new ArrayList<>();
+    private ArrayList<String> flyerHashtag = new ArrayList<>();
+
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_your_event);
+        setContentView(R.layout.home_fragment_pager);
         Bundle bundle = getIntent().getExtras();
-        string = bundle.getString("user");
+        user = bundle.getString("user");
 
-        linearLayout = (LinearLayout)findViewById(R.id.llNoYourEvent);
-        linearLayout.setVisibility(View.VISIBLE);
+        /*Button deleteButton = (Button) findViewById(R.id.yourEventDelete);
+        deleteButton.setOnClickListener(this);
 
-        progressBar = (ProgressBar)findViewById(R.id.pbYourEventProgress);
-        progressBar.setVisibility(View.VISIBLE);
+        if(user.equals(ParseUser.getCurrentUser().getObjectId())){
+            deleteButton.setVisibility(View.VISIBLE);
+        }*/
 
-        listView = (ListView) findViewById(R.id.lvYourevents);
-
-        ParseObject.registerSubclass(PublicPost_Helper.class);
-
-        ParseQueryAdapter<PublicPost_Helper> mainAdapter = new ParseQueryAdapter<>(this, PublicPost_Helper.class);
-        mainAdapter.setTextKey("title");
-
-        reloadStuff(this);
+        loadStuff();
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.ibYourEventFlyer:
-                Intent intent = new Intent(this, SeeFlyer.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("objectId", v.getTag().toString());
-                intent.putExtras(bundle);
-                startActivity(intent);
-                break;
+        switch (v.getId()) {
 
-            case R.id.ibYourEventTrash:
+            case R.id.yourEventDelete:
                 openConfirmDeleteDialog(v);
-                break;
-
-            case R.id.bNoYourEvent:
-                Intent intent1 = new Intent(this, Promotion.class);
-                startActivity(intent1);
                 break;
 
             default:
@@ -85,7 +77,7 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
         }
     }
 
-    private void openConfirmDeleteDialog(final View view ){
+    private void openConfirmDeleteDialog(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.confirmDeleteTitle)
                 .setMessage(R.string.confirmDeleteMessage)
@@ -94,7 +86,7 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
                     public void onClick(DialogInterface dialog, int which) {
                         //yaornah = true;
 
-                        ParseObject.registerSubclass(PublicPostRemoved.class);
+                        ParseObject.registerSubclass(PublicPostRemoved_Helper.class);
                         ParseObject.registerSubclass(PublicPost_Helper.class);
                         ParseQuery<PublicPost_Helper> cladQuery = PublicPost_Helper.getQuery();
                         cladQuery.whereEqualTo("objectId", view.getTag().toString());
@@ -102,7 +94,7 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
                                                            @Override
                                                            public void done(final PublicPost_Helper publicPostHelper, ParseException e) {
                                                                if (e == null) {
-                                                                   PublicPostRemoved remove = new PublicPostRemoved();
+                                                                   PublicPostRemoved_Helper remove = new PublicPostRemoved_Helper();
 
                                                                    String title = publicPostHelper.getTitle();
                                                                    String address = publicPostHelper.getAddress();
@@ -119,15 +111,15 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
                                                                    remove.setDate(date);
                                                                    remove.setTime(time);
 
-                                                                   if(!website.equals("null")){
+                                                                   if (!website.equals("null")) {
                                                                        remove.setWebsite(website);
                                                                    }
 
-                                                                   if(!des.equals("null")){
+                                                                   if (!des.equals("null")) {
                                                                        remove.setDescription(des);
                                                                    }
 
-                                                                   if (!hashtag.equals("null")){
+                                                                   if (!hashtag.equals("null")) {
                                                                        remove.setHashtag(hashtag);
                                                                    }
                                                                    remove.setCategory(category);
@@ -142,14 +134,12 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
                                                                            publicPostHelper.deleteInBackground(new DeleteCallback() {
                                                                                @Override
                                                                                public void done(ParseException e) {
-                                                                                   reloadStuff(YourEvent.this);
+                                                                                   loadStuff();
                                                                                }
                                                                            });
                                                                        }
                                                                    });
-                                                               }
-
-                                                               else{
+                                                               } else {
                                                                    Toast.makeText(getApplicationContext(),
                                                                            "Deletion failed. Make sure your Internet is connected.",
                                                                            Toast.LENGTH_SHORT).show();
@@ -172,76 +162,40 @@ public class YourEvent extends ActionBarActivity implements View.OnClickListener
         alertDialog.show();
     }
 
-    private void reloadStuff(Context context){
-        YourBoardAdapter yourBoardAdapter = new YourBoardAdapter(context);
-        listView.setAdapter(yourBoardAdapter);
-        yourBoardAdapter.setAutoload(true);
-        yourBoardAdapter.loadObjects();
-        yourBoardAdapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<PublicPost_Helper>() {
-            @Override
-            public void onLoading() {
-                progressBar = (ProgressBar)findViewById(R.id.pbYourEventProgress);
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setIndeterminate(true);
-            }
+    private void loadStuff(){
+        flyerFile.clear();
+        bulletinName.clear();
+        flyerId.clear();
+        flyerHashtag.clear();
 
+        ParseQuery<PublicPost_Helper> loadFlyerData = PublicPost_Helper.getQuery();
+        loadFlyerData.whereEqualTo("userId", user);
+        loadFlyerData.findInBackground(new FindCallback<PublicPost_Helper>() {
             @Override
-            public void onLoaded(List<PublicPost_Helper> publicPostHelpers, Exception e) {
-                progressBar.setVisibility(View.GONE);
-                if(publicPostHelpers.isEmpty()){
+            public void done(List<PublicPost_Helper> list, ParseException e) {
+                if (e == null) {
 
-                    Button button = (Button)findViewById(R.id.bNoYourEvent);
-                    button.setOnClickListener(YourEvent.this);
-                } else{
-                    linearLayout.setVisibility(View.GONE);
+                    for(PublicPost_Helper getFlyerData : list){
+                        ParseFile parseFile = getFlyerData.getParseFile("Flyer");
+                        flyerFile.add(parseFile.getUrl());
+                        bulletinName.add(getFlyerData.getCategory());
+                        flyerId.add(getFlyerData.getObjectId());
+                        flyerHashtag.add(getFlyerData.getHashtag());
+                    }
+
+                    //NUM_ITEMS = list.size();
+                    mAdapter = new FlyerPager_Adapter(getFragmentManager());
+
+                    mAdapter.setFlyerFile(flyerFile);
+                    mAdapter.setBulletinName(bulletinName);
+                    mAdapter.setFlyerId(flyerId);
+                    mAdapter.setFlyerHashtag(flyerHashtag);
+                    mAdapter.setNUM_ITEMS(list.size());
+
+                    mPager = (ViewPager) findViewById(R.id.pager);
+                    mPager.setAdapter(mAdapter);
                 }
             }
         });
-    }
-
-    class YourBoardAdapter extends ParseQueryAdapter<PublicPost_Helper>{
-        public YourBoardAdapter(Context context){
-            super(context, new ParseQueryAdapter.QueryFactory<PublicPost_Helper>() {
-               public ParseQuery<PublicPost_Helper>create(){
-                   ParseQuery query = new ParseQuery("PublicPost");
-                   query.orderByDescending("createdAt")
-                        .whereEqualTo("userId", string );
-                   return query;
-               }
-            });
-        }
-
-        @Override
-        public View getItemView(PublicPost_Helper object, View v, ViewGroup parent) {
-            if(v == null){
-                v = View.inflate(getContext(), R.layout.activity_row_yourevent, null);
-            }
-            super.getItemView(object, v, parent);
-
-            ImageButton deleteFlyer = (ImageButton)v.findViewById(R.id.ibYourEventTrash);
-            deleteFlyer.setOnClickListener(YourEvent.this);
-            deleteFlyer.setTag(object.getObjectId());
-
-            if(object.getUser().equals(ParseUser.getCurrentUser())){
-                deleteFlyer.setVisibility(View.VISIBLE);
-            } else{
-                deleteFlyer.setVisibility(View.GONE);
-            }
-
-            ImageButton showFlyer = (ImageButton)v.findViewById(R.id.ibYourEventFlyer);
-            showFlyer.setTag(object.getObjectId());
-            showFlyer.setOnClickListener(YourEvent.this);
-
-            final ParseImageView parseImageView =
-                    (ParseImageView)v.findViewById(R.id.ivYourEventFlyer);
-
-            ParseFile parseFile = object.getParseFile("Flyer");
-            Picasso.with(YourEvent.this)
-                    .load(parseFile.getUrl())
-                    .resize(425,505)
-                    .centerCrop()
-                    .into(parseImageView);
-            return v;
-        }
     }
 }

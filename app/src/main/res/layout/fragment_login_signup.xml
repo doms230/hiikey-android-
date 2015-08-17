@@ -6,21 +6,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/snow"
-    tools:context="com.dominic.nopinion.socialgroupe.Signup_Login">
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="100dp">
-
-
+    android:id="@+id/rlLogLog"
+    tools:context="com.socialgroupe.hiikey.Signup_Login"
+    android:orientation="vertical"
+    android:background="@mipmap/backbackv2">
 
             <ProgressBar
                 android:layout_width="wrap_content"
@@ -35,6 +24,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/linearLayout5">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="50">
+
+                    <Button
+                        android:id="@+id/bSignup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/signup"
+                        android:background="#00ffffff"
+                        android:textColor="@color/appColor"
+                        android:padding="5dp"
+                        android:textSize="12sp"
+                        android:layout_weight="50"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/imageView3"
+                        android:layout_weight="50"
+                        android:src="@drawable/ic_launcher_hiikey" />
+
+                    <Button
+                        android:id="@+id/bSignIn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/action_sign_in_short"
+                        android:background="#00ffffff"
+                        android:textColor="@color/appColor"
+                        android:textSize="12sp"
+                        android:padding="5dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="50"
+                        style="@style/Base.TextAppearance.AppCompat.Headline"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <EditText
                     android:layout_width="fill_parent"
@@ -63,39 +96,39 @@
                     android:textColorHint="@color/appColor"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="100"
-                    android:layout_marginTop="20dp">
-
-                    <Button
-                        android:id="@+id/bSignIn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_sign_in_short"
-                        android:background="@color/appColor"
-                        android:textColor="#ffffffff"
-                        android:textSize="30sp"
-                        android:padding="5dp"
-                        android:layout_gravity="end"
-                        android:layout_weight="50"
-                        style="@style/Base.TextAppearance.AppCompat.Headline"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
                 <Button
                     android:id="@+id/bForgotPass"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/forgotPassword"
-                    android:background="@android:color/transparent"
+                    android:background="#00ffffff"
                     android:textColor="@color/appColor"
                     android:visibility="visible"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_horizontal" />
+
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/ivBlur"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/appColor"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/ibLogTwitter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@mipmap/twitterbutton2" />
+
 </RelativeLayout>
+
