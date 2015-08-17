@@ -34,7 +34,7 @@
             android:layout_gravity="center_horizontal|top"
             android:background="#96020206"
             android:id="@+id/llHomeBulletin"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageButton
                 android:layout_width="100dp"
