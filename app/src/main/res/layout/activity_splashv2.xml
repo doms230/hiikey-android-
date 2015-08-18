@@ -1,0 +1,96 @@
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/splash"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="68dp"
+            android:id="@+id/ivCladderRank"
+            android:src="@drawable/ic_launcher_hiikey"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="455dp">
+
+        <Button
+            android:id="@+id/bSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:text="@string/action_sign_in_short"
+            android:background="#ff050505"
+            android:textColor="#ffffffff"
+            android:textSize="25sp"
+            android:padding="2dp"
+            android:layout_gravity="end"
+            android:layout_weight="0.5"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:textStyle="bold"
+            android:onClick="signIn"/>
+
+        <Button
+            android:id="@+id/bSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup"
+            android:background="@color/appColor"
+            android:textColor="#ffffffff"
+            android:padding="2dp"
+            android:textSize="25sp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginStart="62dp"
+            android:textStyle="bold"
+            android:onClick="signUp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="500dp">
+
+        <Button
+            android:id="@+id/explore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/explore"
+            android:background="@android:color/transparent"
+            android:textColor="#ffffffff"
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:onClick="explore"
+
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>
