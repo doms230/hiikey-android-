@@ -3,7 +3,7 @@
 
 Private Repository Hiikey, the event discovery and promotion app. #savetreesusehiikey
 
-* Version 1.4.3
+* Version 1.5.0
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### Major Dependencies ###
