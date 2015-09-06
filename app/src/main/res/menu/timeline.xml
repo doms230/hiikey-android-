@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.dominic.nopinion.socialgroupe.PublicBoardFrag">
+    tools:context="com.socialgroupe.hiikeyandroid.PublicBoardFrag">
 
     <item android:id = "@+id/action_myProfile"
         android:icon="@drawable/ic_action_person_white"
@@ -11,6 +11,12 @@
 
     <item android:id = "@+id/action_newFlyer"
         android:icon="@drawable/ic_action_new_pwhite"
+        android:title="@string/title_newEvent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:showAsAction="always"/>
+
+    <item android:id = "@+id/action_search2"
+        android:icon="@drawable/ic_action_search_white"
         android:title="@string/title_newEvent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:showAsAction="always"/>

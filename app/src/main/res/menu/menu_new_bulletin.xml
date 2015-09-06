@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.socialgroupe.hiikey.NewBulletin">
+    tools:context="com.socialgroupe.hiikeyandroid.NewBulletin">
 
     <item android:id="@+id/action_finish_new_bulletin" android:title="@string/title_activity_new_bulletin"
         android:orderInCategory="1" app:showAsAction="always"

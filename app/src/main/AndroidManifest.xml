@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.socialgroupe.hiikey" >
+    package="com.socialgroupe.hiikeyandroid" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -38,14 +38,14 @@
     -->
 
     <permission
-        android:name="com.socialgroupe.hiikey.permission.C2D_MESSAGE"
+        android:name="com.socialgroupe.hiikeyandroid.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.socialgroupe.hiikey.permission.C2D_MESSAGE" />
 
     <!-- ******************************* -->
     <application
-        android:name=".Application"
+        android:name="com.socialgroupe.hiikeyandroid.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_hiikey"
         android:label="@string/app_name"
@@ -59,9 +59,9 @@
         //////////////////////////Splash//////////////////////////////////////////////////
         /////////////////////////////////Profile/////////////////////////
         <activity
-            android:name=".Profile"
+            android:name="com.socialgroupe.hiikeyandroid.Profile"
             android:label="@string/title_activity_profile"
-            android:parentActivityName=".Home"
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroupe.PROFILE" />
@@ -71,11 +71,11 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Home" />
+                android:value="com.socialgroupe.hiikeyandroid.Home" />
         </activity>
         //////////////////////////////////////////////////////////////
         <activity
-            android:name=".Splash"
+            android:name="com.socialgroupe.hiikeyandroid.Splash"
             android:label="Splash"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -85,7 +85,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Event_Info"
+            android:name="com.socialgroupe.hiikeyandroid.Event_Info"
             android:label="@string/title_activity_new_post"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -96,7 +96,7 @@
         </activity>
         //////////////////////Forgot Password////////////////////////////////////////////////////
         <activity
-            android:name=".ForgotPassFrag"
+            android:name="com.socialgroupe.hiikeyandroid.ForgotPassFrag"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.socialgroupe.FORGOTPASSWORD" />
@@ -106,7 +106,7 @@
         </activity>
         ////////////////////////////////////Edit profile////////////////////////////////////////////
         <activity
-            android:name=".EditProfile"
+            android:name="com.socialgroupe.hiikeyandroid.EditProfile"
             android:label="@string/title_activity_edit_profile"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -123,7 +123,7 @@
 
         <!-- -New Design/New Event -->
         <activity
-            android:name=".NewDesign"
+            android:name="com.socialgroupe.hiikeyandroid.NewDesign"
             android:label="@string/title_activity_new_event"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar" >
@@ -136,7 +136,7 @@
 
         <!-- -Promotion/Privacy Setting -->
         <activity
-            android:name=".Promotion"
+            android:name="com.socialgroupe.hiikeyandroid.Promotion"
             android:label="@string/title_activity_privacy"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -154,32 +154,32 @@
 
         <!-- -Events the User Created/is Hosting -->
         <activity
-            android:name=".YourEvent"
+            android:name="com.socialgroupe.hiikeyandroid.YourEvent"
             android:label="@string/title_activity_your_event"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Home" />
+                android:value="com.socialgroupe.hiikeyandroid.Home" />
         </activity>
 
         <!-- -Users hosting the current user -->
         <activity
-            android:name=".Hosts"
+            android:name="com.socialgroupe.hiikeyandroid.Hosts"
             android:label="@string/title_activity_hosts"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Home" />
+                android:value="com.socialgroupe.hiikeyandroid.Home" />
         </activity>
 
         <!-- -Users on the current user's guest list -->
         <activity
-            android:name=".Guests"
+            android:name="com.socialgroupe.hiikeyandroid.Guests"
             android:label="@string/title_activity_guests"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Home" />
+                android:value="com.socialgroupe.hiikeyandroid.Home" />
         </activity>
         <!-- Parse stuff ************************************ -->
 
@@ -218,9 +218,9 @@
 
         <!-- -User Profile -->
         <activity
-            android:name=".MyProfile"
+            android:name="com.socialgroupe.hiikeyandroid.MyProfile"
             android:label="MyProfile"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.MYPROFILE" />
 
@@ -229,7 +229,7 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.socialgroupe.hiikey.Home" />
+                android:value="com.socialgroupe.hiikeyandroid.Home" />
         </activity>
 
         <!-- -Bulletin -->
@@ -252,9 +252,9 @@
 
         <!-- -Search -->
         <activity
-            android:name=".Search"
+            android:name="com.socialgroupe.hiikeyandroid.Search"
             android:label="@string/search"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.SEARCHBULLETINS" />
 
@@ -268,7 +268,7 @@
 
         <!-- -Home- -->
         <activity
-            android:name=".Home"
+            android:name="com.socialgroupe.hiikeyandroid.Home"
             android:label="Home"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -280,9 +280,9 @@
 
         <!-- -Interested- -->
         <activity
-            android:name=".InterestedFrag"
+            android:name="com.socialgroupe.hiikeyandroid.InterestedFrag"
             android:label="Interested"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.INTERESTED" />
 
@@ -290,9 +290,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Signup_Login"
+            android:name="com.socialgroupe.hiikeyandroid.Signup_Login"
             android:label="Login"
-            android:parentActivityName=".Home" >
+            android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
                 <action android:name="com.socialgroupe.SIGNIN_SIGNUP" />
 
@@ -300,7 +300,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.socialgroupe.hiikeyandroid.MainActivity"
             android:label="@string/app_name"
           >
             <intent-filter>

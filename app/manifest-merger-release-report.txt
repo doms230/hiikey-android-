@@ -73,13 +73,13 @@ uses-permission#com.google.android.c2dm.permission.RECEIVE
 ADDED from AndroidManifest.xml:31:5
 	android:name
 		ADDED from AndroidManifest.xml:31:22
-permission#com.socialgroupe.hiikey.permission.C2D_MESSAGE
+permission#hiikeyandroid.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:41:5
 	android:protectionLevel
 		ADDED from AndroidManifest.xml:43:9
 	android:name
 		ADDED from AndroidManifest.xml:42:9
-uses-permission#com.socialgroupe.hiikey.permission.C2D_MESSAGE
+uses-permission#hiikeyandroid.permission.C2D_MESSAGE
 ADDED from AndroidManifest.xml:45:5
 	android:name
 		ADDED from AndroidManifest.xml:45:22
@@ -222,7 +222,7 @@ MERGED from com.google.android.gms:play-services-base:7.0.0:21:9
 		ADDED from AndroidManifest.xml:59:13
 	android:name
 		ADDED from AndroidManifest.xml:58:13
-activity#com.socialgroupe.hiikey.Splash
+activity#hiikeyandroid.Splash
 ADDED from AndroidManifest.xml:61:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:64:13
@@ -240,7 +240,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:68:17
 	android:name
 		ADDED from AndroidManifest.xml:68:27
-activity#com.socialgroupe.hiikey.Profile
+activity#hiikeyandroid.Profile
 ADDED from AndroidManifest.xml:72:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:76:13
@@ -266,7 +266,7 @@ ADDED from AndroidManifest.xml:83:13
 		ADDED from AndroidManifest.xml:85:17
 	android:name
 		ADDED from AndroidManifest.xml:84:17
-activity#com.socialgroupe.hiikey.Event_Info
+activity#hiikeyandroid.Event_Info
 ADDED from AndroidManifest.xml:88:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:91:13
@@ -282,7 +282,7 @@ action#com.socialgroupe.NEWPOST
 ADDED from AndroidManifest.xml:94:17
 	android:name
 		ADDED from AndroidManifest.xml:94:25
-activity#com.socialgroupe.hiikey.Counter
+activity#hiikeyandroid.Counter
 ADDED from AndroidManifest.xml:100:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:104:13
@@ -298,7 +298,7 @@ action#com.socialgroupe.COUNTER
 ADDED from AndroidManifest.xml:106:17
 	android:name
 		ADDED from AndroidManifest.xml:106:25
-activity#com.socialgroupe.hiikey.ForgotPassFrag
+activity#hiikeyandroid.ForgotPassFrag
 ADDED from AndroidManifest.xml:116:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:118:13
@@ -310,7 +310,7 @@ action#com.socialgroupe.FORGOTPASSWORD
 ADDED from AndroidManifest.xml:120:17
 	android:name
 		ADDED from AndroidManifest.xml:120:25
-activity#com.socialgroupe.hiikey.EditProfile
+activity#hiikeyandroid.EditProfile
 ADDED from AndroidManifest.xml:126:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:129:13
@@ -326,7 +326,7 @@ action#com.socialgroupe.EDITPROFILE
 ADDED from AndroidManifest.xml:132:17
 	android:name
 		ADDED from AndroidManifest.xml:132:25
-activity#com.socialgroupe.hiikey.SeeFlyer
+activity#hiikeyandroid.SeeFlyer
 ADDED from AndroidManifest.xml:138:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:142:13
@@ -348,7 +348,7 @@ ADDED from AndroidManifest.xml:154:9
 		ADDED from AndroidManifest.xml:156:13
 	android:name
 		ADDED from AndroidManifest.xml:155:13
-activity#com.socialgroupe.hiikey.NewDesign
+activity#hiikeyandroid.NewDesign
 ADDED from AndroidManifest.xml:158:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:161:13
@@ -364,7 +364,7 @@ action#com.socialgroupe.NEWEVENT
 ADDED from AndroidManifest.xml:164:17
 	android:name
 		ADDED from AndroidManifest.xml:164:25
-activity#com.socialgroupe.hiikey.Board
+activity#hiikeyandroid.Board
 ADDED from AndroidManifest.xml:169:9
 	android:uiOptions
 		ADDED from AndroidManifest.xml:171:13
@@ -376,7 +376,7 @@ action#com.socialgroupe.BOARD
 ADDED from AndroidManifest.xml:173:17
 	android:name
 		ADDED from AndroidManifest.xml:173:25
-activity#com.socialgroupe.hiikey.Promotion
+activity#hiikeyandroid.Promotion
 ADDED from AndroidManifest.xml:178:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:181:13
@@ -392,7 +392,7 @@ action#com.socialgroupe.PROMOTION
 ADDED from AndroidManifest.xml:184:17
 	android:name
 		ADDED from AndroidManifest.xml:184:25
-activity#com.socialgroupe.hiikey.Signup_Login
+activity#hiikeyandroid.Signup_Login
 ADDED from AndroidManifest.xml:189:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:192:13
@@ -406,7 +406,7 @@ action#com.socialgroupe.LOGIN
 ADDED from AndroidManifest.xml:194:17
 	android:name
 		ADDED from AndroidManifest.xml:194:25
-activity#com.socialgroupe.hiikey.BoardStuff
+activity#hiikeyandroid.BoardStuff
 ADDED from AndroidManifest.xml:199:9
 	android:label
 		ADDED from AndroidManifest.xml:201:13
@@ -420,7 +420,7 @@ action#com.socialgroupe.BOARDSTUFF
 ADDED from AndroidManifest.xml:204:17
 	android:name
 		ADDED from AndroidManifest.xml:204:25
-activity#com.socialgroupe.hiikey.YourEvent
+activity#hiikeyandroid.YourEvent
 ADDED from AndroidManifest.xml:209:9
 	android:label
 		ADDED from AndroidManifest.xml:211:13
@@ -428,7 +428,7 @@ ADDED from AndroidManifest.xml:209:9
 		ADDED from AndroidManifest.xml:212:13
 	android:name
 		ADDED from AndroidManifest.xml:210:13
-activity#com.socialgroupe.hiikey.Hosts
+activity#hiikeyandroid.Hosts
 ADDED from AndroidManifest.xml:217:9
 	android:label
 		ADDED from AndroidManifest.xml:219:13
@@ -436,7 +436,7 @@ ADDED from AndroidManifest.xml:217:9
 		ADDED from AndroidManifest.xml:220:13
 	android:name
 		ADDED from AndroidManifest.xml:218:13
-activity#com.socialgroupe.hiikey.Guests
+activity#hiikeyandroid.Guests
 ADDED from AndroidManifest.xml:225:9
 	android:label
 		ADDED from AndroidManifest.xml:227:13
@@ -488,7 +488,7 @@ ADDED from AndroidManifest.xml:252:9
 		ADDED from AndroidManifest.xml:254:13
 	android:name
 		ADDED from AndroidManifest.xml:253:13
-intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.socialgroupe.hiikey
+intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+hiikeyandroid
 ADDED from AndroidManifest.xml:255:13
 action#com.google.android.c2dm.intent.RECEIVE
 ADDED from AndroidManifest.xml:256:17
@@ -498,7 +498,7 @@ action#com.google.android.c2dm.intent.REGISTRATION
 ADDED from AndroidManifest.xml:257:17
 	android:name
 		ADDED from AndroidManifest.xml:257:25
-category#com.socialgroupe.hiikey
+category#hiikeyandroid
 ADDED from AndroidManifest.xml:260:17
 	android:name
 		ADDED from AndroidManifest.xml:260:27
@@ -508,7 +508,7 @@ ADDED from AndroidManifest.xml:264:9
 		ADDED from AndroidManifest.xml:266:13
 	android:name
 		ADDED from AndroidManifest.xml:265:13
-activity#com.socialgroupe.hiikey.Tutorial
+activity#hiikeyandroid.Tutorial
 ADDED from AndroidManifest.xml:268:9
 	android:label
 		ADDED from AndroidManifest.xml:270:13
@@ -516,7 +516,7 @@ ADDED from AndroidManifest.xml:268:9
 		ADDED from AndroidManifest.xml:271:13
 	android:name
 		ADDED from AndroidManifest.xml:269:13
-activity#com.socialgroupe.hiikey.SearchStuff
+activity#hiikeyandroid.SearchStuff
 ADDED from AndroidManifest.xml:276:9
 	android:label
 		ADDED from AndroidManifest.xml:278:13
@@ -530,7 +530,7 @@ action#com.socialgroupe.SEARCHSTUFF
 ADDED from AndroidManifest.xml:281:17
 	android:name
 		ADDED from AndroidManifest.xml:281:25
-activity#com.socialgroupe.hiikey.MyProfile
+activity#hiikeyandroid.MyProfile
 ADDED from AndroidManifest.xml:290:9
 	android:label
 		ADDED from AndroidManifest.xml:290:45
