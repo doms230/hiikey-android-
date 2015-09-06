@@ -53,7 +53,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
     private HorizontalScrollView filterColors, designLayouts;
     private String category;
     private Bundle createFlyInfo;
-    private double latitude, longitude; //
+    private double latitude, longitude; ////
     private byte[] bytes;
     private ProgressBar pr;
     private ImageButton upload, uploadDismiss;
