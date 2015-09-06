@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.socialgroupe.hiikey.EditProfile">
+    tools:context="com.socialgroupe.hiikeyandroid.EditProfile">
 
     <item android:id="@+id/action_editProfile_upate" android:title="@string/title_activity_new_bulletin"
         android:orderInCategory="1" app:showAsAction="always"
