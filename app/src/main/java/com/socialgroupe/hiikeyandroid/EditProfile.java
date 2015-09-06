@@ -42,7 +42,7 @@ public class EditProfile extends ActionBarActivity implements View.OnClickListen
    private String stringInstagram;
        private String stringTumblr;
      private String stringTwitter;
-     private String stringSnapChat; //
+     private String stringSnapChat; //helloo
      private String displayName;
      private ImageButton changeProPic;
       private static final int REQUEST_IMAGE_GET = 1;
