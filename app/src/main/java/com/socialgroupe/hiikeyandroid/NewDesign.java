@@ -7,6 +7,9 @@ import android.view.WindowManager;
 
 import com.parse.ParseObject;
 
+/**
+ * Parent Activity for UploardFlyer.Java and CreateFLyer_Frag.Java
+ */
 public class NewDesign extends FragmentActivity {
 
     @Override

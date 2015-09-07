@@ -42,6 +42,8 @@ import java.util.List;
 
 /**
  * Created by Dominic on 8/8/15.
+ * fragment used to load the flyer data into the main UI
+ * parent activity: Home.Java
  */
 public class Home_fragment extends ListFragment implements View.OnClickListener {
         int mNum;
@@ -215,6 +217,9 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
 
                 case R.id.ibHomeInfo:
 
+                    /**
+                     * queries for the flyer info: PublicPost database class.
+                     */
                     ParseQuery<PublicPost_Helper> getInfo = PublicPost_Helper.getQuery();
                     getInfo.whereEqualTo("objectId", flyerId.get(mNum))
                     .getFirstInBackground(new GetCallback<PublicPost_Helper>() {
@@ -268,6 +273,10 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
                     }
                     break;
 
+                /**
+                 * let's the user like the flyer.
+                 * adds a new column to the Favorites database class.
+                 */
                 case R.id.ibHomeLike:
                     if (!liked) {
                         Favorites_Helper favThat = new Favorites_Helper();
@@ -303,6 +312,10 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
                     }
                     break;
 
+                /**
+                 * let's the user share the flyer elsewhere.
+                 * does a query in the PublicPost database class for the hashtag and flyer
+                 */
                 case R.id.ibHomeShare:
                     progressShare.setVisibility(View.VISIBLE);
                     final String flyerHasher;
@@ -342,7 +355,14 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
                                 }
                             });
                     break;
-
+                /**
+                 * queries the database for the bulletin board info and the whether or not the user
+                 * subscribed to the bulletin board.
+                 *
+                 * if the bulletin board name is local, which is the basic bulletin, the hiikey stops
+                 * there and simply displays local. No use in going any further since the user can't
+                 * subscribe or un-subscribe from local.
+                 */
                 case R.id.ibHomeBulletin:
                     if (!bulletinNameList.get(mNum).equals("LOCAL")) {
                         ParseQuery<Subscribe_Helper> seeSubscription = Subscribe_Helper.getData();
@@ -449,6 +469,16 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
         }
     }
 
+    /**
+     * open a dialog that shows the flyer info. Also gives the user the ability to map the address,
+     * and go to the website.
+     * @param description
+     * @param title
+     * @param hashtag
+     * @param website
+     * @param address
+     * @param location
+     */
     private void openInfoDialog(String description, String title, String hashtag,
                                  final String website, final String address, final String location){
 
@@ -486,6 +516,11 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
         alertDialog.show();
     }
 
+    /**
+     * opens dialog that confirms the user wants to delete the flyer.
+     * if the user clicks yes, hiikey queries the flyer and deletes it from the PublicPost database class
+     * and add it to the PublicPost_removed database class.
+     */
     private void openConfirmDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.confirmDeleteTitle)
@@ -575,6 +610,13 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
         alertDialog.show();
     }
 
+    /**
+     * function to load the flyer info.
+     * loads the amount of people who have liked the flyer.
+     * also decides whether or not the current user has liked the flyer.
+     * if yes, then the heart will be red.
+     * if no, then the heart will be white.
+     */
     private void loadStuff(){
         ParseQuery<PublicPost_Helper> isOwner = PublicPost_Helper.getQuery();
         isOwner.whereEqualTo("objectId", flyerId.get(mNum))

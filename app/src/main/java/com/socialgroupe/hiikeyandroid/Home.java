@@ -28,6 +28,10 @@ import java.util.List;
 
 /**
  * Created by Dominic on 8/5/15.
+ * Home is a parent activity.
+ * Fragment: Home_fragment
+ *
+ * Home is where the users see the flyers.
  *
  */
 
@@ -111,6 +115,14 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 getSupportActionBar().getSelectedNavigationIndex());
     }
 
+    /**
+     *
+     * @param position
+     * @param id
+     * @return
+     * functions that decides which data to load.
+     *
+     */
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
         // When the given dropdown item is selected, show its contents in the
@@ -255,6 +267,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                 });
                 break;
 
+            /**
+             * liked flyers was selected
+             */
             case 3:
                 flyerFile.clear();
                 bulletinName.clear();
@@ -364,6 +379,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                     startActivity(a);
                     finish();
                 }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

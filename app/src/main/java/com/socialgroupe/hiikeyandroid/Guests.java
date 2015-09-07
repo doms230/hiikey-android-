@@ -24,6 +24,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used to show a list of the chosen user's Guest list.
+ */
 
 public class Guests extends ActionBarActivity implements View.OnClickListener {
 
@@ -115,6 +118,11 @@ public class Guests extends ActionBarActivity implements View.OnClickListener {
                     }
                 });
     }
+
+    /**
+     * ParseQueryAdapter<ParseObject> is a custom adapter class created Parse
+     * to make it easier for people to load their parse data into a listView/GridView
+     */
 
     class GuestAdapter extends ParseQueryAdapter<ParseUser> {
         public GuestAdapter(Context context, final List list){

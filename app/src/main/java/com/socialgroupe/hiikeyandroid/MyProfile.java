@@ -28,9 +28,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-Class where people view and edit their profile.
- */
+/**
+*Class where people view and edit their profile.
+ **/
 
 public class MyProfile extends AppCompatActivity implements View.OnClickListener{
 

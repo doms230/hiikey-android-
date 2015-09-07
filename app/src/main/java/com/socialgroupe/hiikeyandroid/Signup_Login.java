@@ -39,7 +39,7 @@ import java.io.IOException;
 /**
  * Created By: Dominic
  *
- * Fragment class used to signin/ signup people for imboard.
+ * Fragment class used to signin/ signup people for Hiikey.
  *
  * Parent Activity: SignupAct.class
  *
@@ -145,6 +145,10 @@ public class Signup_Login extends Activity implements View.OnClickListener{
 
                         progressbar.setVisibility(View.VISIBLE);
 
+                        /**
+                         * REQUIRED: for some reason if the columns below aren't created when
+                         * the user first signups, he/she will not be able to edit later.
+                         */
                         final ParseUser user = new ParseUser();
                         user.setUsername(username.toLowerCase());
                         user.setPassword(password);

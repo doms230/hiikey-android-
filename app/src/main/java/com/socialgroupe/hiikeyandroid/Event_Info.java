@@ -1,15 +1,5 @@
 package com.socialgroupe.hiikeyandroid;
 
-/**
-Class where all of the users put in the flyer information.
-
- New 7/20/2015:
-        *Ln 501: Added method where the bulletin spinner only loads the bulletins that the user created along with the basic bulletin "LOCAL"
-        *Ln 273 Added method where Hiikey checks the privacy setting beforehand. Bulletin will show "PRIVATE " if the user chose private.
-        * Ln 217: Added validation method where Hiikey doest a check to make user that the user entered in a valid website url
-        * Ln 80: Added method where Hiikey checks to see if the address or location entered is valid after he or she is finished editing.
-
-        */
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -163,6 +153,10 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    /***
+     * function validate all of the info stated below.
+     *
+     */
     private void validateInfo(String location, EditText lo, String date,
                               String time, String title, EditText tit, String website, EditText web){
 
@@ -214,6 +208,9 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         finish();
     }
 
+    /**
+     * function to put the event info in a bundle and send it to the activity.
+     */
     private void customNext() {
 
         String stringFlyHashtag = flyHashtag.getText().toString();
@@ -267,6 +264,11 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
                 }
              }
 
+    /**
+     * function to choose the event date.
+     * returns date in 1/1/2015 orientation.
+     * @param date
+     */
     private void date_picker(final Button date){
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
@@ -285,6 +287,12 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         dpd.show();
     }
 
+    /**
+     * function to choose the event time.
+     * the time is is returned on a 24 hr. clock by default,
+     * so the switch statement below converts the time to 12 hr. clock.
+     * @param time
+     */
     private void time_picker(final Button time){
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -441,6 +449,9 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         tpd.show();
     }
 
+    /**
+     * initializes all of the main UI components.
+     */
     private void initialize_post() {
 
         privacy = getIntent().getExtras().getString("privacy");

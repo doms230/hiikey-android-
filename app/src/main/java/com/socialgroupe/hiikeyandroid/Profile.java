@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Class to load the selected user's profile.
+ */
 
 public class Profile extends ActionBarActivity implements View.OnClickListener{
 

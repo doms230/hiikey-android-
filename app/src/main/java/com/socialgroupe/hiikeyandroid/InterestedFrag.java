@@ -22,6 +22,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment used to see who is interested in the selected Flyer.
+ */
 
 public class InterestedFrag extends ActionBarActivity implements View.OnClickListener {
 

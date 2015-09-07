@@ -1,8 +1,8 @@
 package com.socialgroupe.hiikeyandroid;
 
-/*/
-Class where the flyer design is handled.
- */
+/**
+ * Class where the flyer design is handled.
+ **/
 
 import android.content.Context;
 import android.content.Intent;
@@ -222,6 +222,12 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     *
+     * @param view
+     * createFlyer is used to set up the Ui components of the activity.
+     * It is also used to retrieve the strings from the last Event_info.Java
+     */
     private void createFlyer(View view){
 
         filter = (ImageView)view.findViewById(R.id.ivFilter);
@@ -316,10 +322,18 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         designLayouts = (HorizontalScrollView)view.findViewById(R.id.svDesignLayouts);
     }
 
+    /**
+     * function to publish the flyer publicly
+     */
     private void publicPublish(){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Processing...", Toast.LENGTH_SHORT).show();
 
+        /**
+         * retrieves the title, category/bulletin, date, time, hashtag,
+         * website, description, address, location, user, userId, privacy/acl,
+         * flyer, and saves it as a new column in the PublicPust database class.
+         */
         final PublicPost_Helper pubPost = new PublicPost_Helper();
         pubPost.setTitle(stitle);
         pubPost.setCategory(category);
@@ -364,7 +378,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
                                 push.setMessage("A new event has been published in " + category + "!" );
                                 push.sendInBackground() ;*/
                                 getActivity().finish();
-                            } else{
+                            } else {
                                 Toast.makeText(getActivity().getApplicationContext(),
                                         "Publication failed. Make sure your Internet is connected.", Toast.LENGTH_SHORT).show();
                             }
@@ -380,10 +394,18 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * function to publish the flyer privately.
+     * When the info is saved, the creator's/host's guest list are
+     * given read access through parse's acl method.
+     */
     private void privatePublish(){
         Toast.makeText(getActivity().getApplicationContext(),
                 "Processing...", Toast.LENGTH_SHORT).show();
 
+        /**
+         * Same as PublicPost function
+         */
         final PublicPost_Helper privPost = new PublicPost_Helper();
 
         privPost.setTitle(stitle);
@@ -456,9 +478,20 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * function to publish the flyer exclusively.
+     * whomever the creator/host chose to be invited will be given read access
+     * through parse's acl function.
+     *
+     */
+
    private void exclusivePublish(){
        Toast.makeText(getActivity().getApplicationContext(),
                "Processing...", Toast.LENGTH_SHORT).show();
+
+       /**
+        * Same as PublicPost function
+        */
 
        final PublicPost_Helper exPost = new PublicPost_Helper();
 
@@ -532,6 +565,9 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
        });
    }
 
+    /**
+     * function that takes the pic and edits it.
+     */
     private void savy(){
         background.setDrawingCacheEnabled(true);
         Bitmap bitmap = Bitmap.createBitmap(background.getDrawingCache());
@@ -541,6 +577,16 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         bytes = bos.toByteArray();
     }
+
+    /**
+     *
+     * @param context
+     * @param uri
+     * @param imageView
+     * @return
+     *
+     * saveFlyer takes the image and resizes it to be saved to the database.
+     */
 
     private Bitmap saveFlyer(Context context, Uri uri, RelativeLayout imageView) {
         /**
@@ -605,6 +651,15 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         }
         return null;
     }
+
+    /**
+     *
+     * @param context
+     * @param uri
+     * @return
+     *
+     * gets orientation for rotation.
+     */
 
     private static int getOrientation(Context context, Uri uri) {
         Cursor cursor = context.getContentResolver().query(uri,

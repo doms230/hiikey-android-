@@ -74,6 +74,11 @@ public class EditProfile extends ActionBarActivity implements View.OnClickListen
         changeProPic = (ImageButton)findViewById(R.id.ivUploadProfilePicture);
         changeProPic.setOnClickListener(this);
 
+        /**
+         * updateProfileParseQuery retrieves the user's profile information for editing.
+         *
+         */
+
         ParseQuery<ParseUser> updateProfileParseQuery = ParseUser.getQuery();
         updateProfileParseQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
         updateProfileParseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
@@ -180,6 +185,10 @@ public class EditProfile extends ActionBarActivity implements View.OnClickListen
         }
     }
 
+    /**
+     * dialogs for user's social networks.
+     * When the user presses on the social network button, the corresponding editText dialog shows.
+     */
     private void dialogs(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -273,6 +282,12 @@ public class EditProfile extends ActionBarActivity implements View.OnClickListen
         snapAlert = snapBuilder.create();
     }
 
+    /**
+     *
+     *
+     * saveFlyer takes the image and resizes it to be saved to the database.
+     */
+
     private Bitmap saveFlyer(Context context, Uri uri, ImageView imageView){
 /******
  * where I got this from:
@@ -351,6 +366,10 @@ public class EditProfile extends ActionBarActivity implements View.OnClickListen
         return cursor.getInt(0);
     }
 
+    /**
+     * updateProfile queries the users' info and updates it with the info entered
+     * the hiikey app.
+     */
     private void updateProfile(){
         ParseQuery<ParseUser> updateProfileParseQuery = ParseUser.getQuery();
         updateProfileParseQuery.whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());

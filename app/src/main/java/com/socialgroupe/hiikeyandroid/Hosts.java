@@ -25,6 +25,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class that allows the current user to see the selected user's hosts.
+ */
 
 public class Hosts extends ActionBarActivity implements View.OnClickListener {
     private ListView gridView;
@@ -111,6 +114,11 @@ public class Hosts extends ActionBarActivity implements View.OnClickListener {
                     }
                 });
     }
+
+    /**
+     * ParseQueryAdapter<ParseObject> is custom adapter created by parse.com to make
+     * it easier for people to load data into listview/gridview
+     */
 
     class HostAdapter extends ParseQueryAdapter<ParseUser>{
         public HostAdapter(Context context, final List list){

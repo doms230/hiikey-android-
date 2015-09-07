@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Dominic on 8/15/15.
+ * Adapter used to attach the flyer info into the their string arrays
  */
 public class FlyerPager_Adapter extends FragmentStatePagerAdapter {
 

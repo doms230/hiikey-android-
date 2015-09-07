@@ -49,7 +49,11 @@ public class ForgotPassFrag extends Activity implements View.OnClickListener {
 
             case R.id.bOK:
                 String sEmail = email.getText().toString();
-
+                /**
+                 * queries the database to insure to see if the email entered exists.
+                 * if exists, the user is taken back to the log in screen.
+                 * if not, the user is notified that the email doesn't exist.
+                 */
                 ParseUser.requestPasswordResetInBackground(sEmail,
                         new RequestPasswordResetCallback() {
                             @Override
