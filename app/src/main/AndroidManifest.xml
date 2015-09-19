@@ -256,7 +256,7 @@
             android:label="@string/search"
             android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
-                <action android:name="com.socialgroupe.SEARCHBULLETINS" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

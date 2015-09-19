@@ -4,7 +4,6 @@
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout android:orientation="horizontal"
         android:gravity="center" android:measureWithLargestChild="true"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -27,6 +26,15 @@
             android:textColor="@color/appColor"
             android:textStyle="bold">
         </Button>
+        <Button android:id = "@+id/location"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_weight="1"
+            android:background = "@color/white"
+            android:text = "@string/location"
+            android:textColor="@color/appColor"
+            android:textStyle="bold">
+        </Button>>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager
