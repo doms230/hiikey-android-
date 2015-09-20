@@ -174,11 +174,18 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                         });
                 break;
 
+            /**
+             * If the current user, their given the option to edit their profile info.
+             */
+
             case R.id.bEditProfile:
                 Intent intent = new Intent(this, EditProfile.class);
                 startActivity(intent);
                 break;
 
+            /**
+             * When clicked, shows how many events the profile user is hosting.
+             */
             case R.id.llEventNumber:
                 Intent intent1 = new Intent(this, YourEvent.class);
                 Bundle bundle = new Bundle();
@@ -187,6 +194,9 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                 startActivity(intent1);
                 break;
 
+            /**
+             * Let's the current user see who's hosting the profile user.
+             */
             case R.id.llHostNumber:
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("host", profileUserstring);
@@ -196,6 +206,9 @@ public class Profile extends ActionBarActivity implements View.OnClickListener{
                 hostList.clear();
                 break;
 
+            /**
+             * Let's the current see who's on the profile user's guest list.
+             */
             case R.id.llGuestNumber:
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("guest", profileUserstring);

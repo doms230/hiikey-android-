@@ -9,6 +9,12 @@ import com.parse.ParseObject;
 
 /**
  * Parent Activity for UploardFlyer.Java and CreateFLyer_Frag.Java
+ * Handles what the user decided to do.
+ *
+ * In the Event_info.java class, if the user checked the "I have a flyer" box,
+ * then "customOrNa" is true and the UploardFlyer class is loaded.
+ * If the they didn't then they are taken to CreateFlyer_Frag
+ *
  */
 public class NewDesign extends FragmentActivity {
 

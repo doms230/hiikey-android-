@@ -91,8 +91,8 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[]{
-                                "local",
                                 "Subscriptions",
+                                "Local",
                                 "Private",
                                 "Likes"
                         }),
@@ -117,8 +117,8 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
 
     /**
      *
-     * @param position
-     * @param id
+     * @param position used to distinguish which Flyer type was chosen..
+     * @param id not used.
      * @return
      * functions that decides which data to load.
      *
@@ -128,7 +128,10 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         // When the given dropdown item is selected, show its contents in the
         // container view.
         switch (position){
-            /**Location was selected**/
+            /**Subscriptions was selected
+             * Loads all of the flyers under the bulletins that the user
+             * subscribed to
+             * **/
 
             case 0:
                 flyerFile.clear();
@@ -175,7 +178,12 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                     }
                 });
                 break;
-            /**Subscriptions was selected*/
+            /**
+             * Local was selected
+             *
+             * Loads all of the flyers within a 50 mile radius of the user.
+             *
+             * */
             case 1:
                 flyerFile.clear();
                 bulletinName.clear();
@@ -228,7 +236,12 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                         });
                 break;
 
-            /***Private was selected****/
+            /**
+             * *Private was selected
+             * Loads all of the Flyers listed as private by the users' hosts
+             * Users can only see exclusive events if their host added them upon flyer creation.
+             *
+             * ****/
             case 2:
                 flyerFile.clear();
                 bulletinName.clear();
@@ -269,8 +282,13 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
 
             /**
              * liked flyers was selected
+             * Shows all of the flyers that the user liked.
              */
             case 3:
+                /**
+                 * cleared the array lists, because in case new content is added/deleted
+                 * May be a better way to do this.
+                 */
                 flyerFile.clear();
                 bulletinName.clear();
                 flyerId.clear();
@@ -429,6 +447,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
     }
 
     @Override
+
     public void onConnectionSuspended(int i) {
         mGoogleApiClient.connect();
     }
@@ -444,9 +463,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         super.onStart();
         Bundle bundle = getIntent().getExtras();
 
-        lat =  bundle.getDouble("lat");
+       /* lat =  bundle.getDouble("lat");
         longa =  bundle.getDouble("long");
-        adsf = new ParseGeoPoint(lat, longa);
+        adsf = new ParseGeoPoint(lat, longa);*/
 
         if(mGoogleApiClient!=null){
             mGoogleApiClient.connect();

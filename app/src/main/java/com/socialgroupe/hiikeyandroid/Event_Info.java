@@ -202,6 +202,9 @@ public class Event_Info extends ActionBarActivity implements AdapterView.OnItemS
         }
     }
 
+    /**
+     * function to that takes the user back to the first activity of a new flyer.
+     */
     private void exit(){
         Intent exIntent = new Intent(this, Promotion.class);
         startActivity(exIntent);

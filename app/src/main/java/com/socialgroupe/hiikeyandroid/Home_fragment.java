@@ -472,12 +472,12 @@ public class Home_fragment extends ListFragment implements View.OnClickListener 
     /**
      * open a dialog that shows the flyer info. Also gives the user the ability to map the address,
      * and go to the website.
-     * @param description
-     * @param title
-     * @param hashtag
-     * @param website
+     * @param description The Flyer description
+     * @param title Flyer title
+     * @param hashtag flyer hashtag
+     * @param website website, the user will be able to go straight to the website form alert dialog.
      * @param address
-     * @param location
+     * @param location flyer's location, user will be able to get directions from the app.
      */
     private void openInfoDialog(String description, String title, String hashtag,
                                  final String website, final String address, final String location){

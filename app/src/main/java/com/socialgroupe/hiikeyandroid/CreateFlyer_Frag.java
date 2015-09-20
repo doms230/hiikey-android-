@@ -580,9 +580,9 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
 
     /**
      *
-     * @param context
-     * @param uri
-     * @param imageView
+     * @param context relates to the parent activity that it's connected to.
+     * @param uri refers to the picture file path in the phone
+     * @param imageView is the picture being edited.
      * @return
      *
      * saveFlyer takes the image and resizes it to be saved to the database.
