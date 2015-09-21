@@ -37,14 +37,13 @@ import java.io.IOException;
 
 
 /**
- * Created By: Dominic
+ * Created By: @author Dominic
  *
  * Fragment class used to signin/ signup people for Hiikey.
  *
  * Parent Activity: SignupAct.class
  *
  */
-
 public class Signup_Login extends Activity implements View.OnClickListener{
 
     private EditText Username, Password, Email;
@@ -58,6 +57,10 @@ public class Signup_Login extends Activity implements View.OnClickListener{
     private ImageView blur;
     private RelativeLayout yolo;
 
+    /**
+     * The app requests that the window is full screen. Then, I register the Props Database class, so that I’m able to querying the class from the database later.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +96,23 @@ public class Signup_Login extends Activity implements View.OnClickListener{
         saveFlyer(defaultPicture);
     }
 
+    /**
+     * <h4>Case bSignIn:</h4>
+     * <p>Create two string objects, one for username and another for password. Username is set to lowercase to insure that people don’t have the same username, but with different case usages.</p>
+     * <p>Set the progress bar's visibility to visible to let the user know the app is processing his/her request.</p>
+     * <p>ParseUser.LogInBackground takes the username and password string objects, and checks to see if the password combination
+     * is correct. Once the query finishes, if the parseUser comes back as not null, then the user is taken to the {@link Bulletin_Helper}.Java activity.
+     * The database gets the current installation number and assigns it to the current user. Once that process is finish, the Signup_Login.Java activity is
+     * killed using finish().The username/password combination was incorrect if the parseUser comes back as null,. The progressbar disappears and the a Toast
+     * is made saying that the username/password combination was incorrect.</p>
+     *
+     * <h3>Case bSignup:</h3>
+     * <p>The integer signupPressed is used to determine when the user presses signup more than once. The email editText shows up if the signupPressed
+     * is pressed once, and the database is queried for a non-existent username/email combination the second time.</p>
+     *
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
