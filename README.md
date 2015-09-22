@@ -9,13 +9,13 @@ Private Repository Hiikey, the event discovery and promotion app. #savetreesuseh
 ### Major Dependencies ###
 
 
-*[Parse(Database)](https://parse.com/)
+* [Parse(Database)](https://parse.com/)
 
-*[Google Play Services](https://developer.android.com/google/play-services/index.html)
+* [Google Play Services](https://developer.android.com/google/play-services/index.html)
 
-*[Picasso](http://square.github.io/picasso/)
+* [Picasso](http://square.github.io/picasso/)
 
-*[Melnykov](https://github.com/makovkastar/FloatingActionButton)
+* [Melnykov](https://github.com/makovkastar/FloatingActionButton)
 
 
 ### Contribution guidelines ###
