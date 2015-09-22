@@ -307,7 +307,7 @@ public class CreateFlyer_Frag extends Fragment implements View.OnClickListener {
         filterColors = (HorizontalScrollView)view.findViewById(R.id.svFilterColor);
 
         category = createFlyInfo.getString("category");
-        website = createFlyInfo.getString("website");
+        website = createFlyInfo.getString("website"); // Website
         description = createFlyInfo.getString("description");
         privacy = createFlyInfo.getString("privacy");
         latitude = createFlyInfo.getDouble("latitude");

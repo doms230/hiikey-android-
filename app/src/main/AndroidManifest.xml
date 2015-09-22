@@ -41,7 +41,7 @@
         android:name="com.socialgroupe.hiikeyandroid.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.socialgroupe.hiikey.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.socialgroupe.hiikeyandroid.permission.C2D_MESSAGE" />
 
     <!-- ******************************* -->
     <application
@@ -84,6 +84,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.socialgroupe.hiikeyandroid.Event_Info"
             android:label="@string/title_activity_new_post"
@@ -115,8 +116,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        //////////////////////////////////////See
-        FLyer//////////////////////////////////////////////
+
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIciWKtEVeRsOnCP4F_MGzlVuER7sxk5oknW2HUw" />
@@ -208,7 +208,7 @@
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
-                <category android:name="com.socialgroupe.hiikey" />
+                <category android:name="com.socialgroupe.hiikeyandroid" />
             </intent-filter>
         </receiver>
 
@@ -256,7 +256,7 @@
             android:label="@string/search"
             android:parentActivityName="com.socialgroupe.hiikeyandroid.Home" >
             <intent-filter>
-                <action android:name="com.socialgroupe.SEARCHBULLETINS" />
+                <action android:name="android.intent.action.SEARCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

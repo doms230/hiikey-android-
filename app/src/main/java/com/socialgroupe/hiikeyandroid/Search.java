@@ -22,14 +22,13 @@ import android.widget.Button;
 public class Search extends ActionBarActivity {
 
     // Tab Stuff
-    static final int NUM_ITEMS = 2;
+    static final int NUM_ITEMS = 3; // people, bulletin, location
     MyAdapter mAdapter;
     ViewPager mPager;
 
     private SearchManager searchManager;
     private SearchView searchView;
 
-    static String a="I am from Search Activity. haha";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +55,13 @@ public class Search extends ActionBarActivity {
 
             }
         });
+        button = (Button) findViewById(R.id.location);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mPager.setCurrentItem(NUM_ITEMS - 2);
+            }
+        });
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {
@@ -75,6 +81,7 @@ public class Search extends ActionBarActivity {
                 // test -- pass string from activity to fragment
                 case 1: return SearchPeople.newInstance();
                 //return SearchBulletinsF.newInstance("SearchBulletins, Default");
+                case 2: return SearchLocation.newInstance();
             }
             return SearchBulletinsF.newInstance();
         }

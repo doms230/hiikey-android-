@@ -22,7 +22,6 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.io.DataOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +86,8 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[]{
-                                "local",
                                 "Subscriptions",
+                                "Local",
                                 "Private",
                                 "Likes"
                         }),
@@ -116,9 +115,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         // When the given dropdown item is selected, show its contents in the
         // container view.
         switch (position){
-            /**Location was selected**/
+            /**Subscriptions was selected**/
 
-            case 0:
+            case 1:
                 flyerFile.clear();
                 bulletinName.clear();
                 flyerId.clear();
@@ -163,8 +162,8 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
                     }
                 });
                 break;
-            /**Subscriptions was selected*/
-            case 1:
+            /**Local was selected*/
+            case 0:
                 flyerFile.clear();
                 bulletinName.clear();
                 flyerId.clear();
@@ -428,9 +427,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         super.onStart();
         Bundle bundle = getIntent().getExtras();
 
-        lat =  bundle.getDouble("lat");
-        longa =  bundle.getDouble("long");
-        adsf = new ParseGeoPoint(lat, longa);
+        //lat =  bundle.getDouble("lat");
+        //longa =  bundle.getDouble("longa");
+        //adsf = new ParseGeoPoint(lat, longa);
 
         if(mGoogleApiClient!=null){
             mGoogleApiClient.connect();
