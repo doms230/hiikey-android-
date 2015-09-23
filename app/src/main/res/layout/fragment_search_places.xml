@@ -3,51 +3,11 @@
     android:layout_height="match_parent" tools:context="com.socialgroupe.hiikeyandroid.SearchPlaces"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ListView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout">
-
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/etSearchPlaces"
-            android:hint="@string/searchEvents" />
-
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:id="@+id/ibSearchPlaces"
-            android:padding="5dp"
-            android:background="@drawable/ic_search_black" />
-
-    </LinearLayout>
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pbSearchPlacesProgress"
-        android:layout_gravity="center_horizontal"
-        android:indeterminate="true"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/noYourEvent"
-        android:id="@+id/tvNoPlaces"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/appColor"
-        android:visibility="gone" />
-
-    <GridView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvSearchPlaces"
-        android:numColumns="auto_fit" />
+        android:layout_height="fill_parent"
+        android:id="@+id/lvSearchLocation"
+        android:numColumns="auto_fit"
+        android:visibility="visible" />
 
 </LinearLayout>

@@ -24,37 +24,37 @@ public class SearchPeople extends Fragment{
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter_people;
+    String query_people;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         // Execute RemoteDataTask AsyncTask
+
+
+        Search search = (Search) getActivity();
+        query_people = search.getMyData();
+        if(query_people == null){
+            query_people = "";
+        }
+
         new RemoteDataTask().execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_search_people,container,false);
-        /**
-        TextView tv = (TextView) v.findViewById(R.id.tvSP);
-        tv.setText(getArguments().getString("msg"));
-         */
         return v;
     }
-
     public static SearchPeople newInstance(){
 
         SearchPeople sp = new SearchPeople();
-        /**
-        Bundle bundle = new Bundle();
-        bundle.putString("msg",text);
-        sp.setArguments(bundle);
-        */
 
         return sp;
     }
+
 
     private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
         @Override
@@ -73,9 +73,14 @@ public class SearchPeople extends Fragment{
 
         @Override
         protected Void doInBackground(Void... params) {
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                    "Favorites_Helper");
-
+            //ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
+                  //  "Bulletin");
+            //SearchPeople spp = new SearchPeople();
+            String spl = SearchPeople.this.query_people;
+            //System.out.println(spl);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("List");
+            query.whereEqualTo("guestId",spl);
+            //System.out.println("final " + spl);
             try {
                 ob = query.find();
             } catch (com.parse.ParseException e) {
@@ -83,20 +88,23 @@ public class SearchPeople extends Fragment{
                 e.printStackTrace();
             }
 
+
             return null;
         }
 
         protected void onPostExecute(Void result) {
 
             listview = (ListView) getView().findViewById(R.id.lvSearchPeople);
-            adapter = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_itemp);
-            for (ParseObject user : ob) {
+            adapter_people = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_itemp);
+            for (ParseObject bulletin_name : ob) {
                 // Test - load String...
-                adapter.add((String) user.get("userId"));
+               // adapter.add((String) user.get("userId"));
+                adapter_people.add((String) bulletin_name.get("guestId"));
             }
-            listview.setAdapter(adapter);
+            listview.setAdapter(adapter_people);
             mProgressDialog.dismiss();
         }
+
     }
 
 }

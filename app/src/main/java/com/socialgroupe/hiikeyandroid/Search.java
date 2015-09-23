@@ -2,6 +2,7 @@ package com.socialgroupe.hiikeyandroid;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,11 +29,21 @@ public class Search extends ActionBarActivity {
 
     private SearchManager searchManager;
     private SearchView searchView;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchviewpager);
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+            query = intent.getStringExtra(SearchManager.QUERY);
+            //query ="sdsds";
+            //System.out.println(query+"!!!!!!!!");
+
+        }
 
         mAdapter = new MyAdapter(getSupportFragmentManager());
 
@@ -51,17 +62,21 @@ public class Search extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPager.setCurrentItem(NUM_ITEMS - 1);
-
+                mPager.setCurrentItem(NUM_ITEMS - 2);
             }
         });
         button = (Button) findViewById(R.id.location);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                mPager.setCurrentItem(NUM_ITEMS - 2);
+                mPager.setCurrentItem(NUM_ITEMS - 1);
             }
         });
+    }
+
+    public String getMyData(){
+        return query;
+        //return "sss";
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {
@@ -121,4 +136,5 @@ public class Search extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
