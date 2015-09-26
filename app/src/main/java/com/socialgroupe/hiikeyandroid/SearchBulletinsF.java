@@ -7,13 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,9 @@ public class SearchBulletinsF extends Fragment {
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
-    ArrayAdapter<String> adapter_bulletin;
+    Search_adapter adapter_bulletin;
     String query_bulletin;
+    List<Bulletin_Helper> bulletin_search;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -71,6 +73,7 @@ public class SearchBulletinsF extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
+            bulletin_search = new ArrayList<Bulletin_Helper>();
             //ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
             //  "Bulletin");
             //SearchPeople spp = new SearchPeople();
@@ -81,6 +84,13 @@ public class SearchBulletinsF extends Fragment {
             //System.out.println("final " + spl);
             try {
                 ob = query.find();
+                for(ParseObject bulletins_search : ob){
+                    Bulletin_Helper item = new Bulletin_Helper();
+                    item.setBulletinPic((ParseFile) bulletins_search.get("bulletinPic"));
+                    item.setBulletinName((String) bulletins_search.get("bulletinName"));
+                    bulletin_search.add(item);
+
+                }
             } catch (com.parse.ParseException e) {
                 Toast.makeText(getActivity(), "Error, " + e.getMessage(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
@@ -93,12 +103,8 @@ public class SearchBulletinsF extends Fragment {
         protected void onPostExecute(Void result) {
 
             listview = (ListView) getView().findViewById(R.id.lvSearchBulletins);
-            adapter_bulletin = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_item);
-            for (ParseObject bulletin_name : ob) {
-                // Test - load String...
-                // adapter.add((String) user.get("userId"));
-                adapter_bulletin.add((String) bulletin_name.get("bulletinName"));
-            }
+            //adapter_bulletin = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_item, R.id.tvtry);
+            adapter_bulletin = new Search_adapter(getActivity(), bulletin_search);
             listview.setAdapter(adapter_bulletin);
             mProgressDialog.dismiss();
         }

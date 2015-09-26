@@ -21,20 +21,18 @@ import java.util.List;
  */
 public class SearchPeople extends Fragment{
 
-    //yola test
-
     ListView listview;
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
     ArrayAdapter<String> adapter_people;
     String query_people;
+    //List<Bulletin_Helper> people_search;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         // Execute RemoteDataTask AsyncTask
-
 
         Search search = (Search) getActivity();
         query_people = search.getMyData();
@@ -70,7 +68,6 @@ public class SearchPeople extends Fragment{
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
-
         }
 
         @Override
@@ -80,28 +77,35 @@ public class SearchPeople extends Fragment{
             //SearchPeople spp = new SearchPeople();
             String spl = SearchPeople.this.query_people;
             //System.out.println(spl);
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("List");
-            query.whereEqualTo("guestId",spl);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+            query.whereEqualTo("username",spl);
             //System.out.println("final " + spl);
             try {
                 ob = query.find();
+                /*
+                for(ParseObject user_search : ob){
+                    Bulletin_Helper item = new Bulletin_Helper();
+                    item.setBulletinPic((ParseFile) user_search.get("Profile"));
+                    item.setBulletinName((String) user_search.get("username"));
+                    people_search.add(item);
+
+                }
+                */
             } catch (com.parse.ParseException e) {
                 Toast.makeText(getActivity(), "Error, " + e.getMessage(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
-
-
             return null;
         }
 
         protected void onPostExecute(Void result) {
 
             listview = (ListView) getView().findViewById(R.id.lvSearchPeople);
-            adapter_people = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_itemp);
+            adapter_people = new ArrayAdapter<String>(getActivity(), R.layout.search_listview_itemp, R.id.username);
             for (ParseObject bulletin_name : ob) {
                 // Test - load String...
-               // adapter.add((String) user.get("userId"));
-                adapter_people.add((String) bulletin_name.get("guestId"));
+                // adapter.add((String) user.get("userId"));
+                adapter_people.add((String) bulletin_name.get("username"));
             }
             listview.setAdapter(adapter_people);
             mProgressDialog.dismiss();
