@@ -60,14 +60,14 @@ public class Search_adapter extends BaseAdapter {
             view = inflater.inflate(R.layout.search_listview_item, null);
 
             // Locate the TextViews and ParseImageView
-            holder.bulletin_name = (TextView) view.findViewById(R.id.tvtry);
+            //holder.bulletin_name = (TextView) view.findViewById(R.id.tvtry);
             holder.bulletin_image = (ParseImageView) view.findViewById(R.id.bulletinpic);
             view.setTag(holder);
         }else{
             holder = (ViewHolder) view.getTag();
         }
 
-        holder.bulletin_name.setText(bulletins_search.get(position).getBulletinName());
+        //holder.bulletin_name.setText(bulletins_search.get(position).getBulletinName());
         holder.bulletin_image.setParseFile(bulletins_search.get(position).getBulletinPic());
         holder.bulletin_image.loadInBackground(new GetDataCallback() {
             @Override

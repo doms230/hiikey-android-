@@ -6,14 +6,14 @@
 
     <com.parse.ParseImageView
         android:id="@+id/bulletinpic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         android:src="@drawable/ic_launcher"/>
-
+<!--
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,10 @@
         android:layout_marginTop="15dp"
         android:id="@+id/tvtry"
         android:text="@string/abc_action_bar_home_description">
+
+
     </TextView>
+    -->
 
 </LinearLayout>
 
