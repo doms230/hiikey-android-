@@ -70,8 +70,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
 
         setContentView(R.layout.home_fragment_pager);
 
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
+
 
         if(checkPlayServices()){
             buildGoogleApiClient();

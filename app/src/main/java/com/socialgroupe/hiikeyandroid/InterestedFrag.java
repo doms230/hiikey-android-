@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -29,6 +31,11 @@ public class InterestedFrag extends ActionBarActivity implements View.OnClickLis
     private InterestedAdapter interestedAdapter;
     private String objectid;
 
+    private String TAG = "InterestedFrag";
+    private String name = "test";
+
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +51,19 @@ public class InterestedFrag extends ActionBarActivity implements View.OnClickLis
         updateProfileParseQueryAdapter.setTextKey("title");
         gridView = (GridView)findViewById(R.id.gvInterested);
 
+        AnalyticsApplication mapplication = (AnalyticsApplication) getApplication();
+        mTracker = mapplication.getDefaultTracker();
+
+
         updateFavorites();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        //GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
         updateFavorites();
     }
 
@@ -61,6 +75,7 @@ public class InterestedFrag extends ActionBarActivity implements View.OnClickLis
 
     @Override
     public void onClick(final View v) {
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
         v.post(new Runnable() {
             @Override
             public void run() {
