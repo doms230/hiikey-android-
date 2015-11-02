@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -35,6 +36,7 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         GoogleApiClient.OnConnectionFailedListener{
 
     static int NUM_ITEMS = 0;
+    static Tracker mTracker;
 
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
@@ -67,6 +69,9 @@ public class Home extends AppCompatActivity implements android.support.v7.app.Ac
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.home_fragment_pager);
+
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
 
         if(checkPlayServices()){
             buildGoogleApiClient();
