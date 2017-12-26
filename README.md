@@ -1,4 +1,4 @@
-# README #
+# README # This code is very old and hasn't been updated in a couple years 
 
 
 Private Repository Hiikey, the event discovery and promotion app. #savetreesusehiikey
